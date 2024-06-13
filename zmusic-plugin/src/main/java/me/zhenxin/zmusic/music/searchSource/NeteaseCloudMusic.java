@@ -21,20 +21,20 @@ public class NeteaseCloudMusic {
     public static JsonObject getMusicUrl(String musicName) {
         try {
             Gson gson = new Gson();
-            int musicId;
+            long musicId;
             if (!musicName.contains("-id:")) {
                 String getUrl = Config.neteaseApiRoot + "search?keywords=" + URLEncoder.encode(musicName, "UTF-8") + "&limit=1&type=1";
                 String jsonText = NetUtils.getNetString(getUrl, null);
                 JsonObject json = gson.fromJson(jsonText, JsonObject.class);
                 JsonObject result = json.getAsJsonObject("result");
-                if (result != null || result.get("songCount").getAsInt() != 0) {
+                if (result != null && result.get("songCount").getAsInt() != 0) {
                     JsonObject jsonOut = result.getAsJsonArray("songs").get(0).getAsJsonObject();
-                    musicId = jsonOut.get("id").getAsInt();
+                    musicId = jsonOut.get("id").getAsLong();
                 } else {
                     return null;
                 }
             } else {
-                musicId = Integer.parseInt(musicName.substring(musicName.indexOf("-id:") + 4));
+                musicId = Long.parseLong(musicName.substring(musicName.indexOf("-id:") + 4));
             }
             String getUrl = Config.neteaseApiRoot + "song/detail?ids=" + musicId;
             String jsonText = NetUtils.getNetString(getUrl, null);
@@ -45,11 +45,11 @@ public class NeteaseCloudMusic {
             inttime = inttime / 1000;
             String time = String.valueOf(inttime);
             JsonArray singer = result.get("ar").getAsJsonArray();
-            String singerName = "";
+            StringBuilder singerName = new StringBuilder();
             for (JsonElement j : singer) {
-                singerName += j.getAsJsonObject().get("name").getAsString() + "/";
+                singerName.append(j.getAsJsonObject().get("name").getAsString()).append("/");
             }
-            singerName = singerName.substring(0, singerName.length() - 1);
+            singerName = new StringBuilder(singerName.substring(0, singerName.length() - 1));
 
             String lyricJsonText = NetUtils.getNetString(Config.neteaseApiRoot + "lyric?id=" + musicId, null);
             JsonObject lyricJson = gson.fromJson(lyricJsonText, JsonObject.class);
@@ -78,7 +78,7 @@ public class NeteaseCloudMusic {
             returnJson.addProperty("url", musicUrl);
             returnJson.addProperty("time", time);
             returnJson.addProperty("name", name);
-            returnJson.addProperty("singer", singerName);
+            returnJson.addProperty("singer", singerName.toString());
             returnJson.addProperty("lyric", lyric);
             returnJson.addProperty("lyricTr", lyricTr);
             returnJson.addProperty("error", sb.toString());
@@ -108,7 +108,7 @@ public class NeteaseCloudMusic {
                 JsonArray jsonOut = result.getAsJsonArray("songs");
                 for (JsonElement j : jsonOut) {
                     String name = j.getAsJsonObject().get("name").getAsString();
-                    int musicID = j.getAsJsonObject().get("id").getAsInt();
+                    long musicID = j.getAsJsonObject().get("id").getAsLong();
                     JsonArray singer = j.getAsJsonObject().get("artists").getAsJsonArray();
                     String singerName = "";
                     for (JsonElement js : singer) {
