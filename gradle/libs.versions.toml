@@ -2,13 +2,13 @@
 kotlin = "2.0.0"
 blossom = "2.1.0"
 shadow = "8.1.1"
-spigot = "1.19.4-R0.1-SNAPSHOT"
-bungeecord = "1.19-R0.1-SNAPSHOT"
+spigot = "1.20.4-R0.1-SNAPSHOT"
+bungeecord = "1.20-R0.1-SNAPSHOT"
 velocity = "3.1.1"
-hutool = "6.0.0-M11"
-netty = "4.1.97.Final"
-placeholderapi = "2.11.5"
-nightconfig = "3.6.7"
+hutool = "6.0.0-M13"
+netty = "4.1.111.Final"
+placeholderapi = "2.11.6"
+nightconfig = "3.7.3"
 bstats = "3.0.2"
 
 [plugins]
@@ -24,6 +24,7 @@ velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocit
 # hutool
 hutool-core = { module = "org.dromara.hutool:hutool-core", version.ref = "hutool" }
 hutool-http = { module = "org.dromara.hutool:hutool-http", version.ref = "hutool" }
+hutool-log = { module = "org.dromara.hutool:hutool-log", version.ref = "hutool" }
 hutool-json = { module = "org.dromara.hutool:hutool-json", version.ref = "hutool" }
 # netty
 netty-buffer = { module = "io.netty:netty-buffer", version.ref = "netty" }
@@ -38,5 +39,5 @@ bstats-bungeecord = { module = "org.bstats:bstats-bungeecord", version.ref = "bs
 bstats-velocity = { module = "org.bstats:bstats-velocity", version.ref = "bstats" }
 
 [bundles]
-hutool = ["hutool-core", "hutool-http", "hutool-json"]
+hutool = ["hutool-core", "hutool-http", "hutool-log", "hutool-json"]
 nightconfig = ["nightconfig-core", "nightconfig-toml"]

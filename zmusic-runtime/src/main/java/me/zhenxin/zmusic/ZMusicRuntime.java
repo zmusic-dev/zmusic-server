@@ -22,6 +22,10 @@ import java.util.logging.Logger;
         test = "!org.dromara.hutool.http.HttpUtil"
 )
 @RuntimeDependency(
+        value = "!org.dromara.hutool:hutool-log:" + ZMusicConstants.HUTOOL_VERSION,
+        test = "!org.dromara.hutool.log.LogUtil"
+)
+@RuntimeDependency(
         value = "!org.dromara.hutool:hutool-json:" + ZMusicConstants.HUTOOL_VERSION,
         test = "!org.dromara.hutool.json.JSONUtil"
 )

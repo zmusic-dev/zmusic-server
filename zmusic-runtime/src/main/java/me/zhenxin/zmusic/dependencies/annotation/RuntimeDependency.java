@@ -17,7 +17,7 @@ public @interface RuntimeDependency {
 
     String test() default "";
 
-    String repository() default "https://repo.nju.edu.cn/repository/maven-public";
+    String repository() default "https://mirrors.huaweicloud.com/repository/maven";
 
     boolean transitive() default true;
 
