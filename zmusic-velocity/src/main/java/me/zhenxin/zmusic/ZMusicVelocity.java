@@ -7,7 +7,7 @@ import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import me.zhenxin.zmusic.platform.Platform;
+import me.zhenxin.zmusic.enums.Platform;
 import me.zhenxin.zmusic.platform.impl.LoggerVelocity;
 import org.bstats.velocity.Metrics;
 

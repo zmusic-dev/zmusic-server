@@ -1,7 +1,7 @@
 package me.zhenxin.zmusic;
 
 import me.zhenxin.zmusic.dependencies.annotation.RuntimeDependency;
-import me.zhenxin.zmusic.platform.Platform;
+import me.zhenxin.zmusic.enums.Platform;
 import me.zhenxin.zmusic.platform.impl.LoggerBukkit;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;

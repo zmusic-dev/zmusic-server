@@ -1,7 +1,7 @@
 package me.zhenxin.zmusic;
 
 import me.zhenxin.zmusic.dependencies.annotation.RuntimeDependency;
-import me.zhenxin.zmusic.platform.Platform;
+import me.zhenxin.zmusic.enums.Platform;
 import me.zhenxin.zmusic.platform.impl.LoggerBungee;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;

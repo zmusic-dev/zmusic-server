@@ -1,5 +1,5 @@
 repositories {
-    maven("https://hub.spigotmc.org/nexus/content/groups/public/")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://repo.tabooproject.org/repository/releases")
 }
 

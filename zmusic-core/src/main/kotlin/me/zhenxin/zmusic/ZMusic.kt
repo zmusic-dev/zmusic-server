@@ -4,11 +4,13 @@ import me.zhenxin.zmusic.config.I18n
 import me.zhenxin.zmusic.config.initConfig
 import me.zhenxin.zmusic.config.initI18n
 import me.zhenxin.zmusic.platform.Logger
-import me.zhenxin.zmusic.platform.Platform
+import me.zhenxin.zmusic.enums.Platform
 import me.zhenxin.zmusic.utils.checkUpdate
 import me.zhenxin.zmusic.utils.colored
 import java.io.File
 import kotlin.concurrent.thread
+
+const val baseApi = "https://api.zhenxin.me"
 
 /**
  * ZMusic

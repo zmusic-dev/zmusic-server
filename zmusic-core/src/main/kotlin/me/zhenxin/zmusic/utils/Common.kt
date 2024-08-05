@@ -1,11 +1,11 @@
 package me.zhenxin.zmusic.utils
 
 import me.zhenxin.zmusic.ZMusicConstants
+import me.zhenxin.zmusic.baseApi
 import me.zhenxin.zmusic.config.I18n
 import me.zhenxin.zmusic.entity.VersionInfo
 import me.zhenxin.zmusic.logger
 import org.dromara.hutool.json.JSONUtil
-import kotlin.math.log
 
 /**
  * 公共工具
@@ -20,7 +20,7 @@ import kotlin.math.log
  */
 fun checkUpdate() {
     logger.info(I18n.Update.checking)
-    val res = httpGet("https://api.zhenxin.me/zmusic/version?type=dev")
+    val res = httpGet("${baseApi}/zmusic/version?type=dev")
     val json = JSONUtil.parseObj(res)
     if (json.getInt("code") != 200) {
         logger.error(I18n.Update.checkFailed)

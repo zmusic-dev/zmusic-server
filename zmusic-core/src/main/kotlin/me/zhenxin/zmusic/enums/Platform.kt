@@ -1,4 +1,4 @@
-package me.zhenxin.zmusic.platform
+package me.zhenxin.zmusic.enums
 
 /**
  * 平台
