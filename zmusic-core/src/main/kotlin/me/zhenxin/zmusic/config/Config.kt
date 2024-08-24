@@ -11,7 +11,6 @@ import me.zhenxin.zmusic.logger
  *
  * @author 真心
  * @since 2023/7/24 11:06
- * @email qgzhenxin@qq.com
  */
 object Config {
     /**

@@ -8,57 +8,57 @@ import me.zhenxin.zmusic.utils.colored
  *
  * @author 真心
  * @since 2023/7/22 20:08
- * @email qgzhenxin@qq.com
  */
-interface Logger {
+interface PlatformLogger {
     /**
      * 信息日志
-     * @param msg String 日志信息
+     *
+     * @param msg 日志信息
      */
     fun info(msg: String) {
-        val prefix = Config.prefix.colored()
         val color = "&a".colored()
         val message = msg.colored()
-        log("$prefix$color$message")
+        log("$color$message")
     }
 
     /**
      * 警告日志
-     * @param msg String 日志信息
+     *
+     * @param msg 日志信息
      */
     fun warn(msg: String) {
-        val prefix = Config.prefix.colored()
         val color = "&e".colored()
         val message = msg.colored()
-        log("$prefix$color$message")
+        log("$color$message")
     }
 
     /**
      * 错误日志
-     * @param msg String 日志信息
+     *
+     * @param msg 日志信息
      */
     fun error(msg: String) {
-        val prefix = Config.prefix.colored()
         val color = "&c".colored()
         val message = msg.colored()
-        log("$prefix$color$message")
+        log("$color$message")
     }
 
     /**
      * 调试日志
-     * @param msg String 日志信息
+     *
+     * @param msg 日志信息
      */
     fun debug(msg: String) {
         if (Config.debug) {
-            val prefix = Config.prefix.colored()
             val color = "&b[Debug] ".colored()
-            log("$prefix$color$msg")
+            log("$color$msg")
         }
     }
 
     /**
      * 打印日志
-     * @param msg String 日志信息
+     *
+     * @param msg 日志信息
      */
     fun log(msg: String)
 }

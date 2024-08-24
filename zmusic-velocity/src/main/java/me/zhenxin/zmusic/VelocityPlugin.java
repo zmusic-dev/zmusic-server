@@ -8,7 +8,7 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.zhenxin.zmusic.enums.Platform;
-import me.zhenxin.zmusic.platform.impl.LoggerVelocity;
+import me.zhenxin.zmusic.platform.VelocityLoggerImpl;
 import org.bstats.velocity.Metrics;
 
 import java.nio.file.Path;
@@ -18,18 +18,17 @@ import java.util.logging.Logger;
  * Velocity 入口类
  *
  * @author 真心
- * @email qgzhenxin@qq.com
  * @since 2023/8/28 12:22
  */
-@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
+@SuppressWarnings({"SpellCheckingInspection", "unused"})
 @Plugin(id = "zmusic")
-public class ZMusicVelocity {
+public class VelocityPlugin {
     private final ProxyServer server;
     private final Path dataDirectory;
     private final Metrics.Factory metricsFactory;
 
     @Inject
-    public ZMusicVelocity(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory, Metrics.Factory metricsFactory) {
+    public VelocityPlugin(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory, Metrics.Factory metricsFactory) {
         this.server = server;
         this.dataDirectory = dataDirectory;
         this.metricsFactory = metricsFactory;
@@ -39,7 +38,7 @@ public class ZMusicVelocity {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        ZMusicKt.setLogger(new LoggerVelocity(server.getConsoleCommandSource()));
+        ZMusicKt.setLogger(new VelocityLoggerImpl(server.getConsoleCommandSource()));
         ZMusicKt.setDataFolder(dataDirectory.toFile());
         ZMusicKt.setPlatform(Platform.VELOCITY);
         metricsFactory.make(this, 12426);

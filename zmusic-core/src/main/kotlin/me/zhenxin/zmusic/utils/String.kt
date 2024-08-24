@@ -10,9 +10,9 @@ package me.zhenxin.zmusic.utils
 /**
  * 对字符串进行颜色处理
  */
-fun String.colored() = this.replace("&", "§")
+fun String.colored() = replace("&", "§")
 
 /**
  * 对字符串取消颜色处理
  */
-fun String.uncolored() = this.replace("§", "&")
+fun String.uncolored() = replace("§", "&")

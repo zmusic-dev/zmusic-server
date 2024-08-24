@@ -1,5 +1,5 @@
 name: ZMusic
-main: me.zhenxin.zmusic.ZMusicBukkit
+main: me.zhenxin.zmusic.BukkitPlugin
 version: ${version}
 api-version: 1.13
 folia-supported: true

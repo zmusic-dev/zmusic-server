@@ -3,8 +3,8 @@ package me.zhenxin.zmusic
 import me.zhenxin.zmusic.config.I18n
 import me.zhenxin.zmusic.config.initConfig
 import me.zhenxin.zmusic.config.initI18n
-import me.zhenxin.zmusic.platform.Logger
 import me.zhenxin.zmusic.enums.Platform
+import me.zhenxin.zmusic.platform.PlatformLogger
 import me.zhenxin.zmusic.utils.checkUpdate
 import me.zhenxin.zmusic.utils.colored
 import java.io.File
@@ -17,7 +17,6 @@ const val baseApi = "https://api.zhenxin.me"
  *
  * @author 真心
  * @since 2023/5/23 16:57
- * @email qgzhenxin@qq.com
  */
 object ZMusic {
 
@@ -77,4 +76,4 @@ lateinit var platform: Platform
 /**
  * 日志
  */
-lateinit var logger: Logger
+lateinit var logger: PlatformLogger

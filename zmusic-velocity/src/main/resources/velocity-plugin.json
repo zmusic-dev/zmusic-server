@@ -1,7 +1,7 @@
 {
   "id": "zmusic",
   "name": "ZMusic",
-  "main": "me.zhenxin.zmusic.ZMusicVelocity",
+  "main": "me.zhenxin.zmusic.VelocityPlugin",
   "version": "${version}",
   "authors": [
     "ZhenXin"

@@ -9,7 +9,6 @@ import java.util.logging.Logger;
  * ZMusic 运行时依赖
  *
  * @author 真心
- * @email qgzhenxin@qq.com
  * @since 2023/7/24 18:14
  */
 @SuppressWarnings({"AlibabaClassNamingShouldBeCamel", "SpellCheckingInspection"})
