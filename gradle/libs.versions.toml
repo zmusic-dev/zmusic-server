@@ -9,7 +9,7 @@ hutool = "6.0.0-M14"
 netty = "4.1.115.Final"
 placeholderapi = "2.11.6"
 nightconfig = "3.8.1"
-bstats = "3.0.2"
+bstats = "3.1.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
