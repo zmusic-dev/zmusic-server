@@ -21,6 +21,9 @@ public class Toast {
             Player bukkitPlayer = (Player) player;
             AdvancementPacket packet;
             switch (nms) {
+                case "craftbukkit": // Mojang mappings server for paper 1.20.5+
+                    packet = new AdvancementPacket_Paper(bukkitPlayer, title);
+                    break;
                 case "v1_20_R1":
                     packet = new AdvancementPacket_1_20_R1(bukkitPlayer, title);
                     break;
