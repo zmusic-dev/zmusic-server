@@ -118,7 +118,7 @@ public class DependencyDownloader extends AbstractXmlParser {
             if (file.exists()) {
                 // 如果没有重定向规则，直接注入
                 if (relocation.isEmpty()) {
-                    ClassLoader loader = ClassAppender.addPath(file.toPath(), false, dep.isExternal());
+                    ClassLoader loader = ClassAppender.addPath(file.toPath(), dep.isExternal());
                     injectedDependencies.computeIfAbsent(dep, dependency -> new HashSet<>()).add(loader);
                 } else {
                     // 获取重定向后的文件
@@ -138,7 +138,7 @@ public class DependencyDownloader extends AbstractXmlParser {
                         }
                     }
                     // 注入重定向后的文件
-                    ClassLoader loader = ClassAppender.addPath(rel.toPath(), false, dep.isExternal());
+                    ClassLoader loader = ClassAppender.addPath(rel.toPath(), dep.isExternal());
                     injectedDependencies.computeIfAbsent(dep, dependency -> new HashSet<>()).add(loader);
                 }
             } else {

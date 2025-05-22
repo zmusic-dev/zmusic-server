@@ -1,7 +1,6 @@
 package me.zhenxin.zmusic.dependencies.common;
 
 import me.zhenxin.zmusic.ZMusicRuntime;
-import me.zhenxin.zmusic.dependencies.common.classloader.IsolatedClassLoader;
 import sun.misc.Unsafe;
 
 import java.io.File;
@@ -51,20 +50,10 @@ public class ClassAppender {
      * 加载一个文件到 ClassLoader
      *
      * @param path       路径
-     * @param isIsolated 是否隔离
      * @param isExternal 是否外部库（不加入 loadedClasses）
      */
-    public static ClassLoader addPath(Path path, boolean isIsolated, boolean isExternal) throws Throwable {
+    public static ClassLoader addPath(Path path, boolean isExternal) throws Throwable {
         File file = new File(path.toUri().getPath());
-        // IsolatedClassLoader
-        if (isIsolated) {
-            IsolatedClassLoader loader = IsolatedClassLoader.INSTANCE;
-            loader.addURL(file.toURI().toURL());
-            for (Callback i : callbacks) {
-                i.add(loader, file, isExternal);
-            }
-            return loader;
-        }
         ClassLoader loader = ZMusicRuntime.class.getClassLoader();
         // Application
         if (loader.getClass().getSimpleName().equals("AppClassLoader")) {

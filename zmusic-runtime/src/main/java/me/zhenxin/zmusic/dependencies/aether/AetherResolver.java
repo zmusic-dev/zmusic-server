@@ -76,7 +76,7 @@ public class AetherResolver {
         else injectedDependencies.add(file.getParent());
         // 如果没有重定向规则，直接注入
         if (relocation == null || relocation.isEmpty()) {
-            return ClassAppender.addPath(file.toPath(), false, isExternal);
+            return ClassAppender.addPath(file.toPath(), isExternal);
         } else {
             // 获取重定向后的文件
             String name = file.getName().substring(0, file.getName().lastIndexOf('.'));
@@ -95,7 +95,7 @@ public class AetherResolver {
                 }
             }
             // 注入重定向后的文件
-            return ClassAppender.addPath(rel.toPath(), false, isExternal);
+            return ClassAppender.addPath(rel.toPath(), isExternal);
         }
     }
 
