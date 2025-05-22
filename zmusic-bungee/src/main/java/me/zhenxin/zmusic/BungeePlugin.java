@@ -1,6 +1,6 @@
 package me.zhenxin.zmusic;
 
-import me.zhenxin.zmusic.dependencies.annotation.RuntimeDependency;
+import me.zhenxin.zmusic.dependencies.RuntimeDependency;
 import me.zhenxin.zmusic.enums.Platform;
 import me.zhenxin.zmusic.platform.BungeeLoggerImpl;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -22,7 +22,7 @@ public class BungeePlugin extends Plugin {
 
     @Override
     public void onLoad() {
-        ZMusicRuntime.setup(getDataFolder().getAbsolutePath(), getLogger(), BungeePlugin.class);
+        ZMusicRuntime.setup(getDataFolder().getAbsolutePath(), BungeePlugin.class);
     }
 
     @Override

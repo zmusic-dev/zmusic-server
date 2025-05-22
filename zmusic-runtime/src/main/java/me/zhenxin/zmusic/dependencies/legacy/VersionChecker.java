@@ -1,4 +1,4 @@
-package me.zhenxin.zmusic.dependencies.utils;
+package me.zhenxin.zmusic.dependencies.legacy;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
  * @author 坏黑
  * @since 2023/3/31 16:37
  */
-@SuppressWarnings({"AlibabaConstantFieldShouldBeUpperCase", "ResultOfMethodCallIgnored"})
 public class VersionChecker {
 
     private static final File checkFile = new File("version.lock");

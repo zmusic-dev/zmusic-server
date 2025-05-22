@@ -1,10 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-repositories {
-    maven("https://repo.papermc.io/repository/maven-public/")
-}
-
 dependencies {
     api(project(":zmusic-core"))
     compileOnly(libs.velocity)

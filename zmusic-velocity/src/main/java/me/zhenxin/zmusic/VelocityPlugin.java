@@ -7,6 +7,7 @@ import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import me.zhenxin.zmusic.dependencies.RuntimeDependency;
 import me.zhenxin.zmusic.enums.Platform;
 import me.zhenxin.zmusic.platform.VelocityLoggerImpl;
 import org.bstats.velocity.Metrics;
@@ -21,6 +22,11 @@ import java.util.logging.Logger;
  * @since 2023/8/28 12:22
  */
 @SuppressWarnings({"SpellCheckingInspection", "unused"})
+@RuntimeDependency(
+        value = "!org.bstats:bstats-velocity:" + ZMusicConstants.BSTATS_VERSION,
+        test = "!me.zhenxin.zmusic.library.bstats.velocity.Metrics",
+        relocate = {"!org.bstats.", "!me.zhenxin.zmusic.library.bstats."}
+)
 @Plugin(id = "zmusic")
 public class VelocityPlugin {
     private final ProxyServer server;
@@ -33,7 +39,7 @@ public class VelocityPlugin {
         this.dataDirectory = dataDirectory;
         this.metricsFactory = metricsFactory;
 
-        ZMusicRuntime.setup(dataDirectory.toFile().getAbsolutePath(), logger);
+        ZMusicRuntime.setup(dataDirectory.toFile().getAbsolutePath(), VelocityPlugin.class);
     }
 
     @Subscribe

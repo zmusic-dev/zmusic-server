@@ -1,4 +1,4 @@
-package me.zhenxin.zmusic.dependencies;
+package me.zhenxin.zmusic.dependencies.legacy;
 
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Element;
@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
  * @author Zach Deibert, sky
  * @since 1.0.0
  */
-@SuppressWarnings("AlibabaUndefineMagicConstant")
 public abstract class AbstractXmlParser {
 
     /**

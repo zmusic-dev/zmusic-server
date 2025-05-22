@@ -2,14 +2,23 @@
 kotlin = "2.1.21"
 blossom = "2.1.0"
 shadow = "8.1.1"
+
+lucko-jar-relocator = "1.7"
+google-guava = "33.4.8-jre"
+google-gson = "2.13.1"
+maven-resolver = "1.9.23"
+maven-resolver-provider = "3.9.9"
+
 spigot = "1.21-R0.1-SNAPSHOT"
 bungeecord = "1.21-R0.2"
 velocity = "3.3.0-SNAPSHOT"
+
+bstats = "3.1.0"
+placeholderapi = "2.11.6"
+
 hutool = "6.0.0-M21"
 netty = "4.2.1.Final"
-placeholderapi = "2.11.6"
 nightconfig = "3.8.2"
-bstats = "3.1.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -17,27 +26,47 @@ kyori-blossom = { id = "net.kyori.blossom", version.ref = "blossom" }
 johnrengelman-shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 
 [libraries]
+# Lucko Jar Relocator
+lucko-jar-relocator = { module = "me.lucko:jar-relocator", version.ref = "lucko-jar-relocator" }
+# Google Guava
+google-guava = { module = "com.google.guava:guava", version.ref = "google-guava" }
+# Google Gson
+google-gson = { module = "com.google.code.gson:gson", version.ref = "google-gson" }
+# Maven Resolver
+maven-resolver-api = { module = "org.apache.maven.resolver:maven-resolver-api", version.ref = "maven-resolver" }
+maven-resolver-util = { module = "org.apache.maven.resolver:maven-resolver-util", version.ref = "maven-resolver" }
+maven-resolver-impl = { module = "org.apache.maven.resolver:maven-resolver-impl", version.ref = "maven-resolver" }
+maven-resolver-connector-basic = { module = "org.apache.maven.resolver:maven-resolver-connector-basic", version.ref = "maven-resolver" }
+maven-resolver-transport-wagon = { module = "org.apache.maven.resolver:maven-resolver-transport-wagon", version.ref = "maven-resolver" }
+maven-resolver-transport-http = { module = "org.apache.maven.resolver:maven-resolver-transport-http", version.ref = "maven-resolver" }
+# Maven Resolver Provider
+maven-resolver-provider = { module = "org.apache.maven:maven-resolver-provider", version.ref = "maven-resolver-provider" }
 # Platform API
 spigot = { module = "org.spigotmc:spigot-api", version.ref = "spigot" }
 bungeecord = { module = "net.md-5:bungeecord-api", version.ref = "bungeecord" }
 velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocity" }
-# hutool
-hutool-core = { module = "org.dromara.hutool:hutool-core", version.ref = "hutool" }
-hutool-http = { module = "org.dromara.hutool:hutool-http", version.ref = "hutool" }
-hutool-log = { module = "org.dromara.hutool:hutool-log", version.ref = "hutool" }
-hutool-json = { module = "org.dromara.hutool:hutool-json", version.ref = "hutool" }
-# netty
-netty-buffer = { module = "io.netty:netty-buffer", version.ref = "netty" }
-# PAPI
-placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
-# Night Config
-nightconfig-core = { module = "com.electronwill.night-config:core", version.ref = "nightconfig" }
-nightconfig-toml = { module = "com.electronwill.night-config:toml", version.ref = "nightconfig" }
 # bStats
 bstats-bukkit = { module = "org.bstats:bstats-bukkit", version.ref = "bstats" }
 bstats-bungeecord = { module = "org.bstats:bstats-bungeecord", version.ref = "bstats" }
 bstats-velocity = { module = "org.bstats:bstats-velocity", version.ref = "bstats" }
+# PlaceholderAPI
+placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
+# Hutool
+hutool-core = { module = "org.dromara.hutool:hutool-core", version.ref = "hutool" }
+hutool-http = { module = "org.dromara.hutool:hutool-http", version.ref = "hutool" }
+hutool-log = { module = "org.dromara.hutool:hutool-log", version.ref = "hutool" }
+hutool-json = { module = "org.dromara.hutool:hutool-json", version.ref = "hutool" }
+# Netty
+netty-buffer = { module = "io.netty:netty-buffer", version.ref = "netty" }
+# Night Config
+nightconfig-core = { module = "com.electronwill.night-config:core", version.ref = "nightconfig" }
+nightconfig-toml = { module = "com.electronwill.night-config:toml", version.ref = "nightconfig" }
+
 
 [bundles]
+# Maven Resolver
+maven-resolver = ["maven-resolver-api", "maven-resolver-util", "maven-resolver-impl", "maven-resolver-connector-basic", "maven-resolver-transport-wagon", "maven-resolver-transport-http", "maven-resolver-provider"]
+# Hutool
 hutool = ["hutool-core", "hutool-http", "hutool-log", "hutool-json"]
+# Night Config
 nightconfig = ["nightconfig-core", "nightconfig-toml"]

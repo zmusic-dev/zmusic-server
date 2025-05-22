@@ -1,6 +1,6 @@
-package me.zhenxin.zmusic.dependencies;
+package me.zhenxin.zmusic.dependencies.legacy;
 
-import me.zhenxin.zmusic.dependencies.utils.IO;
+import me.zhenxin.zmusic.dependencies.common.PrimitiveIO;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -22,11 +22,6 @@ import java.util.Objects;
 public class Repository extends AbstractXmlParser {
 
     /**
-     * 中央仓库地址
-     */
-    private static final String MAVEN_CENTRAL = "https://mirrors.huaweicloud.com/repository/maven";
-
-    /**
      * 仓库地址
      */
     private final String url;
@@ -40,7 +35,7 @@ public class Repository extends AbstractXmlParser {
     }
 
     public Repository() {
-        this(MAVEN_CENTRAL);
+        this("https://maven.aliyun.com/repository/central");
     }
 
     /**
@@ -52,8 +47,8 @@ public class Repository extends AbstractXmlParser {
         // 构建 URL
         URL url = dep.getURL(this, ext);
         // 下载文件
-        IO.downloadFile(url, out);
-        IO.downloadFile(dep.getURL(this, ext + ".sha1"), new File(out.getPath() + ".sha1"));
+        PrimitiveIO.downloadFile(url, out);
+        PrimitiveIO.downloadFile(dep.getURL(this, ext + ".sha1"), new File(out.getPath() + ".sha1"));
     }
 
     /**
@@ -80,12 +75,8 @@ public class Repository extends AbstractXmlParser {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Repository)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Repository)) return false;
         Repository that = (Repository) o;
         return Objects.equals(getUrl(), that.getUrl());
     }
@@ -97,8 +88,6 @@ public class Repository extends AbstractXmlParser {
 
     @Override
     public String toString() {
-        return "Repository{" +
-                "url='" + url + '\'' +
-                '}';
+        return "Repository{" + "url='" + url + '\'' + '}';
     }
 }

@@ -6,7 +6,12 @@ plugins {
 }
 
 dependencies {
-    implementation("me.lucko:jar-relocator:1.7")
+    implementation(libs.lucko.jar.relocator)
+
+    compileOnly(libs.google.guava)
+    compileOnly(libs.google.gson)
+
+    compileOnly(libs.bundles.maven.resolver)
 }
 
 sourceSets {

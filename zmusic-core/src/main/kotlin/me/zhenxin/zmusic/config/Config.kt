@@ -5,6 +5,7 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig
 import me.zhenxin.zmusic.ZMusic
 import me.zhenxin.zmusic.dataFolder
 import me.zhenxin.zmusic.logger
+import me.zhenxin.zmusic.utils.colored
 
 /**
  * 配置文件
@@ -42,7 +43,7 @@ object Config {
      * 消息前缀
      */
     val prefix: String
-        get() = config.get("prefix") ?: "&bZMusic &e>>> &r"
+        get() = (config.get("prefix") ?: "&bZMusic &e>>> &r").colored()
 
     /**
      * 网易云音乐API

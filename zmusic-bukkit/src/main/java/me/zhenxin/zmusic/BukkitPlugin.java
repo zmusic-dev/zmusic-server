@@ -1,6 +1,6 @@
 package me.zhenxin.zmusic;
 
-import me.zhenxin.zmusic.dependencies.annotation.RuntimeDependency;
+import me.zhenxin.zmusic.dependencies.RuntimeDependency;
 import me.zhenxin.zmusic.enums.Platform;
 import me.zhenxin.zmusic.platform.BukkitLoggerImpl;
 import org.bstats.bukkit.Metrics;
@@ -22,7 +22,7 @@ public class BukkitPlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        ZMusicRuntime.setup(getDataFolder().getAbsolutePath(), getLogger(), BukkitPlugin.class);
+        ZMusicRuntime.setup(getDataFolder().getAbsolutePath(), BukkitPlugin.class);
     }
 
     @Override

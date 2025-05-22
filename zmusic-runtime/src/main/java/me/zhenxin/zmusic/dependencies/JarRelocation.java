@@ -33,16 +33,10 @@ public class JarRelocation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof JarRelocation)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof JarRelocation)) return false;
         JarRelocation that = (JarRelocation) o;
-        if (getPattern() != null ? !getPattern().equals(that.getPattern()) : that.getPattern() != null) {
-            return false;
-        }
+        if (getPattern() != null ? !getPattern().equals(that.getPattern()) : that.getPattern() != null) return false;
         return getRelocatedPattern() != null ? getRelocatedPattern().equals(that.getRelocatedPattern()) : that.getRelocatedPattern() == null;
     }
 

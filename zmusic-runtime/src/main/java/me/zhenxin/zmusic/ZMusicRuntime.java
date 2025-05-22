@@ -1,9 +1,10 @@
 package me.zhenxin.zmusic;
 
+import me.zhenxin.zmusic.dependencies.RuntimeDependency;
 import me.zhenxin.zmusic.dependencies.RuntimeEnv;
-import me.zhenxin.zmusic.dependencies.annotation.RuntimeDependency;
+import me.zhenxin.zmusic.dependencies.common.RuntimeLogger;
 
-import java.util.logging.Logger;
+import static me.zhenxin.zmusic.dependencies.common.PrimitiveIO.t;
 
 /**
  * ZMusic 运行时依赖
@@ -47,13 +48,28 @@ import java.util.logging.Logger;
 )
 public class ZMusicRuntime {
 
-    public static void setup(String dataFolder, Logger logger, Class<?>... classes) {
-        logger.info("Loading libraries, please wait...");
-        RuntimeEnv.ENV.setup(dataFolder);
-        RuntimeEnv.ENV.inject(ZMusicRuntime.class);
-        for (Class<?> clazz : classes) {
-            RuntimeEnv.ENV.inject(clazz);
+    public static void setup(String dataFolder, Class<?>... classes) {
+        // 目录检测
+        RuntimeLogger.info(t(
+                "正在初始化运行时依赖，请稍等...",
+                "Initializing runtime dependencies, please wait..."
+        ));
+        RuntimeEnv.ENV.runtimeInit(dataFolder);
+        try {
+            RuntimeEnv.ENV.inject(ZMusicRuntime.class);
+            for (Class<?> clazz : classes) {
+                RuntimeEnv.ENV.inject(clazz);
+            }
+        } catch (Throwable t) {
+            RuntimeLogger.warning(t(
+                    "加载运行时依赖失败，请检查运行环境！",
+                    "Failed to load runtime dependencies, please check the runtime environment!"
+            ));
+            t.printStackTrace();
         }
-        logger.info("Libraries loaded.");
+        RuntimeLogger.info(t(
+                "运行时依赖加载完成！",
+                "Runtime dependencies loaded!"
+        ));
     }
 }

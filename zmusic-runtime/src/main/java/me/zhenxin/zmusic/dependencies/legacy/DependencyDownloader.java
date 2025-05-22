@@ -1,8 +1,11 @@
-package me.zhenxin.zmusic.dependencies;
+package me.zhenxin.zmusic.dependencies.legacy;
 
 import me.lucko.jarrelocator.JarRelocator;
 import me.lucko.jarrelocator.Relocation;
-import me.zhenxin.zmusic.dependencies.utils.IO;
+import me.zhenxin.zmusic.dependencies.DependencyScope;
+import me.zhenxin.zmusic.dependencies.JarRelocation;
+import me.zhenxin.zmusic.dependencies.common.ClassAppender;
+import me.zhenxin.zmusic.dependencies.common.PrimitiveIO;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,7 +21,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
+
 
 /**
  * 包含所有需要下载和注入依赖项到类路径的方法的类。
@@ -26,28 +32,28 @@ import java.util.stream.Collectors;
  * @author Zach Deibert, sky
  * @since 1.0.0
  */
-@SuppressWarnings({"UnusedReturnValue", "AlibabaConstantFieldShouldBeUpperCase", "ResultOfMethodCallIgnored", "unused"})
+@SuppressWarnings("UnusedReturnValue")
 public class DependencyDownloader extends AbstractXmlParser {
 
     /**
      * 已注入的依赖
      */
-    private static final Map<Dependency, Set<ClassLoader>> injectedDependencies = new HashMap<>();
+    private static final Map<Dependency, Set<ClassLoader>> injectedDependencies = new ConcurrentHashMap<>();
 
     /**
      * 已下载的依赖
      */
-    private static final Set<Dependency> downloadedDependencies = new HashSet<>();
+    private static final Set<Dependency> downloadedDependencies = new CopyOnWriteArraySet<>();
 
     /**
      * 仓库
      */
-    private final Set<Repository> repositories = new HashSet<>();
+    private final Set<Repository> repositories = new CopyOnWriteArraySet<>();
 
     /**
      * 重定向规则
      */
-    private final Set<JarRelocation> relocation = new HashSet<>();
+    private final Set<JarRelocation> relocation = new CopyOnWriteArraySet<>();
 
     /**
      * 本地依赖目录
@@ -57,7 +63,7 @@ public class DependencyDownloader extends AbstractXmlParser {
     /**
      * 依赖范围
      */
-    private DependencyScope[] dependencyScopes = {DependencyScope.RUNTIME, DependencyScope.COMPILE};
+    private List<DependencyScope> dependencyScopes = Arrays.asList(DependencyScope.RUNTIME, DependencyScope.COMPILE);
 
     /**
      * 忽略可选依赖
@@ -73,16 +79,6 @@ public class DependencyDownloader extends AbstractXmlParser {
      * 是否传递依赖
      */
     private boolean isTransitive = true;
-
-    /**
-     * 是否隔离
-     */
-    private boolean isIsolated = false;
-
-    /**
-     * 是否主动（不知道什么意思）
-     */
-    private boolean isInitiative = false;
 
     public DependencyDownloader(@Nullable File baseDir) {
         this.baseDir = baseDir;
@@ -109,11 +105,11 @@ public class DependencyDownloader extends AbstractXmlParser {
     /**
      * 将一组依赖项注入到类路径中
      */
-    public void injectClasspath(Set<Dependency> dependencies) {
+    public void injectClasspath(Set<Dependency> dependencies) throws Throwable {
         for (Dependency dep : dependencies) {
             // 如果已经注入过了，就跳过
             Set<ClassLoader> injectedDependencyClassLoaders = injectedDependencies.get(dep);
-            if (injectedDependencyClassLoaders != null && injectedDependencyClassLoaders.contains(ClassAppender.judgeAddPathClassLoader(isIsolated, isInitiative))) {
+            if (injectedDependencyClassLoaders != null && injectedDependencyClassLoaders.contains(ClassAppender.getClassLoader())) {
                 continue;
             }
             // 获取依赖项的文件
@@ -122,10 +118,8 @@ public class DependencyDownloader extends AbstractXmlParser {
             if (file.exists()) {
                 // 如果没有重定向规则，直接注入
                 if (relocation.isEmpty()) {
-                    ClassLoader loader = ClassAppender.addPath(file.toPath(), isIsolated, isInitiative);
-                    if (loader != null) {
-                        injectedDependencies.computeIfAbsent(dep, dependency -> new HashSet<>()).add(loader);
-                    }
+                    ClassLoader loader = ClassAppender.addPath(file.toPath(), false, dep.isExternal());
+                    injectedDependencies.computeIfAbsent(dep, dependency -> new HashSet<>()).add(loader);
                 } else {
                     // 获取重定向后的文件
                     String name = file.getName().substring(0, file.getName().lastIndexOf('.'));
@@ -136,7 +130,7 @@ public class DependencyDownloader extends AbstractXmlParser {
                             // 获取重定向规则
                             List<Relocation> rules = relocation.stream().map(JarRelocation::toRelocation).collect(Collectors.toList());
                             // 获取临时文件
-                            File tempSourceFile = IO.copyFile(file, File.createTempFile(file.getName(), ".jar"));
+                            File tempSourceFile = PrimitiveIO.copyFile(file, File.createTempFile(file.getName(), ".jar"));
                             // 运行
                             new JarRelocator(tempSourceFile, rel, rules).run();
                         } catch (IOException e) {
@@ -144,10 +138,8 @@ public class DependencyDownloader extends AbstractXmlParser {
                         }
                     }
                     // 注入重定向后的文件
-                    ClassLoader loader = ClassAppender.addPath(rel.toPath(), isIsolated, isInitiative);
-                    if (loader != null) {
-                        injectedDependencies.computeIfAbsent(dep, dependency -> new HashSet<>()).add(loader);
-                    }
+                    ClassLoader loader = ClassAppender.addPath(rel.toPath(), false, dep.isExternal());
+                    injectedDependencies.computeIfAbsent(dep, dependency -> new HashSet<>()).add(loader);
                 }
             } else {
                 try {
@@ -156,6 +148,7 @@ public class DependencyDownloader extends AbstractXmlParser {
                     // 重新注入
                     injectClasspath(Collections.singleton(dep));
                 } catch (IOException e) {
+                    // TODO: Disable Plugin
                     throw new IllegalStateException("Unable to load dependency: " + dep, e);
                 }
             }
@@ -184,9 +177,12 @@ public class DependencyDownloader extends AbstractXmlParser {
         File jar = dependency.findFile(baseDir, "jar");
         File jar1 = new File(jar.getPath() + ".sha1");
         Set<Dependency> downloaded = new HashSet<>();
-        downloaded.add(dependency);
+        // 如果类型为 Type 才会下载自己
+        if (dependency.getType().equals("jar")) {
+            downloaded.add(dependency);
+        }
         // 检查文件的完整性
-        if (IO.validation(pom, pom1) && IO.validation(jar, jar1)) {
+        if (PrimitiveIO.validation(pom, pom1) && PrimitiveIO.validation(jar, jar1)) {
             // 加载依赖项
             downloadedDependencies.add(dependency);
             if (pom.exists()) {
@@ -230,9 +226,9 @@ public class DependencyDownloader extends AbstractXmlParser {
     /**
      * 下载 pom 中指定的所有依赖项
      */
-    public Set<Dependency> loadDependencyFromPom(Document pom, DependencyScope... scopes) throws IOException {
+    public Set<Dependency> loadDependencyFromPom(Document pom, List<DependencyScope> scopes) throws IOException {
         List<Dependency> dependencies = new ArrayList<>();
-        Set<DependencyScope> scopeSet = new HashSet<>(Arrays.asList(scopes));
+        Set<DependencyScope> scopeSet = new HashSet<>(scopes);
         NodeList nodes = pom.getDocumentElement().getChildNodes();
         List<Repository> repos = new ArrayList<>(repositories);
         if (repos.isEmpty()) {
@@ -241,7 +237,7 @@ public class DependencyDownloader extends AbstractXmlParser {
         try {
             for (int i = 0; i < nodes.getLength(); ++i) {
                 Node node = nodes.item(i);
-                if ("repositories".equals(node.getNodeName())) {
+                if (node.getNodeName().equals("repositories")) {
                     nodes = ((Element) node).getElementsByTagName("repository");
                     for (i = 0; i < nodes.getLength(); ++i) {
                         Element e = (Element) nodes.item(i);
@@ -258,7 +254,7 @@ public class DependencyDownloader extends AbstractXmlParser {
             try {
                 for (int i = 0; i < nodes.getLength(); ++i) {
                     // ignore optional
-                    if (ignoreOptional && "true".equals(find("optional", (Element) nodes.item(i), "false"))) {
+                    if (ignoreOptional && find("optional", (Element) nodes.item(i), "false").equals("true")) {
                         continue;
                     }
                     Dependency dep = new Dependency((Element) nodes.item(i));
@@ -285,7 +281,7 @@ public class DependencyDownloader extends AbstractXmlParser {
     /**
      * 下载 pom 中指定的所有依赖项
      */
-    public Set<Dependency> loadDependencyFromInputStream(InputStream pom, DependencyScope... scopes) throws IOException {
+    public Set<Dependency> loadDependencyFromInputStream(InputStream pom, List<DependencyScope> scopes) throws IOException {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setFeature("http://xml.org/sax/features/validation", false);
@@ -309,11 +305,11 @@ public class DependencyDownloader extends AbstractXmlParser {
         return baseDir;
     }
 
-    public DependencyScope[] getDependencyScopes() {
+    public List<DependencyScope> getDependencyScopes() {
         return dependencyScopes;
     }
 
-    public DependencyDownloader setDependencyScopes(DependencyScope[] dependencyScopes) {
+    public DependencyDownloader setDependencyScopes(List<DependencyScope> dependencyScopes) {
         this.dependencyScopes = dependencyScopes;
         return this;
     }
@@ -350,21 +346,5 @@ public class DependencyDownloader extends AbstractXmlParser {
 
     public void setTransitive(boolean transitive) {
         isTransitive = transitive;
-    }
-
-    public boolean isIsolated() {
-        return isIsolated;
-    }
-
-    public void setIsolated(boolean isolated) {
-        isIsolated = isolated;
-    }
-
-    public boolean isInitiative() {
-        return isInitiative;
-    }
-
-    public void setInitiative(boolean initiative) {
-        isInitiative = initiative;
     }
 }

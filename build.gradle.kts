@@ -19,6 +19,10 @@ plugins {
 
 allprojects {
     repositories {
+        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+        maven("https://repo.tabooproject.org/repository/releases")
+        maven("https://oss.sonatype.org/content/repositories/snapshots")
+        maven("https://repo.papermc.io/repository/maven-public/")
         mavenCentral()
     }
 }

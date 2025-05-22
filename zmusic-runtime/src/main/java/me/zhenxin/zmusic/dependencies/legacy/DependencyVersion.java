@@ -1,4 +1,4 @@
-package me.zhenxin.zmusic.dependencies;
+package me.zhenxin.zmusic.dependencies.legacy;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,7 +10,6 @@ import java.util.List;
  * @author Zach Deibert
  * @since 1.0.0
  */
-@SuppressWarnings("AlibabaUndefineMagicConstant")
 public class DependencyVersion implements Comparable<DependencyVersion> {
 
     /**

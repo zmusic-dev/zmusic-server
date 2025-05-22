@@ -1,6 +1,6 @@
-package me.zhenxin.zmusic.dependencies;
+package me.zhenxin.zmusic.dependencies.legacy;
 
-import me.zhenxin.zmusic.dependencies.utils.VersionChecker;
+import me.zhenxin.zmusic.dependencies.DependencyScope;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Element;
 
@@ -19,7 +19,6 @@ import java.util.Objects;
  * @author Zach Deibert, sky
  * @since 1.0.0
  */
-@SuppressWarnings({"AlibabaLowerCamelCaseVariableNaming", "AlibabaUndefineMagicConstant"})
 public class Dependency extends AbstractXmlParser {
 
     /**
@@ -46,6 +45,17 @@ public class Dependency extends AbstractXmlParser {
      * 要下载的版本，或者如果在 pom 中没有指定依赖项的最新版本，则设置依赖项的最新版本
      */
     private String version;
+
+    /**
+     * 类型（extension）
+     * 例如：jar, pom... 只有
+     */
+    private String type = "jar";
+
+    /**
+     * 是否外部库（不加入 loadedClasses）
+     */
+    private boolean isExternal;
 
     public Dependency(String groupId, String artifactId, String version, DependencyScope scope) {
         this.groupId = groupId;
@@ -189,6 +199,22 @@ public class Dependency extends AbstractXmlParser {
         }
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isExternal() {
+        return isExternal;
+    }
+
+    public void setExternal(boolean external) {
+        isExternal = external;
+    }
+
     public DependencyScope getScope() {
         return scope;
     }
@@ -200,12 +226,8 @@ public class Dependency extends AbstractXmlParser {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Dependency)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Dependency)) return false;
         Dependency that = (Dependency) o;
         return Objects.equals(getGroupId(), that.getGroupId()) && Objects.equals(getArtifactId(), that.getArtifactId()) && Objects.equals(getVersion(), that.getVersion());
     }

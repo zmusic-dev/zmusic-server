@@ -3,7 +3,7 @@ package me.zhenxin.zmusic.dependencies;
 /**
  * The scope of a dependency
  *
- * @author Zach Deibert
+ * @author Zach Deibert, sky
  * @since 1.0.0
  */
 public enum DependencyScope {

@@ -1,9 +1,3 @@
-repositories {
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
-    maven("https://bmclapi2.bangbang93.com/maven")
-    maven("https://libraries.minecraft.net")
-}
-
 dependencies {
     api(project(":zmusic-core"))
 
