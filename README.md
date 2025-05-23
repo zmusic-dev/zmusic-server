@@ -36,12 +36,6 @@
 
 [点击查看使用文档][docs-link]
 
-## 仓库
-
-* [ZMusic](https://github.com/zmusic-dev/zmusic-server) - 插件
-* [ZMusic Mod](https://github.com/zmusic-dev/zmusic-server-Mod) - 配套模组
-* [ZMusic Docs](https://github.com/zmusic-dev/zmusic-server-Docs) - 使用文档
-
 ## 开源协议
 
 本项目使用 [GPL-3.0](LICENSE) 协议开放源代码

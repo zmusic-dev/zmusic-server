@@ -32,12 +32,6 @@ This is a powerful music system that supports the following functions.
 * Volume adjustment
 * Support BungeeCord
 
-## Repositories
-
-* [ZMusic](https://github.com/zmusic-dev/zmusic-server) - Server Plugin
-* [ZMusic Mod](https://github.com/zmusic-dev/zmusic-server-Mod) - Client Mod
-* [ZMusic Docs](https://github.com/zmusic-dev/zmusic-server-Docs) - Documentation
-
 ## Open Source License
 
 This project uses [GPL-3.0](LICENSE) license for open source code
