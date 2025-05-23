@@ -29,7 +29,7 @@ public class BungeePlugin extends Plugin {
     public void onEnable() {
         ZMusicKt.setLogger(new BungeeLoggerImpl(getProxy().getConsole()));
         ZMusicKt.setDataFolder(getDataFolder());
-        ZMusicKt.setPlatform(Platform.BUNGEE);
+        ZMusicKt.setCurrentPlatform(Platform.BUNGEE);
         new Metrics(this, 8864);
         ZMusic.INSTANCE.onEnable();
     }

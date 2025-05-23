@@ -45,7 +45,7 @@ object ZMusic {
         I18n.Init.loaded.forEach {
             logger.info(
                 it.replace("{version}", ZMusicConstants.PLUGIN_VERSION)
-                    .replace("{platform}", platform.name.lowercase())
+                    .replace("{platform}", currentPlatform.name.lowercase())
                     .replace("{docs-url}", "zmusic.zhenxin.me")
                     .replace("{author}", "ZhenXin")
             )
@@ -64,14 +64,14 @@ object ZMusic {
 }
 
 /**
+ * 当前平台
+ */
+lateinit var currentPlatform: Platform
+
+/**
  * 插件数据文件夹
  */
 lateinit var dataFolder: File
-
-/**
- * 当前平台
- */
-lateinit var platform: Platform
 
 /**
  * 日志

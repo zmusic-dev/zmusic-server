@@ -25,17 +25,30 @@ public class BukkitPlugin extends JavaPlugin {
         ZMusicRuntime.setup(getDataFolder().getAbsolutePath(), BukkitPlugin.class);
     }
 
-    @Override
-    public void onEnable() {
-        ZMusicKt.setLogger(new BukkitLoggerImpl(getServer().getConsoleSender()));
-        ZMusicKt.setDataFolder(getDataFolder());
-        ZMusicKt.setPlatform(Platform.BUKKIT);
-        new Metrics(this, 7291);
-        ZMusic.INSTANCE.onEnable();
+    private static boolean isFolia() {
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 
     @Override
     public void onDisable() {
         ZMusic.INSTANCE.onDisable();
+    }
+
+    @Override
+    public void onEnable() {
+        ZMusicKt.setLogger(new BukkitLoggerImpl(getServer().getConsoleSender()));
+        ZMusicKt.setDataFolder(getDataFolder());
+        if (isFolia()) {
+            ZMusicKt.setCurrentPlatform(Platform.FOLIA);
+        } else {
+            ZMusicKt.setCurrentPlatform(Platform.BUKKIT);
+        }
+        new Metrics(this, 7291);
+        ZMusic.INSTANCE.onEnable();
     }
 }

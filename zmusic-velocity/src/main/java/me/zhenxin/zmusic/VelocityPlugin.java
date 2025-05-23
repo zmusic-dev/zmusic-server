@@ -46,7 +46,7 @@ public class VelocityPlugin {
     public void onProxyInitialization(ProxyInitializeEvent event) {
         ZMusicKt.setLogger(new VelocityLoggerImpl(server.getConsoleCommandSource()));
         ZMusicKt.setDataFolder(dataDirectory.toFile());
-        ZMusicKt.setPlatform(Platform.VELOCITY);
+        ZMusicKt.setCurrentPlatform(Platform.VELOCITY);
         metricsFactory.make(this, 12426);
         ZMusic.INSTANCE.onEnable();
     }

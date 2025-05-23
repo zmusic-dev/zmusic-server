@@ -6,8 +6,10 @@ package me.zhenxin.zmusic.enums
  * @author 真心
  * @since 2024/2/7 14:19
  */
+@Suppress("SpellCheckingInspection")
 enum class Platform {
     BUKKIT,
+    FOLIA,
     BUNGEE,
     VELOCITY
 }
