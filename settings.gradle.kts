@@ -1,4 +1,4 @@
-rootProject.name = "ZMusic"
+rootProject.name = "zmusic-server"
 
 pluginManagement {
     repositories {
