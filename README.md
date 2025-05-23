@@ -72,7 +72,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 [![][contrib]](https://github.com/zmusic-dev/zmusic-server/graphs/contributors)
 
-[banner]: https://socialify.git.ci/zmusic-dev/zmusic-server/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Auto
+[banner]: https://socialify.git.ci/zmusic-dev/zmusic-server/image?description=1&forks=1&issues=1&language=1&name=1&pulls=1&stargazers=1&theme=Auto
 
 [license]: https://img.shields.io/github/license/zmusic-dev/zmusic-server?style=for-the-badge
 
