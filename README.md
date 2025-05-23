@@ -38,9 +38,9 @@
 
 ## 仓库
 
-* [ZMusic](https://github.com/RealHeart/ZMusic) - 插件
-* [ZMusic Mod](https://github.com/RealHeart/ZMusic-Mod) - 配套模组
-* [ZMusic Docs](https://github.com/RealHeart/ZMusic-Docs) - 使用文档
+* [ZMusic](https://github.com/zmusic-dev/zmusic-server) - 插件
+* [ZMusic Mod](https://github.com/zmusic-dev/zmusic-server-Mod) - 配套模组
+* [ZMusic Docs](https://github.com/zmusic-dev/zmusic-server-Docs) - 使用文档
 
 ## 开源协议
 
@@ -70,11 +70,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## 贡献者
 
-[![][contrib]](https://github.com/RealHeart/ZMusic/graphs/contributors)
+[![][contrib]](https://github.com/zmusic-dev/zmusic-server/graphs/contributors)
 
-[banner]: https://socialify.git.ci/RealHeart/ZMusic/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Auto
+[banner]: https://socialify.git.ci/zmusic-dev/zmusic-server/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Auto
 
-[license]: https://img.shields.io/github/license/RealHeart/ZMusic?style=for-the-badge
+[license]: https://img.shields.io/github/license/zmusic-dev/zmusic-server?style=for-the-badge
 
 [players]: https://img.shields.io/bstats/players/7291?label=players&style=for-the-badge
 
@@ -82,11 +82,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 [tested-versions]: https://img.shields.io/spiget/tested-versions/83027?style=for-the-badge
 
-[releases]: https://img.shields.io/github/v/release/RealHeart/ZMusic?style=for-the-badge
+[releases]: https://img.shields.io/github/v/release/zmusic-dev/zmusic-server?style=for-the-badge
 
-[downloads]: https://img.shields.io/github/downloads/RealHeart/ZMusic/total?style=for-the-badge
+[downloads]: https://img.shields.io/github/downloads/zmusic-dev/zmusic-server/total?style=for-the-badge
 
-[contrib]: https://contrib.rocks/image?repo=RealHeart/ZMusic
+[contrib]: https://contrib.rocks/image?repo=zmusic-dev/zmusic-server
 
 [docs-link]: https://zmusic.zhenxin.me
 
