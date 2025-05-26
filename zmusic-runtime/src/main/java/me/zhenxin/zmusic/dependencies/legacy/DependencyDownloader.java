@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @author Zach Deibert, sky
  * @since 1.0.0
  */
-@SuppressWarnings("UnusedReturnValue")
+@SuppressWarnings({"UnusedReturnValue", "ResultOfMethodCallIgnored"})
 public class DependencyDownloader extends AbstractXmlParser {
 
     /**
@@ -105,6 +105,7 @@ public class DependencyDownloader extends AbstractXmlParser {
     /**
      * 将一组依赖项注入到类路径中
      */
+    @SuppressWarnings("DuplicatedCode")
     public void injectClasspath(Set<Dependency> dependencies) throws Throwable {
         for (Dependency dep : dependencies) {
             // 如果已经注入过了，就跳过
@@ -178,7 +179,7 @@ public class DependencyDownloader extends AbstractXmlParser {
         File jar1 = new File(jar.getPath() + ".sha1");
         Set<Dependency> downloaded = new HashSet<>();
         // 如果类型为 Type 才会下载自己
-        if (dependency.getType().equals("jar")) {
+        if ("jar".equals(dependency.getType())) {
             downloaded.add(dependency);
         }
         // 检查文件的完整性
@@ -237,7 +238,7 @@ public class DependencyDownloader extends AbstractXmlParser {
         try {
             for (int i = 0; i < nodes.getLength(); ++i) {
                 Node node = nodes.item(i);
-                if (node.getNodeName().equals("repositories")) {
+                if ("repositories".equals(node.getNodeName())) {
                     nodes = ((Element) node).getElementsByTagName("repository");
                     for (i = 0; i < nodes.getLength(); ++i) {
                         Element e = (Element) nodes.item(i);
@@ -254,7 +255,7 @@ public class DependencyDownloader extends AbstractXmlParser {
             try {
                 for (int i = 0; i < nodes.getLength(); ++i) {
                     // ignore optional
-                    if (ignoreOptional && find("optional", (Element) nodes.item(i), "false").equals("true")) {
+                    if (ignoreOptional && "true".equals(find("optional", (Element) nodes.item(i), "false"))) {
                         continue;
                     }
                     Dependency dep = new Dependency((Element) nodes.item(i));
@@ -281,6 +282,7 @@ public class DependencyDownloader extends AbstractXmlParser {
     /**
      * 下载 pom 中指定的所有依赖项
      */
+    @SuppressWarnings("HttpUrlsUsage")
     public Set<Dependency> loadDependencyFromInputStream(InputStream pom, List<DependencyScope> scopes) throws IOException {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

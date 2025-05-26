@@ -226,8 +226,12 @@ public class Dependency extends AbstractXmlParser {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Dependency)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Dependency)) {
+            return false;
+        }
         Dependency that = (Dependency) o;
         return Objects.equals(getGroupId(), that.getGroupId()) && Objects.equals(getArtifactId(), that.getArtifactId()) && Objects.equals(getVersion(), that.getVersion());
     }

@@ -45,8 +45,8 @@ import java.util.stream.Collectors;
 
 public class AetherResolver {
 
-    private static final Map<String, AetherResolver> resolverMap = Maps.newConcurrentMap();
-    private static final Set<String> injectedDependencies = Sets.newConcurrentHashSet();
+    private static final Map<String, AetherResolver> RESOLVER_MAP = Maps.newConcurrentMap();
+    private static final Set<String> INJECTED_DEPENDENCIES = Sets.newConcurrentHashSet();
 
     private final RepositorySystem repository;
     private final DefaultRepositorySystemSession session;
@@ -67,16 +67,20 @@ public class AetherResolver {
     }
 
     public static AetherResolver of(@NotNull String repository) {
-        return resolverMap.computeIfAbsent(repository, AetherResolver::new);
+        return RESOLVER_MAP.computeIfAbsent(repository, AetherResolver::new);
     }
 
-    public static @Nullable ClassLoader inject(@NotNull File file, @Nullable List<JarRelocation> relocation, boolean isExternal) throws Throwable {
+    @SuppressWarnings("DuplicatedCode")
+    public static void inject(@NotNull File file, @Nullable List<JarRelocation> relocation, boolean isExternal) throws Throwable {
         // 避免重复加载多个依赖
-        if (injectedDependencies.contains(file.getPath())) return null;
-        else injectedDependencies.add(file.getParent());
+        if (INJECTED_DEPENDENCIES.contains(file.getPath())) {
+            return;
+        } else {
+            INJECTED_DEPENDENCIES.add(file.getParent());
+        }
         // 如果没有重定向规则，直接注入
         if (relocation == null || relocation.isEmpty()) {
-            return ClassAppender.addPath(file.toPath(), isExternal);
+            ClassAppender.addPath(file.toPath(), isExternal);
         } else {
             // 获取重定向后的文件
             String name = file.getName().substring(0, file.getName().lastIndexOf('.'));
@@ -95,7 +99,7 @@ public class AetherResolver {
                 }
             }
             // 注入重定向后的文件
-            return ClassAppender.addPath(rel.toPath(), isExternal);
+            ClassAppender.addPath(rel.toPath(), isExternal);
         }
     }
 
@@ -114,9 +118,13 @@ public class AetherResolver {
             @Override
             public boolean accept(DependencyNode node, List<DependencyNode> parents) {
                 // 忽略可选
-                if (ignoreOptional && node.getDependency().isOptional()) return false;
+                if (ignoreOptional && node.getDependency().isOptional()) {
+                    return false;
+                }
                 // 依赖传递
-                if (isTransitive) return true;
+                if (isTransitive) {
+                    return true;
+                }
                 if (self) {
                     self = false;
                     return true;

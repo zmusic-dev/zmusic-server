@@ -12,7 +12,6 @@ import static me.zhenxin.zmusic.dependencies.common.PrimitiveIO.t;
  * @author 真心
  * @since 2023/7/24 18:14
  */
-@SuppressWarnings({"AlibabaClassNamingShouldBeCamel", "SpellCheckingInspection"})
 @RuntimeDependency(
         value = "!org.dromara.hutool:hutool-core:" + ZMusicConstants.HUTOOL_VERSION,
         test = "!org.dromara.hutool.core.text.StrUtil"
@@ -65,6 +64,7 @@ public class ZMusicRuntime {
                     "加载运行时依赖失败，请检查运行环境！",
                     "Failed to load runtime dependencies, please check the runtime environment!"
             ));
+            //noinspection CallToPrintStackTrace
             t.printStackTrace();
         }
         RuntimeLogger.info(t(

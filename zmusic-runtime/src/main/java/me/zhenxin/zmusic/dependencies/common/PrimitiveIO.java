@@ -147,12 +147,14 @@ public class PrimitiveIO {
      */
     @SuppressWarnings("StatementWithEmptyBody")
     public static void downloadFile(URL url, File out) throws IOException {
+        //noinspection ResultOfMethodCallIgnored
         out.getParentFile().mkdirs();
         InputStream ins = url.openStream();
         OutputStream outs = Files.newOutputStream(out.toPath());
         byte[] buffer = new byte[BUFFER_SIZE];
-        for (int len; (len = ins.read(buffer)) > 0; outs.write(buffer, 0, len))
-            ;
+        for (int len; (len = ins.read(buffer)) > 0; outs.write(buffer, 0, len)) {
+
+        }
         outs.close();
         ins.close();
     }

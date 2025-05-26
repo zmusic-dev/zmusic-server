@@ -11,16 +11,18 @@ import org.dromara.hutool.http.meta.Method
 import org.dromara.hutool.json.JSONObject
 
 /**
- * HTTP工具
+ * HTTP 工具
  *
  * @author 真心
  * @since 2023/7/24 10:04
  */
 
 /**
- * GET获取
+ * GET 获取
  * @param url 链接
- * @param paramsMap 参数(Map)
+ * @param params 参数
+ * @param headers 请求头
+ * @param cache 是否使用缓存
  */
 fun httpGet(
     url: String,
@@ -34,9 +36,11 @@ fun httpGet(
 }
 
 /**
- * POST获取
+ * POST 获取
  * @param url 连接
  * @param data 参数
+ * @param headers 请求头
+ * @param cache 是否使用缓存
  */
 fun httpPost(
     url: String,

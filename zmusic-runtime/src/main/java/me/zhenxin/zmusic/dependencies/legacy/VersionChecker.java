@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
  * @author 坏黑
  * @since 2023/3/31 16:37
  */
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class VersionChecker {
 
     private static final File checkFile = new File("version.lock");

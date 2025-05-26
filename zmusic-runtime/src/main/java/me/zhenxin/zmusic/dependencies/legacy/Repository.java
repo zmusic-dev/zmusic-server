@@ -75,8 +75,12 @@ public class Repository extends AbstractXmlParser {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Repository)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Repository)) {
+            return false;
+        }
         Repository that = (Repository) o;
         return Objects.equals(getUrl(), that.getUrl());
     }

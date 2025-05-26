@@ -62,6 +62,7 @@ public class Artifact {
         return extension;
     }
 
+    @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder(128);
         buffer.append(this.getGroupId());

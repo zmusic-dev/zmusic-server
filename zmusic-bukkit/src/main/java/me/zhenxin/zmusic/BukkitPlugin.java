@@ -20,11 +20,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 )
 public class BukkitPlugin extends JavaPlugin {
 
-    @Override
-    public void onLoad() {
-        ZMusicRuntime.setup(getDataFolder().getAbsolutePath(), BukkitPlugin.class);
-    }
-
     private static boolean isFolia() {
         try {
             Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
@@ -32,6 +27,11 @@ public class BukkitPlugin extends JavaPlugin {
         } catch (ClassNotFoundException e) {
             return false;
         }
+    }
+
+    @Override
+    public void onLoad() {
+        ZMusicRuntime.setup(getDataFolder().getAbsolutePath(), BukkitPlugin.class);
     }
 
     @Override

@@ -2,12 +2,15 @@ package me.zhenxin.zmusic.dependencies.common;
 
 import java.util.logging.Level;
 
+/**
+ * @author zhenxin
+ */
 public class RuntimeLogger {
 
     /**
      * 日志对象
      */
-    private static java.util.logging.Logger logger = java.util.logging.Logger.getLogger("ZMusic");
+    private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger("ZMusic");
 
     /**
      * 输出 Info 日志
@@ -15,7 +18,7 @@ public class RuntimeLogger {
      * @param message 日志内容
      */
     public static void info(String message, Object... args) {
-        logger.log(Level.INFO, message, args);
+        LOGGER.log(Level.INFO, message, args);
     }
 
     /**
@@ -24,7 +27,7 @@ public class RuntimeLogger {
      * @param message 日志内容
      */
     public static void warning(String message, Object... args) {
-        logger.log(Level.WARNING, message, args);
+        LOGGER.log(Level.WARNING, message, args);
     }
 
     /**
@@ -33,6 +36,6 @@ public class RuntimeLogger {
      * @param message 日志内容
      */
     public static void error(String message, Object... args) {
-        logger.log(Level.SEVERE, message, args);
+        LOGGER.log(Level.SEVERE, message, args);
     }
 }

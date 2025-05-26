@@ -22,9 +22,9 @@ import static me.zhenxin.zmusic.dependencies.common.PrimitiveIO.t;
  */
 public class ClassAppender {
 
+    final static List<Callback> CALLBACKS = new ArrayList<>();
     static MethodHandles.Lookup lookup;
     static Unsafe unsafe;
-    static List<Callback> callbacks = new ArrayList<>();
 
     static {
         try {
@@ -56,17 +56,17 @@ public class ClassAppender {
         File file = new File(path.toUri().getPath());
         ClassLoader loader = ZMusicRuntime.class.getClassLoader();
         // Application
-        if (loader.getClass().getSimpleName().equals("AppClassLoader")) {
-            addURL(loader, ucp(loader.getClass()), file, isExternal);
+        if ("AppClassLoader".equals(loader.getClass().getSimpleName())) {
+            addUrl(loader, ucp(loader.getClass()), file, isExternal);
         }
         // Hybrid
-        else if (loader.getClass().getName().equals("net.minecraft.launchwrapper.LaunchClassLoader")) {
+        else if ("net.minecraft.launchwrapper.LaunchClassLoader".equals(loader.getClass().getName())) {
             MethodHandle methodHandle = lookup.findVirtual(URLClassLoader.class, "addURL", MethodType.methodType(void.class, java.net.URL.class));
             methodHandle.invoke(loader, file.toURI().toURL());
         }
         // Bukkit
         else {
-            addURL(loader, ucp(loader), file, isExternal);
+            addUrl(loader, ucp(loader), file, isExternal);
         }
         return loader;
     }
@@ -90,7 +90,7 @@ public class ClassAppender {
         }
     }
 
-    private static void addURL(ClassLoader loader, Field ucpField, File file, boolean isExternal) throws Throwable {
+    private static void addUrl(ClassLoader loader, Field ucpField, File file, boolean isExternal) throws Throwable {
         if (ucpField == null) {
             throw new IllegalStateException("ucp field not found");
         }
@@ -101,7 +101,7 @@ public class ClassAppender {
         try {
             MethodHandle methodHandle = lookup.findVirtual(ucp.getClass(), "addURL", MethodType.methodType(void.class, URL.class));
             methodHandle.invoke(ucp, file.toURI().toURL());
-            for (Callback i : callbacks) {
+            for (Callback i : CALLBACKS) {
                 i.add(loader, file, isExternal);
             }
         } catch (NoSuchMethodError e) {
@@ -130,7 +130,7 @@ public class ClassAppender {
     }
 
     public static void registerCallback(Callback callback) {
-        callbacks.add(callback);
+        CALLBACKS.add(callback);
     }
 
     public interface Callback {

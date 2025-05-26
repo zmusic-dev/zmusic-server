@@ -8,6 +8,7 @@ package me.zhenxin.zmusic;
  */
 public class Application {
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void main(String[] args) {
         System.out.println("这是一个 Minecraft 插件，请使用 Bukkit, BungeeCord 或 Velocity 来运行这个插件。");
         System.out.println("This is Minecraft Plugin, Please use Bukkit, BungeeCord or Velocity to run this plugin.");
