@@ -12,6 +12,8 @@ dependencies {
     compileOnly(libs.google.gson)
 
     compileOnly(libs.bundles.maven.resolver)
+
+    compileOnly(libs.netty.buffer)
 }
 
 sourceSets {

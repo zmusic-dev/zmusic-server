@@ -2,6 +2,7 @@ dependencies {
     api(project(":zmusic-core"))
 
     compileOnly(libs.spigot)
+    compileOnly(libs.placeholderapi)
     compileOnly(libs.bstats.bukkit)
 }
 
