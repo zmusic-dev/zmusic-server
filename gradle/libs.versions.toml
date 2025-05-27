@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.1.21"
 blossom = "2.1.0"
-shadow = "8.1.1"
+shadow = "8.3.5"
 
 lucko-jar-relocator = "1.7"
 google-guava = "33.4.8-jre"
@@ -23,7 +23,7 @@ nightconfig = "3.8.2"
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kyori-blossom = { id = "net.kyori.blossom", version.ref = "blossom" }
-johnrengelman-shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
+johnrengelman-shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 
 [libraries]
 # Lucko Jar Relocator
