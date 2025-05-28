@@ -1,5 +1,5 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    alias(libs.plugins.shadow)
 }
 
 version = '2.9.0'
@@ -16,7 +16,6 @@ dependencies {
     implementation(project(":zmusic-nms:zmusic-nms-paper"))
 
     compileOnly libs.bungeecord
-    compileOnly libs.velocity
 
     compileOnly libs.placeholderapi
     compileOnly libs.vault
