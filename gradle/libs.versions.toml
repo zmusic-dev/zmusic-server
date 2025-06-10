@@ -7,7 +7,7 @@ lucko-jar-relocator = "1.7"
 google-guava = "33.4.8-jre"
 google-gson = "2.13.1"
 maven-resolver = "1.9.23"
-maven-resolver-provider = "3.9.9"
+maven-resolver-provider = "3.9.10"
 
 spigot = "1.21.5-R0.1-SNAPSHOT"
 bungeecord = "1.21-R0.2"
