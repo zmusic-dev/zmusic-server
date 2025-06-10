@@ -12,28 +12,28 @@
 # 規則については https://toml.io/ja/ を参照してください
 
 [platform]
-netease = "Netease Cloud Music"
-bilibili = "BiliBili"
+netease = "網易雲音楽"
+bilibili = "ビリビリ動画"
 
 [init]
 loaded = [
-    "&aプラグインの読み込みが完了しました！",
-    "&aプラグインのバージョン: &b{version}",
-    "&a現在のプラットフォーム: &b{platform}",
-    "&a使用ドキュメント: &b{docs-url}",
-    "&aプラグインの作者: &b{author}",
+    "&aプラグイン起動完了なのです！",
+    "&aプラグインのバージョンは&b{version}なのです！",
+    "&a現在のプラットフォームは&b{platform}なのです！",
+    "&a使い方はこちらを読んでほしいのです：&b{docs-url}",
+    "&aこのプラグインの作者は&b{author}なのです！",
 ]
 
 [update]
-checking = "&aアップデートを確認中..."
-check_failed = "&cアップデートの確認に失敗しました！"
+checking = "&a更新を確認中なのです…"
+check_failed = "&c更新の確認に失敗しちゃったのです！"
 available = [
-    "&a新しいバージョンを発見: &b{version}",
-    "&a更新履歴:",
+    "&a新しいバージョン&b{version}が見つかったのです！",
+    "&a更新内容はこんな感じなのです:",
     "{changelog}",
-    "&aダウンロードリンク: &b{download}",
+    "&aダウンロードはこちらからなのです：&b{download}",
 ]
-not_available = "&a現在のバージョンは最新です！"
+not_available = "&a今は最新バージョンなのです！"
 
 [help]
-tips = "&a&a/&e{command} &bhelp &aと入力してヘルプを確認してください。"
+tips = "&a&a/&e{command} &bhelp&aって入力すると、使い方を見れるのです！"

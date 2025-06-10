@@ -12,8 +12,8 @@
 # For specification, please refer to https://toml.io/en/
 
 [platform]
-netease = "Netease Cloud Music"
-bilibili = "BiliBili"
+netease = "NetEase Cloud Music"
+bilibili = "Bilibili"
 
 [init]
 loaded = [
