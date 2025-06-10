@@ -1,11 +1,11 @@
 package me.zhenxin.zmusic.utils
 
+import cn.hutool.json.JSONUtil
 import me.zhenxin.zmusic.ZMusicConstants
 import me.zhenxin.zmusic.baseApi
 import me.zhenxin.zmusic.config.I18n
 import me.zhenxin.zmusic.entity.VersionInfo
 import me.zhenxin.zmusic.logger
-import org.dromara.hutool.json.JSONUtil
 
 /**
  * 公共工具

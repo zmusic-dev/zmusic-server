@@ -1,14 +1,12 @@
 package me.zhenxin.zmusic.utils
 
-
+import cn.hutool.core.net.url.UrlBuilder
+import cn.hutool.http.HttpRequest
+import cn.hutool.http.HttpUtil
+import cn.hutool.http.Method
+import cn.hutool.json.JSONObject
 import me.zhenxin.zmusic.ZMusicConstants
-import me.zhenxin.zmusic.exception.ZMusicException
 import me.zhenxin.zmusic.logger
-import org.dromara.hutool.core.net.url.UrlBuilder
-import org.dromara.hutool.http.HttpUtil
-import org.dromara.hutool.http.client.Request
-import org.dromara.hutool.http.meta.Method
-import org.dromara.hutool.json.JSONObject
 
 /**
  * HTTP 工具
@@ -64,21 +62,22 @@ private fun buildUrl(url: String, cache: Boolean, params: Map<String, String> = 
     return builder.build()
 }
 
-private fun request(request: Request, headers: Map<String, String> = mapOf()): String {
+private fun request(request: HttpRequest, headers: Map<String, String> = mapOf()): String {
     request.header("User-Agent", "ZMusic/${ZMusicConstants.PLUGIN_VERSION}")
     headers.forEach {
         request.header(it.key, it.value)
     }
-    logger.debug("Request: ${request.method()} ${request.url()}")
-    if (request.method() == Method.POST) {
-        logger.debug("Request body: ${request.body()}")
+    logger.debug("Request: ${request.method} ${request.url}")
+    if (request.method == Method.POST) {
+        logger.debug("Request body: ${String(request.bodyBytes())}")
     }
-    val response = request.send()
-    val body = response.body().string
-    if (!response.isOk) {
-        logger.error("Request failed: ${response.status}, body: $body")
-        throw ZMusicException("Request failed: ${response.status}, body: $body")
+    val response = request.execute()
+    val body = response.body()
+    if (response.isOk) {
+        logger.debug("Response: $body")
+    } else {
+        val errorMessage = "Request failed: ${response.status}, body: $body"
+        logger.debug(errorMessage)
     }
-    logger.debug("Response: $body")
     return body
 }

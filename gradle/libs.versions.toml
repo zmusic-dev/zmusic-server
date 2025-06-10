@@ -16,7 +16,7 @@ velocity = "3.4.0-SNAPSHOT"
 bstats = "3.1.0"
 placeholderapi = "2.11.6"
 
-hutool = "6.0.0-M21"
+hutool = "5.8.38"
 netty = "4.2.2.Final"
 nightconfig = "3.8.2"
 
@@ -52,10 +52,10 @@ bstats-velocity = { module = "org.bstats:bstats-velocity", version.ref = "bstats
 # PlaceholderAPI
 placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
 # Hutool
-hutool-core = { module = "org.dromara.hutool:hutool-core", version.ref = "hutool" }
-hutool-http = { module = "org.dromara.hutool:hutool-http", version.ref = "hutool" }
-hutool-log = { module = "org.dromara.hutool:hutool-log", version.ref = "hutool" }
-hutool-json = { module = "org.dromara.hutool:hutool-json", version.ref = "hutool" }
+hutool-core = { module = "cn.hutool:hutool-core", version.ref = "hutool" }
+hutool-http = { module = "cn.hutool:hutool-http", version.ref = "hutool" }
+hutool-log = { module = "cn.hutool:hutool-log", version.ref = "hutool" }
+hutool-json = { module = "cn.hutool:hutool-json", version.ref = "hutool" }
 # Netty
 netty-buffer = { module = "io.netty:netty-buffer", version.ref = "netty" }
 # Night Config

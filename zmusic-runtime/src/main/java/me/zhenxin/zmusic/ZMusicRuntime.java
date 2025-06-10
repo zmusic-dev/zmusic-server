@@ -13,20 +13,20 @@ import static me.zhenxin.zmusic.dependencies.common.PrimitiveIO.t;
  * @since 2023/7/24 18:14
  */
 @RuntimeDependency(
-        value = "!org.dromara.hutool:hutool-core:" + ZMusicConstants.HUTOOL_VERSION,
-        test = "!org.dromara.hutool.core.text.StrUtil"
+        value = "!cn.hutool:hutool-core:" + ZMusicConstants.HUTOOL_VERSION,
+        test = "!cn.hutool.core.text.StrUtil"
 )
 @RuntimeDependency(
-        value = "!org.dromara.hutool:hutool-http:" + ZMusicConstants.HUTOOL_VERSION,
-        test = "!org.dromara.hutool.http.HttpUtil"
+        value = "!cn.hutool:hutool-http:" + ZMusicConstants.HUTOOL_VERSION,
+        test = "!cn.hutool.http.HttpUtil"
 )
 @RuntimeDependency(
-        value = "!org.dromara.hutool:hutool-log:" + ZMusicConstants.HUTOOL_VERSION,
-        test = "!org.dromara.hutool.log.LogUtil"
+        value = "!cn.hutool:hutool-log:" + ZMusicConstants.HUTOOL_VERSION,
+        test = "!cn.hutool.log.LogUtil"
 )
 @RuntimeDependency(
-        value = "!org.dromara.hutool:hutool-json:" + ZMusicConstants.HUTOOL_VERSION,
-        test = "!org.dromara.hutool.json.JSONUtil"
+        value = "!cn.hutool:hutool-json:" + ZMusicConstants.HUTOOL_VERSION,
+        test = "!cn.hutool.json.JSONUtil"
 )
 @RuntimeDependency(
         value = "!io.netty:netty-buffer:" + ZMusicConstants.NETTY_VERSION,
