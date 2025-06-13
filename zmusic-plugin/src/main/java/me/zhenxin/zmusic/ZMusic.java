@@ -17,6 +17,8 @@ import java.io.File;
 import java.util.List;
 
 public final class ZMusic {
+
+    public static boolean isFolia = false;
     public static boolean isBC;
 
     public static Log log;

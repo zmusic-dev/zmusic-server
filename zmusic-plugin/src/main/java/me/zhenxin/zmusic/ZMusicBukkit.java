@@ -20,12 +20,27 @@ public class ZMusicBukkit extends JavaPlugin {
 
     public static JavaPlugin plugin;
 
+    private static boolean isFolia() {
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        ZMusic.disable();
+    }
+
     @Override
     public void onEnable() {
         ZMusic.log = new LogBukkit(getServer().getConsoleSender());
         ZMusic.log.sendNormalMessage("正在加载中....");
         plugin = this;
         ZMusic.isBC = false;
+        ZMusic.isFolia = isFolia();
         ZMusic.runTask = new RunTaskBukkit();
         ZMusic.message = new MessageBukkit();
         ZMusic.music = new Music();
@@ -115,11 +130,6 @@ public class ZMusicBukkit extends JavaPlugin {
         }
 
         ZMusic.loadEnd(getServer().getConsoleSender());
-    }
-
-    @Override
-    public void onDisable() {
-        ZMusic.disable();
     }
 
 }
