@@ -147,8 +147,9 @@ public class PlayListPlayer extends Thread {
                     Gson gson = new GsonBuilder().create();
                     if (platform.equalsIgnoreCase("netease")) {
                         String id = playList.get(songs).get("id").getAsString();
-                        String getMp3Url = Config.neteaseApiRoot + "song/url?id=" + id + "&br=320000";
-                        String getMp3JsonText = NetUtils.getNetString(getMp3Url, null);
+                        String getMp3Params = "id=" + id + "&br=320000";
+                        String getMp3Url = Config.neteaseApiRoot + "song/url";
+                        String getMp3JsonText = NetUtils.postNetString(getMp3Url, null, getMp3Params);
                         JsonObject getMp3Json = gson.fromJson(getMp3JsonText, JsonObject.class);
                         try {
                             url = getMp3Json.get("data").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
@@ -159,7 +160,8 @@ public class PlayListPlayer extends Thread {
                             songs++;
                             continue;
                         }
-                        String lyricJsonText = NetUtils.getNetString(Config.neteaseApiRoot + "lyric?id=" + id, null);
+                        String lyricJsonParams = "id=" + id;
+                        String lyricJsonText = NetUtils.postNetString(Config.neteaseApiRoot + "lyric", null, lyricJsonParams);
                         JsonObject lyricJson = gson.fromJson(lyricJsonText, JsonObject.class);
                         String lyricText = "";
                         String lyricTrText = "";

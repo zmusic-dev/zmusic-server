@@ -2,6 +2,7 @@ package me.zhenxin.zmusic.utils;
 
 import com.google.gson.JsonObject;
 import me.zhenxin.zmusic.ZMusic;
+import me.zhenxin.zmusic.config.Config;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -70,39 +71,6 @@ public class NetUtils {
     }
 
     /**
-     * 获取网络InputStream
-     *
-     * @param url 网络地址
-     * @return 获取的InputStream
-     */
-    public static InputStream getNetInputStream(String url) {
-        ZMusic.log.sendDebugMessage(url);
-        try {
-            URL getUrl = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) getUrl.openConnection();
-            con.setReadTimeout(20000);
-            con.setConnectTimeout(5000);
-            con.addRequestProperty("Charset", "UTF-8");
-            con.addRequestProperty("User-Agent", "ZMusic/" + ZMusic.thisVer);
-            con.setRequestMethod("GET");
-            int code = con.getResponseCode();
-            if (code == 200 || code == 201 || code == 202) {
-                return con.getInputStream();
-            } else {
-                return con.getErrorStream();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return 0;
-            }
-        };
-    }
-
-    /**
      * 获取网络文件返回文本
      *
      * @param url 网络地址
@@ -136,6 +104,12 @@ public class NetUtils {
             }
 
             ZMusic.log.sendDebugMessage(url);
+            ZMusic.log.sendDebugMessage(content);
+
+            if (url.contains(Config.neteaseApiRoot)) {
+                ZMusic.log.sendDebugMessage("[NetUtils] 发送网易云音乐API请求，附加Cookie");
+                content = content + "&cookie=" + CookieUtils.getCookies();
+            }
 
             URL getUrl = new URL(url);
             HttpURLConnection con = (HttpURLConnection) getUrl.openConnection();

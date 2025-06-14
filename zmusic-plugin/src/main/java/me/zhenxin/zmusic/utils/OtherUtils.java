@@ -1,19 +1,17 @@
 package me.zhenxin.zmusic.utils;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import me.zhenxin.zmusic.ZMusic;
 import me.zhenxin.zmusic.api.MultiMap;
 import me.zhenxin.zmusic.api.bossbar.BossBar;
 import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.data.PlayerData;
-import me.zhenxin.zmusic.music.searchSource.NeteaseCloudMusic;
 import me.zhenxin.zmusic.proto.Toast;
 
 import java.io.*;
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,22 +31,6 @@ public class OtherUtils {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < args.length; i++) {
             if (i != 0 & i != 1) {
-                s.append(args[i]).append(" ");
-            }
-        }
-        return s.toString().trim();
-    }
-
-    /**
-     * 参数合一
-     *
-     * @param args 参数
-     * @return 合并的值
-     */
-    public static String argsXin1(String[] args, String isComm) {
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            if (i != 0) {
                 s.append(args[i]).append(" ");
             }
         }
@@ -113,26 +95,6 @@ public class OtherUtils {
         if (aSync) {
             ZMusic.runTask.runAsync(r);
         } else r.run();
-    }
-
-    public static void neteaseHotComments(Object player, String musicName) {
-        ZMusic.runTask.runAsync(() -> {
-            try {
-                Gson gson = new GsonBuilder().create();
-                JsonObject json = NeteaseCloudMusic.getMusicUrl(musicName);
-                String musicId = json.get("id").getAsString();
-                JsonObject jsonObject = gson.fromJson(NetUtils.getNetString(Config.neteaseApiRoot + "comment/hot?id=" + musicId + "&type=0&limit=3", null), JsonObject.class);
-                JsonArray jsonArray = jsonObject.get("hotComments").getAsJsonArray();
-                ZMusic.message.sendNormalMessage("====== [" + json.get("name").getAsString() + "] 的热门评论 =====", player);
-                for (JsonElement j : jsonArray) {
-                    ZMusic.message.sendNormalMessage(j.getAsJsonObject().get("content").getAsString() + "\nBy: "
-                            + j.getAsJsonObject().get("user").getAsJsonObject().get("nickname").getAsString(), player);
-                }
-                ZMusic.message.sendNormalMessage("=================================", player);
-            } catch (Exception e) {
-                ZMusic.message.sendErrorMessage("获取评论失败。", player);
-            }
-        });
     }
 
     /**
@@ -343,22 +305,6 @@ public class OtherUtils {
         }
         input.close();
         downloadFile.close();
-    }
-
-    public static String getMD5Three(String path) throws IOException, NoSuchAlgorithmException {
-        BigInteger bi;
-        byte[] buffer = new byte[8192];
-        int len = 0;
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        File f = new File(path);
-        FileInputStream fis = new FileInputStream(f);
-        while ((len = fis.read(buffer)) != -1) {
-            md.update(buffer, 0, len);
-        }
-        fis.close();
-        byte[] b = md.digest();
-        bi = new BigInteger(1, b);
-        return bi.toString(16);
     }
 
     public static String formatTime(Long time) {

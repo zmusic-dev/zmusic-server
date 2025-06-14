@@ -63,11 +63,7 @@ public final class ZMusic {
         ZMusic.runTask.runAsync(() -> {
             OtherUtils.checkUpdate(sender, false);
             new LoadLang().load();
-            if (NeteaseLogin.isLogin()) {
-                NeteaseLogin.refresh();
-            } else {
-                NeteaseLogin.anonymous();
-            }
+            NeteaseLogin.welcome();
             ZMusic.log.sendNormalMessage("插件作者: 真心");
             ZMusic.log.sendNormalMessage("主页：zhenxin.me");
             ZMusic.log.sendNormalMessage("QQ：1307993674");

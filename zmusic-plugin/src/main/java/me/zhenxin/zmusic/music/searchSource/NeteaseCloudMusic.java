@@ -23,8 +23,9 @@ public class NeteaseCloudMusic {
             Gson gson = new Gson();
             long musicId;
             if (!musicName.contains("-id:")) {
-                String getUrl = Config.neteaseApiRoot + "search?keywords=" + URLEncoder.encode(musicName, "UTF-8") + "&limit=1&type=1";
-                String jsonText = NetUtils.getNetString(getUrl, null);
+                String getParam = "keywords=" + URLEncoder.encode(musicName, "UTF-8") + "&limit=1&type=1";
+                String getUrl = Config.neteaseApiRoot + "search";
+                String jsonText = NetUtils.postNetString(getUrl, null, getParam);
                 JsonObject json = gson.fromJson(jsonText, JsonObject.class);
                 JsonObject result = json.getAsJsonObject("result");
                 if (result != null && result.get("songCount").getAsInt() != 0) {
@@ -36,8 +37,9 @@ public class NeteaseCloudMusic {
             } else {
                 musicId = Long.parseLong(musicName.substring(musicName.indexOf("-id:") + 4));
             }
-            String getUrl = Config.neteaseApiRoot + "song/detail?ids=" + musicId;
-            String jsonText = NetUtils.getNetString(getUrl, null);
+            String getParam = "ids=" + musicId;
+            String getUrl = Config.neteaseApiRoot + "song/detail";
+            String jsonText = NetUtils.postNetString(getUrl, null, getParam);
             JsonObject json = gson.fromJson(jsonText, JsonObject.class);
             JsonObject result = json.getAsJsonArray("songs").get(0).getAsJsonObject();
             String name = result.get("name").getAsString();
@@ -51,7 +53,8 @@ public class NeteaseCloudMusic {
             }
             singerName = new StringBuilder(singerName.substring(0, singerName.length() - 1));
 
-            String lyricJsonText = NetUtils.getNetString(Config.neteaseApiRoot + "lyric?id=" + musicId, null);
+            String lyricJsonParam = "id=" + musicId;
+            String lyricJsonText = NetUtils.postNetString(Config.neteaseApiRoot + "lyric", null, lyricJsonParam);
             JsonObject lyricJson = gson.fromJson(lyricJsonText, JsonObject.class);
 
             String lyric = "";
@@ -64,7 +67,8 @@ public class NeteaseCloudMusic {
             } catch (Exception ignored) {
             }
 
-            JsonObject getUrlJson = gson.fromJson(NetUtils.getNetString(Config.neteaseApiRoot + "song/url/v1?id=" + musicId + "&level=exhigh", null), JsonObject.class);
+            String getUrlParam = "id=" + musicId + "&level=exhigh";
+            JsonObject getUrlJson = gson.fromJson(NetUtils.postNetString(Config.neteaseApiRoot + "song/url/v1", null, getUrlParam), JsonObject.class);
             String musicUrl = null;
             try {
                 musicUrl = getUrlJson.get("data").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
@@ -98,9 +102,10 @@ public class NeteaseCloudMusic {
      */
     public static JsonArray getMusicList(String musicName) {
         try {
-            String getUrl = Config.neteaseApiRoot + "search?keywords=" + URLEncoder.encode(musicName, "UTF-8") + "&limit=10&type=1";
+            String getParam = "keywords=" + URLEncoder.encode(musicName, "UTF-8") + "&limit=10&type=1";
+            String getUrl = Config.neteaseApiRoot + "search";
             Gson gson = new GsonBuilder().create();
-            String jsonText = NetUtils.getNetString(getUrl, null);
+            String jsonText = NetUtils.postNetString(getUrl, null, getParam);
             JsonObject json = gson.fromJson(jsonText, JsonObject.class);
             JsonObject result = json.getAsJsonObject("result");
             JsonArray returnJson = new JsonArray();
@@ -139,9 +144,10 @@ public class NeteaseCloudMusic {
      */
     public static JsonObject getMusicSongList(String playListId) {
         try {
-            String getUrl = Config.neteaseApiRoot + "playlist/detail?id=" + playListId;
+            String getParam = "id=" + playListId;
+            String getUrl = Config.neteaseApiRoot + "playlist/detail";
             Gson gson = new GsonBuilder().create();
-            JsonObject json = gson.fromJson(NetUtils.getNetString(getUrl, null), JsonObject.class);
+            JsonObject json = gson.fromJson(NetUtils.postNetString(getUrl, null, getParam), JsonObject.class);
             JsonArray trackIds = json.get("playlist").getAsJsonObject().get("trackIds").getAsJsonArray();
             String playListName = json.getAsJsonObject("playlist").get("name").getAsString();
             int playListSongs = json.getAsJsonObject("playlist").get("trackCount").getAsInt();

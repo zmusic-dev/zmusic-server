@@ -2,6 +2,7 @@ package me.zhenxin.zmusic.login;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import me.zhenxin.zmusic.ZMusic;
 import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.utils.CookieUtils;
 import me.zhenxin.zmusic.utils.NetUtils;
@@ -21,84 +22,67 @@ public class NeteaseLogin {
     private static final Gson GSON = new Gson();
 
     public static String create(String key) throws UnsupportedEncodingException {
-        String result = NetUtils.getNetString(API + "login/qr/create?key=" + key + "&timestamp=" + time(), null);
+        String params = "key=" + key;
+        String result = NetUtils.postNetString(API + "login/qr/create", null, params);
         JsonObject json = GSON.fromJson(result, JsonObject.class);
         JsonObject data = json.getAsJsonObject("data");
         String url = data.get("qrurl").getAsString();
-        return "https://cli.im/api/qrcode/code?text=" + URLEncoder.encode(url, "UTF-8");
+        return "https://api.2dcode.biz/v1/create-qr-code?data=" + URLEncoder.encode(url, "UTF-8");
     }
 
     public static Integer check(String key) {
-        String result = NetUtils.getNetString(API + "login/qr/check?key=" + key + "&timestamp=" + time(), null);
+        String params = "key=" + key + "&noCookie=true";
+        String result = NetUtils.postNetString(API + "login/qr/check", null, params);
         JsonObject json = GSON.fromJson(result, JsonObject.class);
+        if (json.get("code").getAsInt() == 803) {
+            String cookie = json.get("cookie").getAsString();
+            CookieUtils.saveCookies(cookie);
+        }
         return json.get("code").getAsInt();
     }
 
     public static String key() {
-        String result = NetUtils.getNetString(API + "login/qr/key?timestamp=" + time(), null);
+        String result = NetUtils.postNetString(API + "login/qr/key", null, "");
         JsonObject json = GSON.fromJson(result, JsonObject.class);
         JsonObject data = json.getAsJsonObject("data");
         return data.get("unikey").getAsString();
     }
 
-    public static String refresh() {
-        String cookie = "";
-        String result = NetUtils.getNetString(API + "login/refresh?timestamp=" + time(), null);
-        JsonObject data = GSON.fromJson(result, JsonObject.class);
-        int code = data.get("code").getAsInt();
-        if (code == 200) {
-            cookie = data.get("cookie").getAsString();
-        }
-        if (!cookie.isEmpty()) {
-            CookieUtils.saveCookies();
-            return "刷新登录状态成功!";
+    public static void welcome() {
+        String nickname = nickname();
+        if (!nickname.isEmpty()) {
+            ZMusic.log.sendNormalMessage("您已登录网易云音乐, 昵称: " + nickname);
         } else {
-            return "刷新登录状态失败, 建议执行重新登录操作!";
+            ZMusic.log.sendErrorMessage("您未登录网易云音乐, 自动转为匿名登录.");
+            ZMusic.log.sendErrorMessage("匿名登录将无法获取您的个人信息, 仅能播放公开音乐.");
+            ZMusic.log.sendErrorMessage("请使用 /zm login 命令登录网易云音乐.");
         }
     }
 
-    public static void anonymous() {
-        NetUtils.getNetString(API + "register/anonimous?timestamp=" + time(), null);
-        CookieUtils.saveCookies();
-    }
-
-    public static Boolean isLogin() {
-        String result = NetUtils.getNetString(API + "login/status?timestamp=" + time(), null);
-        JsonObject root = GSON.fromJson(result, JsonObject.class);
+    public static String nickname() {
+        JsonObject data = status();
         try {
-            JsonObject data = root.getAsJsonObject("data");
-            data.get("profile").getAsJsonObject();
-            return true;
+            int code = data.get("code").getAsInt();
+            if (code != 200) {
+                return "";
+            }
+            JsonObject profile = data.getAsJsonObject("profile");
+            if (profile == null) {
+                return "";
+            }
+            String nickname = profile.get("nickname").getAsString();
+            if (nickname == null || nickname.isEmpty()) {
+                return "";
+            }
+            return nickname;
         } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public static String welcome() {
-        String name = nickname();
-        if (name.isEmpty()) {
-            return "昵称获取失败!";
-        } else {
-            return "登录成功! 欢迎您, " + name + "!";
-        }
-    }
-
-    private static String nickname() {
-        String result = NetUtils.getNetString(API + "user/account?timestamp=" + time(), null);
-        JsonObject data = GSON.fromJson(result, JsonObject.class);
-        int code = data.get("code").getAsInt();
-        if (code != 200) {
             return "";
         }
-        try {
-            JsonObject profile = data.get("profile").getAsJsonObject();
-            return profile.get("nickname").getAsString();
-        } catch (Exception e) {
-            return data.get("account").getAsJsonObject().get("userName").getAsString();
-        }
     }
 
-    private static Long time() {
-        return System.currentTimeMillis();
+    private static JsonObject status() {
+        String result = NetUtils.postNetString(API + "login/status", null, "");
+        JsonObject root = GSON.fromJson(result, JsonObject.class);
+        return root.getAsJsonObject("data");
     }
 }

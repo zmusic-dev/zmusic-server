@@ -11,7 +11,6 @@ import me.zhenxin.zmusic.music.PlayList;
 import me.zhenxin.zmusic.music.PlayListPlayer;
 import me.zhenxin.zmusic.music.PlayMusic;
 import me.zhenxin.zmusic.music.SearchMusic;
-import me.zhenxin.zmusic.utils.CookieUtils;
 import me.zhenxin.zmusic.utils.HelpUtils;
 import me.zhenxin.zmusic.utils.OtherUtils;
 import me.zhenxin.zmusic.utils.Vault;
@@ -236,8 +235,7 @@ public class Cmd {
                                                                 ZMusic.message.sendNormalMessage("请在手机上确认登录!", sender);
                                                                 break;
                                                             case 803:
-                                                                ZMusic.message.sendNormalMessage(NeteaseLogin.welcome(), sender);
-                                                                CookieUtils.saveCookies();
+                                                                ZMusic.message.sendNormalMessage("您已登录网易云音乐, 昵称: " + NeteaseLogin.nickname(), sender);
                                                                 cancel = true;
                                                                 break;
                                                             default:
@@ -269,7 +267,6 @@ public class Cmd {
                                 if (isAdmin) {
                                     new LoadConfig().reload(sender);
                                     ZMusic.runTask.runAsync(() -> new LoadLang().load());
-                                    ZMusic.message.sendNormalMessage(NeteaseLogin.refresh(), sender);
                                 } else {
                                     ZMusic.message.sendErrorMessage("权限不足，你需要 zmusic.admin 权限此使用命令.", sender);
                                 }
@@ -279,13 +276,6 @@ public class Cmd {
                                     OtherUtils.checkUpdate(sender, true);
                                 } else {
                                     ZMusic.message.sendErrorMessage("权限不足，你需要 zmusic.admin 权限此使用命令.", sender);
-                                }
-                                break;
-                            case "163hot":
-                                if (args.length == 2) {
-                                    OtherUtils.neteaseHotComments(sender, OtherUtils.argsXin1(args, ""));
-                                } else {
-                                    HelpUtils.sendHelp("main", sender);
                                 }
                                 break;
                             case "test":
@@ -345,7 +335,6 @@ public class Cmd {
                             "url",
                             "playAll",
                             "stopAll",
-                            "163hot",
                             "update",
                             "reload"};
                 } else {
@@ -356,7 +345,6 @@ public class Cmd {
                             "stop",
                             "loop",
                             "search",
-                            "163hot",
                             "url"};
                 }
                 return Arrays.stream(commandList).filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
