@@ -167,7 +167,7 @@ public class PlayMusic {
             }
             ZMusic.music.play(musicUrl, p);
             time = System.currentTimeMillis() - time;
-            TextComponent success = new TextComponent(Lang.playSuccess
+            TextComponent success = new TextComponent(Config.prefix + "§a" + Lang.playSuccess
                     .replaceAll("%source%", searchSourceName)
                     .replaceAll("%fullName%", musicFullName)
                     .replaceAll("%time%", String.valueOf(time)));
