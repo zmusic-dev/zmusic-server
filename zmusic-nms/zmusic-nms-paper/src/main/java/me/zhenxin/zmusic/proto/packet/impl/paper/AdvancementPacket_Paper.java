@@ -1,4 +1,4 @@
-package me.zhenxin.zmusic.proto.packet.impl;
+package me.zhenxin.zmusic.proto.packet.impl.paper;
 
 import me.zhenxin.zmusic.proto.packet.AdvancementPacket;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;

@@ -2,9 +2,12 @@ package me.zhenxin.zmusic.proto;
 
 import me.zhenxin.zmusic.ZMusic;
 import me.zhenxin.zmusic.ZMusicBukkit;
+import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.proto.packet.AdvancementPacket;
 import me.zhenxin.zmusic.proto.packet.impl.*;
 import org.bukkit.entity.Player;
+
+import java.lang.reflect.Constructor;
 
 /**
  * 吐司工具
@@ -20,10 +23,8 @@ public class Toast {
             String nms = packageName.substring(packageName.lastIndexOf('.') + 1);
             Player bukkitPlayer = (Player) player;
             AdvancementPacket packet;
+            ZMusic.log.sendDebugMessage("当前NMS版本: " + nms);
             switch (nms) {
-                case "craftbukkit": // Mojang mappings server for paper 1.20.5+
-                    packet = new AdvancementPacket_Paper(bukkitPlayer, title);
-                    break;
                 case "v1_20_R1":
                     packet = new AdvancementPacket_1_20_R1(bukkitPlayer, title);
                     break;
@@ -66,6 +67,11 @@ public class Toast {
                 case "v1_12_R1":
                     packet = new AdvancementPacket_1_12_R1(bukkitPlayer, title);
                     break;
+                case "craftbukkit": // Mojang mappings server for paper 1.20.5+
+                    Class<?> clazz = Class.forName("me.zhenxin.zmusic.proto.packet.impl.paper.AdvancementPacket_Paper");
+                    Constructor<?> constructor = clazz.getConstructor(Player.class, String.class);
+                    packet = (AdvancementPacket) constructor.newInstance(bukkitPlayer, title);
+                    break;
                 default:
                     ZMusic.log.sendErrorMessage("不支持的NMS版本: " + nms);
                     return;
@@ -73,7 +79,10 @@ public class Toast {
 
             packet.grant();
             packet.revoke();
-        } catch (Throwable ignored) {
+        } catch (Throwable t) {
+            if (Config.debug) {
+                t.printStackTrace();
+            }
             ZMusic.log.sendDebugMessage("当前服务端不支持Toast功能.");
         }
     }

@@ -14,7 +14,7 @@
     // 使用开源项目NeteaseCloudMusicApi
     // 推荐自行部署，需Node.js环境
     // 地址: https://github.com/Binaryify/NeteaseCloudMusicApi
-    "netease": "https://zm.armoe.cn/"
+    "netease": "https://ncm.zhenxin.me"
   },
   // 是否关注作者的网易云音乐账号
   "netease-follow": true,
