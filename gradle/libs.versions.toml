@@ -10,7 +10,7 @@ maven-resolver = "1.9.23"
 maven-resolver-provider = "3.9.10"
 
 spigot = "1.21.5-R0.1-SNAPSHOT"
-bungeecord = "1.21-R0.2"
+bungeecord = "1.21-R0.3"
 velocity = "3.4.0-SNAPSHOT"
 
 bstats = "3.1.0"
