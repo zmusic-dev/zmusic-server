@@ -16,7 +16,7 @@ velocity = "3.4.0-SNAPSHOT"
 bstats = "3.1.0"
 placeholderapi = "2.11.6"
 
-hutool = "5.8.38"
+hutool = "5.8.39"
 netty = "4.2.2.Final"
 nightconfig = "3.8.2"
 
