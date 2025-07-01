@@ -9,7 +9,7 @@ google-gson = "2.13.1"
 maven-resolver = "1.9.24"
 maven-resolver-provider = "3.9.10"
 
-spigot = "1.21.6-R0.1-SNAPSHOT"
+spigot = "1.21.7-R0.1-SNAPSHOT"
 bungeecord = "1.21-R0.3"
 velocity = "3.4.0-SNAPSHOT"
 
