@@ -6,7 +6,7 @@ shadow = "8.3.7"
 lucko-jar-relocator = "1.7"
 google-guava = "33.4.8-jre"
 google-gson = "2.13.1"
-maven-resolver = "1.9.23"
+maven-resolver = "1.9.24"
 maven-resolver-provider = "3.9.10"
 
 spigot = "1.21.6-R0.1-SNAPSHOT"
