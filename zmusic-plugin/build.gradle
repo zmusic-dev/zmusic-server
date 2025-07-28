@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-version = '2.10.3'
+version = '2.10.4'
 
 dependencies {
     compileOnly 'ink.ptms:nms-all:1.0.0'
@@ -13,7 +13,8 @@ dependencies {
     implementation(project(":zmusic-nms:zmusic-nms-1.18"))
     implementation(project(":zmusic-nms:zmusic-nms-1.19"))
     implementation(project(":zmusic-nms:zmusic-nms-1.20"))
-    implementation(project(":zmusic-nms:zmusic-nms-paper"))
+    implementation(project(":zmusic-nms:zmusic-nms-1.21.4"))
+    implementation(project(":zmusic-nms:zmusic-nms-1.21.7"))
 
     compileOnly libs.bungeecord
 

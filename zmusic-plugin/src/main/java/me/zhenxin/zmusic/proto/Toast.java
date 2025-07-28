@@ -5,6 +5,7 @@ import me.zhenxin.zmusic.ZMusicBukkit;
 import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.proto.packet.AdvancementPacket;
 import me.zhenxin.zmusic.proto.packet.impl.*;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
@@ -68,7 +69,13 @@ public class Toast {
                     packet = new AdvancementPacket_1_12_R1(bukkitPlayer, title);
                     break;
                 case "craftbukkit": // Mojang mappings server for paper 1.20.5+
-                    Class<?> clazz = Class.forName("me.zhenxin.zmusic.proto.packet.impl.paper.AdvancementPacket_Paper");
+                    String version;
+                    if (Bukkit.getUnsafe().getDataVersion() >= 4435) {
+                        version = "1_21_7";
+                    } else {
+                        version = "1_21_4";
+                    }
+                    Class<?> clazz = Class.forName("me.zhenxin.zmusic.proto.packet.impl.paper.AdvancementPacket_" + version);
                     Constructor<?> constructor = clazz.getConstructor(Player.class, String.class);
                     packet = (AdvancementPacket) constructor.newInstance(bukkitPlayer, title);
                     break;

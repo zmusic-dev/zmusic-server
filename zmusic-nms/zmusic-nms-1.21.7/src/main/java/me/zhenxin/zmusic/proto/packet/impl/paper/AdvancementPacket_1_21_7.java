@@ -1,11 +1,15 @@
 package me.zhenxin.zmusic.proto.packet.impl.paper;
 
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.JsonOps;
+import io.papermc.paper.adventure.PaperAdventure;
 import me.zhenxin.zmusic.proto.packet.AdvancementPacket;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minecraft.advancements.*;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.protocol.game.ClientboundUpdateAdvancementsPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -22,7 +26,7 @@ import java.util.Optional;
  * @since 2025/5/8 10:22
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
-public class AdvancementPacket_Paper extends AdvancementPacket {
+public class AdvancementPacket_1_21_7 extends AdvancementPacket {
 
     private static final AdvancementRequirements SIMPLE_REQUIREMENT = new AdvancementRequirements(Collections.singletonList(Collections.singletonList("1")));
 
@@ -30,13 +34,10 @@ public class AdvancementPacket_Paper extends AdvancementPacket {
     private final Component messageComponent;
     private final Component descriptionComponent;
 
-    public AdvancementPacket_Paper(Player player, String message) {
+    public AdvancementPacket_1_21_7(Player player, String message) {
         super(player, message);
-        RegistryAccess.Frozen frozen = MinecraftServer.getServer().registryAccess();
-        Component component1 = Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(LegacyComponentSerializer.legacyAmpersand().deserialize(message)), frozen);
-        Component component2 = Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(LegacyComponentSerializer.legacyAmpersand().deserialize(desc)), frozen);
-        messageComponent = component1 != null ? component1 : Component.empty();
-        descriptionComponent = component2 != null ? component2 : Component.empty();
+        messageComponent = PaperAdventure.asVanilla(LegacyComponentSerializer.legacyAmpersand().deserialize(message));
+        descriptionComponent = PaperAdventure.asVanilla(LegacyComponentSerializer.legacyAmpersand().deserialize(desc));
     }
 
     @Override
@@ -69,14 +70,16 @@ public class AdvancementPacket_Paper extends AdvancementPacket {
                 false,
                 Collections.singleton(new AdvancementHolder(resourceLocation, advancement)),
                 Collections.emptySet(),
-                Collections.singletonMap(resourceLocation, progress)
+                Collections.singletonMap(resourceLocation, progress),
+                true
             );
         } else {
             packet = new ClientboundUpdateAdvancementsPacket(
                 false,
                 Collections.emptySet(),
                 Collections.singleton(resourceLocation),
-                Collections.emptyMap()
+                Collections.emptyMap(),
+                false
             );
         }
         CraftPlayer player = (CraftPlayer) this.player;
