@@ -1,18 +1,12 @@
 package me.zhenxin.zmusic.proto.packet.impl.paper;
 
-import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.JsonOps;
 import io.papermc.paper.adventure.PaperAdventure;
 import me.zhenxin.zmusic.proto.packet.AdvancementPacket;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minecraft.advancements.*;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.protocol.game.ClientboundUpdateAdvancementsPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -23,7 +17,7 @@ import java.util.Optional;
 
 /**
  * @author Lumine1909
- * @since 2025/5/8 10:22
+ * @since 2025/7/28 10:22
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class AdvancementPacket_1_21_7 extends AdvancementPacket {

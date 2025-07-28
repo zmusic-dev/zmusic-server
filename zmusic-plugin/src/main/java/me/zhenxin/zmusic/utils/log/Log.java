@@ -1,6 +1,7 @@
 package me.zhenxin.zmusic.utils.log;
 
 public interface Log {
+
     /**
      * 发送普通日志
      *

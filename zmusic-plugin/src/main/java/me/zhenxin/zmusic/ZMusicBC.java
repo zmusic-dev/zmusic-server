@@ -14,6 +14,7 @@ import me.zhenxin.zmusic.utils.runtask.RunTaskBC;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class ZMusicBC extends Plugin {
+
     public static Plugin plugin;
 
     @Override

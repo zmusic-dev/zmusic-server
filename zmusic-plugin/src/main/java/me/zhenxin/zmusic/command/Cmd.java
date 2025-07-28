@@ -325,43 +325,43 @@ public class Cmd {
             if (args.length == 1) {
                 if (isAdmin) {
                     commandList = new String[]{"help",
-                            "play",
-                            "playlist",
-                            "music",
-                            "stop",
-                            "loop",
-                            "login",
-                            "search",
-                            "url",
-                            "playAll",
-                            "stopAll",
-                            "update",
-                            "reload"};
+                        "play",
+                        "playlist",
+                        "music",
+                        "stop",
+                        "loop",
+                        "login",
+                        "search",
+                        "url",
+                        "playAll",
+                        "stopAll",
+                        "update",
+                        "reload"};
                 } else {
                     commandList = new String[]{"help",
-                            "play",
-                            "playlist",
-                            "music",
-                            "stop",
-                            "loop",
-                            "search",
-                            "url"};
+                        "play",
+                        "playlist",
+                        "music",
+                        "stop",
+                        "loop",
+                        "search",
+                        "url"};
                 }
                 return Arrays.stream(commandList).filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
             } else if (args[0].equalsIgnoreCase("play")
-                    ||
-                    args[0].equalsIgnoreCase("music")
-                    ||
-                    args[0].equalsIgnoreCase("search")
-                    ||
-                    args[0].equalsIgnoreCase("playAll")) {
+                ||
+                args[0].equalsIgnoreCase("music")
+                ||
+                args[0].equalsIgnoreCase("search")
+                ||
+                args[0].equalsIgnoreCase("playAll")) {
                 if (args.length == 2) {
                     commandList = new String[]{
-                            "qq",
-                            "163",
-                            "netease",
-                            "kuwo",
-                            "bilibili"};
+                        "qq",
+                        "163",
+                        "netease",
+                        "kuwo",
+                        "bilibili"};
                     return Arrays.stream(commandList).filter(s -> s.startsWith(args[1])).collect(Collectors.toList());
                 } else {
                     return new ArrayList<>();
@@ -394,8 +394,8 @@ public class Cmd {
                     }
                 } else if (args.length == 4) {
                     if (args[2].equalsIgnoreCase("qq") ||
-                            args[2].equalsIgnoreCase("163") ||
-                            args[2].equalsIgnoreCase("netease")) {
+                        args[2].equalsIgnoreCase("163") ||
+                        args[2].equalsIgnoreCase("netease")) {
                         commandList = new String[]{"import", "play", "list", "update", "show"};
                         return Arrays.stream(commandList).filter(s -> s.startsWith(args[3])).collect(Collectors.toList());
                     } else {

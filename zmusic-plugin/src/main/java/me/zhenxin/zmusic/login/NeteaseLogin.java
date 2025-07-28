@@ -18,6 +18,7 @@ import java.net.URLEncoder;
  * @since 2023/3/21 11:17
  */
 public class NeteaseLogin {
+
     private static final String API = Config.neteaseApiRoot;
     private static final Gson GSON = new Gson();
 

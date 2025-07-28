@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ZMusicAddon extends JavaPlugin {
+
     public static JavaPlugin plugin;
     public static boolean isPapi;
     public static boolean isSupportAdv = true;

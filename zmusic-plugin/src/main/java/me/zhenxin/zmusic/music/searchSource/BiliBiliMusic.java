@@ -36,8 +36,8 @@ public class BiliBiliMusic {
             String getUrl = "https://m.bilibili.com/audio/au" + musicId;
             String urlHtml = NetUtils.getNetString(getUrl, null);
             String musicUrl = urlHtml
-                    .split("<audio preload=\"auto\" src=\"")[1]
-                    .split("\"")[0];
+                .split("<audio preload=\"auto\" src=\"")[1]
+                .split("\"")[0];
             musicUrl = musicUrl.replaceAll("&amp;", "&");
 
             JsonObject data = new JsonObject();

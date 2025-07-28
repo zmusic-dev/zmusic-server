@@ -88,7 +88,7 @@ public class NeteaseCloudMusic {
             returnJson.addProperty("error", sb.toString());
             return returnJson;
         } catch (
-                Exception e) {
+            Exception e) {
             e.printStackTrace();
             return null;
         }

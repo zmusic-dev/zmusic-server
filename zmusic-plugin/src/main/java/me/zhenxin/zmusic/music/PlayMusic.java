@@ -76,9 +76,9 @@ public class PlayMusic {
                     return;
             }
             boolean supportId = source.equalsIgnoreCase("163") ||
-                    source.equalsIgnoreCase("netease") ||
-                    source.equalsIgnoreCase("qq") ||
-                    source.equalsIgnoreCase("bilibili");
+                source.equalsIgnoreCase("netease") ||
+                source.equalsIgnoreCase("qq") ||
+                source.equalsIgnoreCase("bilibili");
             if (json != null) {
                 if (supportId) {
                     musicID = json.get("id").getAsString();
@@ -97,7 +97,7 @@ public class PlayMusic {
             switch (type) {
                 case "all":
                     play(null, players, Lang.playAllSource
-                            .replaceAll("%player%", ZMusic.player.getName(player)), time);
+                        .replaceAll("%player%", ZMusic.player.getName(player)), time);
                     break;
                 case "self":
                     play(player, new ArrayList<>(), "搜索", time);
@@ -106,8 +106,8 @@ public class PlayMusic {
                     String s = Lang.musicMessage;
                     String prefix = "§a" + s.split("%fullName%")[0];
                     TextComponent message = new TextComponent(Config.prefix + prefix
-                            .replaceAll("%player%", ZMusic.player.getName(player))
-                            .replaceAll("%source%", searchSourceName));
+                        .replaceAll("%player%", ZMusic.player.getName(player))
+                        .replaceAll("%source%", searchSourceName));
                     TextComponent music = new TextComponent("§r[§e" + musicFullName + "§r]");
                     music.setColor(ChatColor.YELLOW);
                     if (supportId) {
@@ -168,9 +168,9 @@ public class PlayMusic {
             ZMusic.music.play(musicUrl, p);
             time = System.currentTimeMillis() - time;
             TextComponent success = new TextComponent(Config.prefix + "§a" + Lang.playSuccess
-                    .replaceAll("%source%", searchSourceName)
-                    .replaceAll("%fullName%", musicFullName)
-                    .replaceAll("%time%", String.valueOf(time)));
+                .replaceAll("%source%", searchSourceName)
+                .replaceAll("%fullName%", musicFullName)
+                .replaceAll("%time%", String.valueOf(time)));
             TextComponent stop = new TextComponent("§r[§e" + Lang.clickStop + "§r]");
             stop.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm stop"));
             stop.setColor(ChatColor.YELLOW);

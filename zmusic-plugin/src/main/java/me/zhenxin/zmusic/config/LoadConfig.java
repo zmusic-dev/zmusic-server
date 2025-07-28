@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 public class LoadConfig {
+
     public void load() {
         File oldConfig = new File(ZMusic.dataFolder.getPath(), "config.yml");
         if (oldConfig.exists()) {

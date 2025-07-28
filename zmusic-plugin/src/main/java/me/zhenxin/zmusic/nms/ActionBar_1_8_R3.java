@@ -5,6 +5,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 
 public class ActionBar_1_8_R3 implements ActionBar {
+
     @Override
     public void sendActionBar(Object p, String message) {
         IChatBaseComponent iChatBaseComponent = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + message + "\"}");

@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
  * PlaceholderAPI 扩展类
  */
 public class PApiHook extends PlaceholderExpansion {
+
     @Override
     public String getIdentifier() {
         return "zmusic";

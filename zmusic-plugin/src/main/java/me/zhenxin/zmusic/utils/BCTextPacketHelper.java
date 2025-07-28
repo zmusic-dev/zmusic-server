@@ -19,9 +19,10 @@ public class BCTextPacketHelper {
         boolean a = false;
         try {
             Kick.class.getConstructor(String.class).newInstance("");
-            a=true;
-        } catch (Exception ignore) {}
-        isLegacy=a;
+            a = true;
+        } catch (Exception ignore) {
+        }
+        isLegacy = a;
 
         try {
             bossBarSetTitle = bossBarClass.getMethod("setTitle", a ? String.class : BaseComponent.class);
@@ -39,6 +40,7 @@ public class BCTextPacketHelper {
     }
 
     private static class FailedProcessPacketException extends RuntimeException {
+
         private FailedProcessPacketException(final String fieldName, final Throwable throwable) {
             super("A exception has occurred when getting field: " + fieldName, throwable);
         }

@@ -1,6 +1,7 @@
 package me.zhenxin.zmusic.api;
 
 public class ProgressBar {
+
     final int length = 25;
     char finish;
     char unFinish;

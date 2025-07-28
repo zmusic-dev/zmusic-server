@@ -16,6 +16,7 @@ import java.util.*;
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class AdvancementPacket_1_16_R2 extends AdvancementPacket {
+
     MinecraftKey minecraftKey = new MinecraftKey(namespaced, key);
 
     public AdvancementPacket_1_16_R2(Player player, String message) {
@@ -49,21 +50,21 @@ public class AdvancementPacket_1_16_R2 extends AdvancementPacket {
             String[][] requirements = Arrays.stream(fixedRequirements.toArray()).toArray(String[][]::new);
 
             AdvancementDisplay advancementDisplay = new AdvancementDisplay(
-                    CraftItemStack.asNMSCopy(new ItemStack(icon)),
-                    new ChatMessage(message),
-                    new ChatMessage(desc),
-                    null,
-                    AdvancementFrameType.TASK,
-                    true,
-                    false,
-                    true);
+                CraftItemStack.asNMSCopy(new ItemStack(icon)),
+                new ChatMessage(message),
+                new ChatMessage(desc),
+                null,
+                AdvancementFrameType.TASK,
+                true,
+                false,
+                true);
             Advancement advancement = new Advancement(
-                    minecraftKey,
-                    null,
-                    advancementDisplay,
-                    new AdvancementRewards(0, new MinecraftKey[0], new MinecraftKey[0], null),
-                    criteria,
-                    requirements);
+                minecraftKey,
+                null,
+                advancementDisplay,
+                new AdvancementRewards(0, new MinecraftKey[0], new MinecraftKey[0], null),
+                criteria,
+                requirements);
             AdvancementProgress advancementProgress = new AdvancementProgress();
             advancementProgress.a(criteria, requirements);
             CriterionProgress criterionProgress = advancementProgress.getCriterionProgress("1");

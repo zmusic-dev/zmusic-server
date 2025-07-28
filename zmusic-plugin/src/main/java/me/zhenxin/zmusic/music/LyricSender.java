@@ -11,6 +11,7 @@ import me.zhenxin.zmusic.utils.OtherUtils;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class LyricSender extends Thread {
+
     public Object player;
     public JsonObject lyric;
     public long maxTime;
@@ -161,7 +162,7 @@ public class LyricSender extends Thread {
                 }
             }
             String data = sb.toString().replaceAll("\n",
-                    "\n" + Config.lyricColor);
+                "\n" + Config.lyricColor);
             ZMusic.send.sendAM(player, "[Lyric]" + data);
         }
     }
@@ -228,7 +229,7 @@ public class LyricSender extends Thread {
         String[] strs = str.split("\n");
         progressBar.setProgress(time);
         strs[4] = "进度: " + OtherUtils.formatTime(time) + "/" + OtherUtils.formatTime(maxTime) +
-                " " + progressBar.toString();
+            " " + progressBar.toString();
         StringBuilder sb = new StringBuilder();
         hudInfo = new StringBuilder();
         for (String s : strs) {
