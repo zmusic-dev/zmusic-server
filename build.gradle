@@ -15,7 +15,7 @@ allprojects {
 }
 
 subprojects {
-    if (project.name != 'zmusic-nms-paper') {
+    if (!project.name.startsWith('zmusic-nms-1.21.')) {
         apply plugin: 'java'
 
         dependencies {

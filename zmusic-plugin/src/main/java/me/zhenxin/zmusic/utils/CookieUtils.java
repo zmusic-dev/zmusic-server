@@ -13,6 +13,7 @@ import java.io.IOException;
  * @since 2023/3/21 12:25
  */
 public class CookieUtils {
+
     private static final File COOKIE_FILE = new File(ZMusic.dataFolder, "cookies.txt");
     private static String cookieString = "";
 

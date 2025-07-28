@@ -22,7 +22,7 @@ public class SendBC implements Send {
             ZMusic.runTask.runAsync(() -> player.sendData("allmusic:channel", buf.array()));
             ZMusic.runTask.runAsync(() -> player.sendData("zmusic:channel", buf.array()));
         } catch (
-                Exception e) {
+            Exception e) {
             ZMusic.log.sendDebugMessage("[Mod通信] 数据发送发生错误");
         }
     }
@@ -35,7 +35,7 @@ public class SendBC implements Send {
         try {
             ZMusic.runTask.runAsync(() -> player.sendData("AudioBuffer", data.getBytes()));
         } catch (
-                Exception e) {
+            Exception e) {
             ZMusic.log.sendDebugMessage("[Mod通信] 数据发送发生错误");
         }
     }

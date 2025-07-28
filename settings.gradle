@@ -11,5 +11,6 @@ include(
         "zmusic-nms:zmusic-nms-1.18",
         "zmusic-nms:zmusic-nms-1.19",
         "zmusic-nms:zmusic-nms-1.20",
-        "zmusic-nms:zmusic-nms-paper"
+        "zmusic-nms:zmusic-nms-1.21.4",
+        "zmusic-nms:zmusic-nms-1.21.7"
 )

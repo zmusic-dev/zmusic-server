@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
  * PlaceholderAPI 扩展类
  */
 public class PApiHook extends PlaceholderExpansion {
+
     private static String formatTime(Long time) {
         if (time != null) {
             if (time < 60) {

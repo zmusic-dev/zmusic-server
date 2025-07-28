@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import java.nio.charset.StandardCharsets;
 
 public class SendBukkit implements Send {
+
     private final Version version = new Version();
 
     @Override

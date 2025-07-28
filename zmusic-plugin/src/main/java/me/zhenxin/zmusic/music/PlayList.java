@@ -233,10 +233,10 @@ public class PlayList {
             String filePath;
             if (isGlobal) {
                 filePath = ZMusic.dataFolder
-                        + "/playlist/global/" + platform;
+                    + "/playlist/global/" + platform;
             } else {
                 filePath = ZMusic.dataFolder
-                        + "/playlist/" + platform + "/" + ZMusic.player.getName(player);
+                    + "/playlist/" + platform + "/" + ZMusic.player.getName(player);
             }
             File path = new File(filePath);
             if (!path.exists()) {
@@ -260,10 +260,10 @@ public class PlayList {
         String filePath = "";
         if (isGlobal) {
             filePath = ZMusic.dataFolder
-                    + "/playlist/global/" + platform;
+                + "/playlist/global/" + platform;
         } else {
             filePath = ZMusic.dataFolder
-                    + "/playlist/" + platform + "/" + ZMusic.player.getName(player);
+                + "/playlist/" + platform + "/" + ZMusic.player.getName(player);
         }
         files = OtherUtils.queryFileNames(filePath);
         try {
@@ -331,10 +331,10 @@ public class PlayList {
         File file;
         if (isGlobal) {
             filePath = ZMusic.dataFolder
-                    + "/playlist/global/" + platform + "/" + id + ".json";
+                + "/playlist/global/" + platform + "/" + id + ".json";
         } else {
             filePath = ZMusic.dataFolder
-                    + "/playlist/" + platform + "/" + ZMusic.player.getName(player) + "/" + id + ".json";
+                + "/playlist/" + platform + "/" + ZMusic.player.getName(player) + "/" + id + ".json";
         }
         file = new File(filePath);
         json = gson.fromJson(OtherUtils.readFileToString(file), JsonObject.class);

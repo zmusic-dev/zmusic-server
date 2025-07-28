@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lang {
+
     public static String searching;
     public static String playing;
     public static String musicMessage;

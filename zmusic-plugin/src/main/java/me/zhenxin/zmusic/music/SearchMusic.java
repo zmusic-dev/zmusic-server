@@ -14,6 +14,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class SearchMusic {
+
     static String musicID;
     static String musicName;
     static String musicSinger;
@@ -54,9 +55,9 @@ public class SearchMusic {
                 TextComponent play = new TextComponent("§r[§e" + Lang.clickPlay + "§r]§r");
                 TextComponent music = new TextComponent("§r[§e" + Lang.clickMusic + "§r]§r");
                 if (source.equalsIgnoreCase("163") ||
-                        source.equalsIgnoreCase("netease") ||
-                        source.equalsIgnoreCase("qq") ||
-                        source.equalsIgnoreCase("bilibili")) {
+                    source.equalsIgnoreCase("netease") ||
+                    source.equalsIgnoreCase("qq") ||
+                    source.equalsIgnoreCase("bilibili")) {
                     musicID = j.getAsJsonObject().get("id").getAsString();
                     play.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm play " + source + " -id:" + musicID));
                     music.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm music " + source + " -id:" + musicID));

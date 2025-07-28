@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 
 public class NetUtils {
+
     /**
      * 获取网络文件返回文本
      *

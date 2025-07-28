@@ -200,9 +200,9 @@ public class PlayListPlayer extends Thread {
                     successTime = System.currentTimeMillis() - successTime;
                     ZMusic.log.sendDebugMessage("[歌单] 歌单播放器(ID:" + getId() + ")为[" + ZMusic.player.getName(player) + "]播放歌单<" + playListName + ">中的" + fullName);
                     TextComponent message = new TextComponent(Config.prefix + "§a" + Lang.playSuccess
-                            .replaceAll("%source%", searchSourceName)
-                            .replaceAll("%fullName%", fullName)
-                            .replaceAll("%time%", String.valueOf(successTime)));
+                        .replaceAll("%source%", searchSourceName)
+                        .replaceAll("%fullName%", fullName)
+                        .replaceAll("%time%", String.valueOf(successTime)));
                     TextComponent prev = new TextComponent("§r[§e" + Lang.clickPrev + "§r]§r");
                     prev.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist prev"));
                     prev.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b" + Lang.clickPrevText).create()));

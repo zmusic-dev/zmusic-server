@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class LoadLang {
+
     JsonObject json;
 
     public LoadLang() {

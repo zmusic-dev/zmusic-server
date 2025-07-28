@@ -22,6 +22,7 @@ import java.util.*;
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class AdvancementPacket_1_17_R1 extends AdvancementPacket {
+
     MinecraftKey minecraftKey = new MinecraftKey(namespaced, key);
 
     public AdvancementPacket_1_17_R1(Player player, String message) {
@@ -55,30 +56,30 @@ public class AdvancementPacket_1_17_R1 extends AdvancementPacket {
             String[][] requirements = Arrays.stream(fixedRequirements.toArray()).toArray(String[][]::new);
 
             AdvancementDisplay advancementDisplay = new AdvancementDisplay(
-                    CraftItemStack.asNMSCopy(new ItemStack(icon)),
-                    new ChatMessage(message),
-                    new ChatMessage(desc),
-                    null,
-                    AdvancementFrameType.a,
-                    true,
-                    false,
-                    true);
+                CraftItemStack.asNMSCopy(new ItemStack(icon)),
+                new ChatMessage(message),
+                new ChatMessage(desc),
+                null,
+                AdvancementFrameType.a,
+                true,
+                false,
+                true);
             Advancement advancement = new Advancement(
-                    minecraftKey,
-                    null,
-                    advancementDisplay,
-                    new AdvancementRewards(0, new MinecraftKey[0], new MinecraftKey[0], null),
-                    criteria,
-                    requirements
+                minecraftKey,
+                null,
+                advancementDisplay,
+                new AdvancementRewards(0, new MinecraftKey[0], new MinecraftKey[0], null),
+                criteria,
+                requirements
             );
             AdvancementProgress advancementProgress = new AdvancementProgress();
             advancementProgress.a(criteria, requirements);
             CriterionProgress criterionProgress = null;
             try {
                 criterionProgress = (CriterionProgress) advancementProgress
-                        .getClass()
-                        .getDeclaredMethod("getCriterionProgress", String.class)
-                        .invoke(advancementProgress, "1");
+                    .getClass()
+                    .getDeclaredMethod("getCriterionProgress", String.class)
+                    .invoke(advancementProgress, "1");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -95,8 +96,8 @@ public class AdvancementPacket_1_17_R1 extends AdvancementPacket {
 
             PlayerConnection connection = player.getHandle().b;
             connection.getClass()
-                    .getDeclaredMethod("sendPacket", Packet.class)
-                    .invoke(connection, packet);
+                .getDeclaredMethod("sendPacket", Packet.class)
+                .invoke(connection, packet);
         } catch (Exception e) {
             e.printStackTrace();
         }

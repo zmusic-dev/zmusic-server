@@ -7,6 +7,7 @@ import java.util.List;
 
 
 public class BossBarBukkit implements BossBar {
+
     private final Player p;
     private final String title;
     private final double seconds;

@@ -6,6 +6,7 @@ import me.zhenxin.zmusic.utils.NetUtils;
 import java.net.URLEncoder;
 
 public class KuwoMusic {
+
     /**
      * 获取音乐链接
      *
@@ -32,7 +33,7 @@ public class KuwoMusic {
             returnJson.addProperty("lyric", "");
             returnJson.addProperty("lyricTr", "");
             String sb = "酷我音乐暂不支持歌词显示\n" +
-                    "酷我音乐暂不支持翻译显示\n";
+                "酷我音乐暂不支持翻译显示\n";
             returnJson.addProperty("error", sb);
             return returnJson;
         } catch (Exception e) {
