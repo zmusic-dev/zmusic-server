@@ -12,7 +12,7 @@ fun gitCommitHash(): String {
 plugins {
     java
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.johnrengelman.shadow)
+    alias(libs.plugins.gradleup.shadow)
 }
 
 allprojects {

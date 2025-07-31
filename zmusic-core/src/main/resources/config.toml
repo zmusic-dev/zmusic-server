@@ -29,7 +29,7 @@ prefix = "&bZMusic &e>>> &r"
 # API设置
 [api]
 # 网易云音乐
-netease-link = "https://zm.armoe.cn"
+netease-link = "https://ncm.zhenxin.me"
 
 # ZMusic VIP设置
 [vip]
