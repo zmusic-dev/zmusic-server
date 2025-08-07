@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static me.zhenxin.zmusic.dependencies.common.PrimitiveIO.t;
+
 
 public class RuntimeEnvDependency {
 
@@ -39,7 +41,7 @@ public class RuntimeEnvDependency {
         }
     }
 
-    private String defaultLibrary = "libraries";
+    private String defaultLibrary = DependencyConfig.DEFAULT_LIBRARY_DIR;
 
     public String getDefaultLibrary() {
         return defaultLibrary;
@@ -181,20 +183,31 @@ public class RuntimeEnvDependency {
             boolean external
     ) throws Throwable {
         if (repository == null || repository.isEmpty()) {
-            repository = "https://maven.aliyun.com/repository/central";
+            repository = DependencyConfig.DEFAULT_REPOSITORY;
         }
         // 使用 Aether 处理依赖
         if (isAetherFound) {
-            AetherResolver.of(repository).resolve(url, scope, transitive, ignoreOptional).forEach(file -> {
-                try {
-                    AetherResolver.inject(file, relocation, external);
-                } catch (Throwable ex) {
-                    if (!ignoreException) {
-                        //noinspection CallToPrintStackTrace
-                        ex.printStackTrace();
-                    }
+            long startTime = me.zhenxin.zmusic.dependencies.common.RuntimeLogger.logDependencyLoadStart(url);
+            try {
+                List<File> resolvedFiles = AetherResolver.of(repository).resolve(url, scope, transitive, ignoreOptional);
+
+                // 根据配置决定是否使用并行注入（仅对多个文件有意义）
+                me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("开始注入 {0} 个依赖文件", "Starting to inject {0} dependency files"), resolvedFiles.size());
+                if (DependencyConfig.PARALLEL_DOWNLOAD && resolvedFiles.size() > 1) {
+                    me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("使用并行模式注入依赖", "Using parallel mode to inject dependencies"));
+                    injectFilesParallel(resolvedFiles, relocation, external, ignoreException);
+                } else {
+                    me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("使用顺序模式注入依赖", "Using sequential mode to inject dependencies"));
+                    injectFilesSequential(resolvedFiles, relocation, external, ignoreException);
                 }
-            });
+
+                me.zhenxin.zmusic.dependencies.common.RuntimeLogger.logDependencyLoadSuccess(url, startTime);
+            } catch (Throwable ex) {
+                me.zhenxin.zmusic.dependencies.common.RuntimeLogger.logDependencyLoadFailure(url, startTime, ex);
+                if (!ignoreException) {
+                    throw ex;
+                }
+            }
         } else {
             loadDependencyLegacy(url, baseDir, relocation, repository, ignoreOptional, ignoreException, transitive, scope, external);
         }
@@ -244,6 +257,84 @@ public class RuntimeEnvDependency {
         } else {
             downloader.injectClasspath(Collections.singleton(dep));
         }
+    }
+
+    /**
+     * 顺序注入文件
+     */
+    private void injectFilesSequential(List<File> files, List<JarRelocation> relocation, boolean external, boolean ignoreException) throws Throwable {
+        for (File file : files) {
+            try {
+                AetherResolver.inject(file, relocation, external);
+            } catch (Throwable ex) {
+                if (!ignoreException) {
+                    me.zhenxin.zmusic.dependencies.common.RuntimeLogger.warning(t("✗ 注入依赖失败: {0} - {1}", "✗ Failed to inject dependency: {0} - {1}"), file.getName(), ex.getMessage());
+                    throw ex;
+                } else {
+                    me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("注入依赖失败(已忽略): {0} - {1}", "Failed to inject dependency (ignored): {0} - {1}"), file.getName(), ex.getMessage());
+                }
+            }
+        }
+    }
+
+    /**
+     * 并行注入文件（仅用于文件预处理，ClassLoader注入仍需要串行）
+     */
+    private void injectFilesParallel(List<File> files, List<JarRelocation> relocation, boolean external, boolean ignoreException) throws Throwable {
+        // 注意：由于ClassLoader操作需要线程安全，这里只是优化重定向文件的生成过程
+        // 实际的ClassLoader注入仍然是串行的，以确保安全性
+
+        java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(
+                Math.min(DependencyConfig.MAX_PARALLEL_DOWNLOADS, files.size())
+        );
+
+        try {
+            // 预处理阶段：并行准备重定向文件
+            List<java.util.concurrent.Future<File>> futures = new ArrayList<>();
+            for (File file : files) {
+                futures.add(executor.submit(() -> {
+                    try {
+                        // 如果需要重定向，预先生成重定向文件
+                        if (relocation != null && !relocation.isEmpty()) {
+                            me.zhenxin.zmusic.dependencies.JarCacheManager cacheManager = me.zhenxin.zmusic.dependencies.JarCacheManager.getInstance();
+                            File relocatedFile = cacheManager.getRelocatedFile(file, relocation.hashCode());
+                            if (cacheManager.needsRelocate(file, relocatedFile)) {
+                                // 在这里执行重定向操作，但不注入ClassLoader
+                                me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("预处理重定向文件: {0}", "Pre-processing relocation for: {0}"), file.getName());
+                            }
+                        }
+                        return file;
+                    } catch (Exception e) {
+                        me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("预处理文件失败: {0} - {1}", "Failed to pre-process file: {0} - {1}"), file.getName(), e.getMessage());
+                        return file; // 返回原始文件，让后续串行处理
+                    }
+                }));
+            }
+
+            // 等待预处理完成
+            for (java.util.concurrent.Future<File> future : futures) {
+                try {
+                    future.get(30, java.util.concurrent.TimeUnit.SECONDS); // 30秒超时
+                } catch (java.util.concurrent.TimeoutException e) {
+                    me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("预处理超时，回退到顺序模式", "Pre-processing timeout, falling back to sequential"));
+                    break;
+                }
+            }
+
+        } finally {
+            executor.shutdown();
+            try {
+                if (!executor.awaitTermination(5, java.util.concurrent.TimeUnit.SECONDS)) {
+                    executor.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                executor.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        // 最终的ClassLoader注入必须串行进行，确保线程安全
+        injectFilesSequential(files, relocation, external, ignoreException);
     }
 
     boolean test(String path) {

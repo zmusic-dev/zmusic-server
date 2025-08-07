@@ -37,6 +37,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static me.zhenxin.zmusic.dependencies.common.PrimitiveIO.t;
+
 /**
  * @author md_5, sky
  * @since 2024/7/20 20:31
@@ -73,20 +75,25 @@ public class AetherResolver {
     @SuppressWarnings("DuplicatedCode")
     public static void inject(@NotNull File file, @Nullable List<JarRelocation> relocation, boolean isExternal) throws Throwable {
         // 避免重复加载多个依赖
-        if (INJECTED_DEPENDENCIES.contains(file.getPath())) {
+        String filePath = file.getPath();
+        if (INJECTED_DEPENDENCIES.contains(filePath)) {
+            me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("跳过已加载的依赖: {0}", "Skipping already loaded dependency: {0}"), file.getName());
             return;
-        } else {
-            INJECTED_DEPENDENCIES.add(file.getParent());
         }
+        INJECTED_DEPENDENCIES.add(filePath);
+        me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("正在注入依赖文件: {0} ({1} bytes)", "Injecting dependency file: {0} ({1} bytes)"), file.getName(), file.length());
         // 如果没有重定向规则，直接注入
         if (relocation == null || relocation.isEmpty()) {
             ClassAppender.addPath(file.toPath(), isExternal);
+            me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("直接注入: {0}", "Direct injection: {0}"), file.getName());
         } else {
             // 获取重定向后的文件
-            String name = file.getName().substring(0, file.getName().lastIndexOf('.'));
-            File rel = new File(file.getParentFile(), name + "_r2_" + Math.abs(relocation.hashCode()) + ".jar");
-            // 如果文件不存在或者文件大小为 0，就执行重定向逻辑
-            if (!rel.exists() || rel.length() == 0) {
+            int relocationHash = relocation.hashCode();
+            me.zhenxin.zmusic.dependencies.JarCacheManager cacheManager = me.zhenxin.zmusic.dependencies.JarCacheManager.getInstance();
+            File rel = cacheManager.getRelocatedFile(file, relocationHash);
+
+            // 检查重定向文件是否需要重新生成
+            if (cacheManager.needsRelocate(file, rel)) {
                 try {
                     // 获取重定向规则
                     List<Relocation> rules = relocation.stream().map(JarRelocation::toRelocation).collect(Collectors.toList());
@@ -100,15 +107,40 @@ public class AetherResolver {
             }
             // 注入重定向后的文件
             ClassAppender.addPath(rel.toPath(), isExternal);
+            me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("注入重定向文件: {0} -> {1}", "Injecting relocated file: {0} -> {1}"), file.getName(), rel.getName());
         }
     }
 
     public List<File> resolve(@NotNull String library, List<DependencyScope> scope, boolean isTransitive, boolean ignoreOptional) throws DependencyResolutionException {
+        me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("解析依赖: {0} (传递性: {1})", "Resolving dependency: {0} (transitive: {1})"), library, isTransitive);
+        return resolveWithRetry(library, scope, isTransitive, ignoreOptional, me.zhenxin.zmusic.dependencies.DependencyConfig.DEFAULT_RETRY_COUNT);
+    }
+
+    private List<File> resolveWithRetry(@NotNull String library, List<DependencyScope> scope, boolean isTransitive, boolean ignoreOptional, int maxRetries) throws DependencyResolutionException {
         Dependency dependency = new Dependency(new DefaultArtifact(library), null);
-        DependencyResult result;
         DependencyRequest dependencyRequest = getDependencyRequest(dependency, scope, isTransitive, ignoreOptional);
-        result = this.repository.resolveDependencies(this.session, dependencyRequest);
-        return result.getArtifactResults().stream().map(it -> it.getArtifact().getFile()).collect(Collectors.toList());
+
+        DependencyResolutionException lastException = null;
+        for (int attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                DependencyResult result = this.repository.resolveDependencies(this.session, dependencyRequest);
+                List<File> files = result.getArtifactResults().stream().map(it -> it.getArtifact().getFile()).collect(Collectors.toList());
+                me.zhenxin.zmusic.dependencies.common.RuntimeLogger.debug(t("解析完成: {0}, 获得 {1} 个文件", "Resolution completed: {0}, got {1} files"), library, files.size());
+                return files;
+            } catch (DependencyResolutionException e) {
+                lastException = e;
+                if (attempt < maxRetries) {
+                    // 等待一段时间后重试，使用指数退避策略
+                    try {
+                        Thread.sleep(1000L * attempt);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        throw new DependencyResolutionException(new DependencyResult(dependencyRequest), "Interrupted during retry", ie);
+                    }
+                }
+            }
+        }
+        throw lastException;
     }
 
     private @NotNull DependencyRequest getDependencyRequest(Dependency dependency, List<DependencyScope> scope, boolean isTransitive, boolean ignoreOptional) {

@@ -30,6 +30,9 @@ public class RuntimeEnv {
         String defaultLibrary = ENV_DEPENDENCY.getDefaultLibrary();
         ENV_DEPENDENCY.setDefaultLibrary(dataFolder + "/" + defaultLibrary);
 
+        // 初始化JAR缓存管理器
+        JarCacheManager.getInstance().initialize();
+
         // 加载 Kotlin 环境
         try {
             List<JarRelocation> relocations = new ArrayList<>();

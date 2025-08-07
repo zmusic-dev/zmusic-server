@@ -71,5 +71,7 @@ public class ZMusicRuntime {
                 "运行时依赖加载完成！",
                 "Runtime dependencies loaded!"
         ));
+        // 输出依赖加载统计信息
+        RuntimeLogger.logDependencyStats();
     }
 }
