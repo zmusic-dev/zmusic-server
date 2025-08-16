@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.2.10"
 blossom = "2.1.0"
-shadow = "9.0.1"
+shadow = "9.0.2"
 
 lucko-jar-relocator = "1.7"
 google-guava = "33.4.8-jre"
