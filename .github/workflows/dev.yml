@@ -22,23 +22,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
           cache: 'gradle'
+
       - name: Build with Gradle
         run: ./gradlew clean build
-      - uses: actions/upload-artifact@v4
+
+      - name: Upload Bukkit Artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: 'zmusic-bukkit'
           path: zmusic-bukkit/build/libs/*.jar
-      - uses: actions/upload-artifact@v4
+
+      - name: Upload Bungee Artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: 'zmusic-bungee'
           path: zmusic-bungee/build/libs/*.jar
-      - uses: actions/upload-artifact@v4
+
+      - name: Upload Velocity Artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: 'zmusic-velocity'
           path: zmusic-velocity/build/libs/*.jar
