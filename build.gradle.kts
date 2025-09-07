@@ -64,10 +64,6 @@ subprojects {
 
         archiveClassifier.set("")
         minimize()
-
-        manifest {
-            attributes["Main-Class"] = "me.zhenxin.zmusic.Application"
-        }
     }
 
     tasks.withType<KotlinCompile> {
