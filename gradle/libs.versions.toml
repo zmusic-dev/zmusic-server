@@ -17,7 +17,7 @@ bstats = "3.1.0"
 placeholderapi = "2.11.6"
 
 hutool = "5.8.40"
-netty = "4.2.5.Final"
+netty = "4.2.6.Final"
 nightconfig = "3.8.3"
 
 [plugins]
