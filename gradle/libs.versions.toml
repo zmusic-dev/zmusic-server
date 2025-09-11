@@ -5,7 +5,7 @@ shadow = "9.1.0"
 
 lucko-jar-relocator = "1.7"
 google-guava = "33.4.8-jre"
-google-gson = "2.13.1"
+google-gson = "2.13.2"
 maven-resolver = "1.9.24"
 maven-resolver-provider = "3.9.11"
 
