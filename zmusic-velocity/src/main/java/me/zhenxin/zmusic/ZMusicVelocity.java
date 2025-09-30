@@ -17,6 +17,7 @@ import me.zhenxin.zmusic.utils.mod.SendVelocity;
 import me.zhenxin.zmusic.utils.music.Music;
 import me.zhenxin.zmusic.utils.player.PlayerVelocity;
 import me.zhenxin.zmusic.utils.runtask.RunTaskVelocity;
+import org.bstats.velocity.Metrics;
 
 import java.nio.file.Path;
 import java.util.logging.Logger;
@@ -28,12 +29,14 @@ public class ZMusicVelocity {
     private final ProxyServer server;
     private final Logger logger;
     private final Path dataDirectory;
+    private final Metrics.Factory metricsFactory;
 
     @Inject
-    public ZMusicVelocity(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
+    public ZMusicVelocity(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory, Metrics.Factory metricsFactory) {
         this.server = server;
         this.logger = logger;
         this.dataDirectory = dataDirectory;
+        this.metricsFactory = metricsFactory;
     }
 
     @Subscribe
@@ -54,6 +57,9 @@ public class ZMusicVelocity {
         ZMusic.thisVer = "2.10.4";
         ZMusic.log.sendNormalMessage("正在加载中....");
         CookieUtils.initCookieManager();
+        
+        // Initialize bStats metrics (service ID for ZMusic Velocity)
+        metricsFactory.make(this, 19999); // TODO: Get actual service ID from bStats
         
         // Register plugin channels
         server.getChannelRegistrar().register("zmusic:channel");

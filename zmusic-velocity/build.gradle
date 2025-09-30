@@ -10,6 +10,9 @@ dependencies {
     compileOnly libs.lombok
     annotationProcessor libs.lombok
     annotationProcessor libs.velocity
+    
+    // bStats for Velocity
+    implementation 'org.bstats:bstats-velocity:3.1.0'
 }
 
 build {

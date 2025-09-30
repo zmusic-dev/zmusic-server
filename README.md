@@ -29,6 +29,7 @@
 * 歌单播放
 * 音量调节
 * 支持BungeeCord
+* 支持Velocity
 
 ## 文档
 
