@@ -3,6 +3,7 @@ shadow = "8.3.5"
 
 spigot = "1.21-R0.1-SNAPSHOT"
 bungeecord = "1.21-R0.2"
+velocity = "3.3.0-SNAPSHOT"
 
 netty = "4.2.1.Final"
 
@@ -18,6 +19,7 @@ shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 # Platform API
 spigot = { module = "org.spigotmc:spigot-api", version.ref = "spigot" }
 bungeecord = { module = "net.md-5:bungeecord-api", version.ref = "bungeecord" }
+velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocity" }
 # netty
 netty_buffer = { module = "io.netty:netty-buffer", version.ref = "netty" }
 # PAPI

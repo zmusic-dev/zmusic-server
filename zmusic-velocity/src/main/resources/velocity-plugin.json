@@ -1,0 +1,9 @@
+{
+  "id": "zmusic",
+  "name": "ZMusic",
+  "version": "${version}",
+  "description": "跨服音乐播放插件",
+  "authors": ["真心"],
+  "main": "me.zhenxin.zmusic.ZMusicVelocity",
+  "dependencies": []
+}

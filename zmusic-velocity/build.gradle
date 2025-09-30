@@ -1,0 +1,25 @@
+plugins {
+    alias(libs.plugins.shadow)
+    id 'java'
+}
+
+version = '2.10.4'
+
+dependencies {
+    compileOnly libs.velocity
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+    annotationProcessor libs.velocity
+}
+
+build {
+    dependsOn shadowJar
+}
+
+processResources {
+    inputs.property "version", project.version
+    
+    filesMatching("velocity-plugin.json") {
+        expand "version": project.version
+    }
+}
