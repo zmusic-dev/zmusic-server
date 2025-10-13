@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.2.20"
-blossom = "2.1.0"
+blossom = "2.2.0"
 shadow = "9.2.2"
 
 lucko-jar-relocator = "1.7"
