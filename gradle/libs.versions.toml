@@ -14,7 +14,7 @@ bungeecord = "1.21-R0.4"
 velocity = "3.4.0-SNAPSHOT"
 
 bstats = "3.1.0"
-placeholderapi = "2.11.6"
+placeholderapi = "2.11.7"
 
 hutool = "5.8.41"
 netty = "4.2.7.Final"
