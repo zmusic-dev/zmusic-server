@@ -3,7 +3,7 @@ shadow = "8.3.5"
 
 spigot = "1.21-R0.1-SNAPSHOT"
 bungeecord = "1.21-R0.2"
-velocity = "3.3.0-SNAPSHOT"
+velocity = "3.1.0"
 
 netty = "4.2.1.Final"
 
