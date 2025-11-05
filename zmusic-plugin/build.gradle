@@ -22,7 +22,7 @@ dependencies {
     compileOnly libs.placeholderapi
     compileOnly libs.vault
     
-    implementation libs.bstats.velocity
+    implementation libs.bstats-velocity
 }
 
 build {
