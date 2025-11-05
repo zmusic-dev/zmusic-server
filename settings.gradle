@@ -1,7 +1,6 @@
 rootProject.name = 'ZMusic'
 include('zmusic-plugin')
 include('zmusic-addon')
-include('zmusic-velocity')
 
 // NMS
 include(

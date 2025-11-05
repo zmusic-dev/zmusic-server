@@ -17,9 +17,13 @@ dependencies {
     implementation(project(":zmusic-nms:zmusic-nms-1.21.7"))
 
     compileOnly libs.bungeecord
+    compileOnly libs.velocity
 
     compileOnly libs.placeholderapi
     compileOnly libs.vault
+    
+    // bStats for Velocity
+    implementation 'org.bstats:bstats-velocity:3.1.0'
 }
 
 build {
@@ -34,6 +38,10 @@ processResources {
     }
 
     filesMatching("plugin.yml") {
+        expand "version": project.version
+    }
+    
+    filesMatching("velocity-plugin.json") {
         expand "version": project.version
     }
 }
