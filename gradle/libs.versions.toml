@@ -30,4 +30,4 @@ vault = { module = "com.github.MilkBowl:VaultAPI", version.ref = "vault" }
 # Lombok
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 # bStats
-bstats-velocity = { module = "org.bstats:bstats-velocity", version.ref = "bstats-velocity" }
+bstatsVelocity = { module = "org.bstats:bstats-velocity", version.ref = "bstats-velocity" }
