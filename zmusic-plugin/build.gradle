@@ -22,8 +22,7 @@ dependencies {
     compileOnly libs.placeholderapi
     compileOnly libs.vault
     
-    // bStats for Velocity
-    implementation 'org.bstats:bstats-velocity:3.1.0'
+    implementation libs.bstats.velocity
 }
 
 build {

@@ -6,8 +6,7 @@ public class RunTaskVelocity implements RunTask {
 
     @Override
     public void run(Runnable runnable) {
-        // For Velocity, we run tasks synchronously on the main thread
-        runnable.run();
+
     }
 
     @Override

@@ -43,7 +43,7 @@ public class ZMusicVelocity {
     public void onProxyInitialization(ProxyInitializeEvent event) {
         ZMusic.log = new LogVelocity(server.getConsoleCommandSource());
         plugin = this;
-        ZMusic.isBC = true; // Velocity acts like BungeeCord for our purposes
+        ZMusic.isBC = true;
         ZMusic.runTask = new RunTaskVelocity();
         ZMusic.message = new MessageVelocity();
         ZMusic.music = new Music();
@@ -57,19 +57,12 @@ public class ZMusicVelocity {
         ZMusic.thisVer = "2.10.4";
         ZMusic.log.sendNormalMessage("正在加载中....");
         CookieUtils.initCookieManager();
-        
-        // Initialize bStats metrics (service ID for ZMusic Velocity)
-        metricsFactory.make(this, 19999); // TODO: Get actual service ID from bStats
-        
-        // Register plugin channels
+        metricsFactory.make(this, 12426);
         server.getChannelRegistrar().register("zmusic:channel");
         server.getChannelRegistrar().register("allmusic:channel");
         server.getChannelRegistrar().register("AudioBuffer");
-        
-        // Register command and events
         server.getCommandManager().register("zm", new CmdVelocity(), "zmusic", "music");
         server.getEventManager().register(this, new EventVelocity());
-        
         ZMusic.loadEnd(server.getConsoleCommandSource());
     }
 

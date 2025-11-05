@@ -25,6 +25,6 @@ public class CmdVelocity implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return true; // Allow all users to execute the command, permissions are handled internally
+        return true;
     }
 }

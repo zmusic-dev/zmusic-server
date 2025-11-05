@@ -11,6 +11,7 @@ placeholderapi = "2.11.6"
 vault = "1.7.1"
 
 lombok = "1.18.38"
+bstats-velocity = "3.1.0"
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
@@ -28,3 +29,5 @@ placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholder
 vault = { module = "com.github.MilkBowl:VaultAPI", version.ref = "vault" }
 # Lombok
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+# bStats
+bstats-velocity = { module = "org.bstats:bstats-velocity", version.ref = "bstats-velocity" }
