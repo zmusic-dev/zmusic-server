@@ -1,6 +1,8 @@
 dependencies {
     api(project(":zmusic-runtime"))
 
+    compileOnly(libs.adventure)
+
     compileOnly(libs.bundles.hutool)
     compileOnly(libs.bundles.nightconfig)
 }

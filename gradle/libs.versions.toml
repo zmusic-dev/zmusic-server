@@ -13,6 +13,8 @@ spigot = "1.21.10-R0.1-SNAPSHOT"
 bungeecord = "1.21-R0.4"
 velocity = "3.4.0-SNAPSHOT"
 
+adventure = "4.25.0"
+
 bstats = "3.1.0"
 placeholderapi = "2.11.7"
 
@@ -45,6 +47,8 @@ maven-resolver-provider = { module = "org.apache.maven:maven-resolver-provider",
 spigot = { module = "org.spigotmc:spigot-api", version.ref = "spigot" }
 bungeecord = { module = "net.md-5:bungeecord-api", version.ref = "bungeecord" }
 velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocity" }
+# Kyori Adventure
+adventure = { module = "net.kyori:adventure-api", version.ref = "adventure" }
 # bStats
 bstats-bukkit = { module = "org.bstats:bstats-bukkit", version.ref = "bstats" }
 bstats-bungeecord = { module = "org.bstats:bstats-bungeecord", version.ref = "bstats" }
