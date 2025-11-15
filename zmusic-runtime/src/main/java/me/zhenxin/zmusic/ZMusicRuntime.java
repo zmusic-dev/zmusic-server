@@ -4,6 +4,9 @@ import me.zhenxin.zmusic.dependencies.RuntimeDependency;
 import me.zhenxin.zmusic.dependencies.RuntimeEnv;
 import me.zhenxin.zmusic.dependencies.common.RuntimeLogger;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import static me.zhenxin.zmusic.dependencies.common.PrimitiveIO.t;
 
 /**
@@ -61,11 +64,13 @@ public class ZMusicRuntime {
             }
         } catch (Throwable t) {
             RuntimeLogger.warning(t(
-                    "加载运行时依赖失败，请检查运行环境！",
-                    "Failed to load runtime dependencies, please check the runtime environment!"
-            ));
-            //noinspection CallToPrintStackTrace
-            t.printStackTrace();
+                    "加载运行时依赖失败，请检查运行环境！{0}",
+                    "Failed to load runtime dependencies, please check the runtime environment! {0}"
+            ), t.getMessage());
+            RuntimeLogger.debug(t(
+                    "异常堆栈: {0}",
+                    "Exception stack trace: {0}"
+            ), getStackTrace(t));
         }
         RuntimeLogger.info(t(
                 "运行时依赖加载完成！",
@@ -73,5 +78,12 @@ public class ZMusicRuntime {
         ));
         // 输出依赖加载统计信息
         RuntimeLogger.logDependencyStats();
+    }
+
+    private static String getStackTrace(Throwable throwable) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        throwable.printStackTrace(pw);
+        return sw.toString();
     }
 }

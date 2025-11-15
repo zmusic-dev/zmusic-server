@@ -1,9 +1,13 @@
 package me.zhenxin.zmusic.dependencies;
 
+import me.zhenxin.zmusic.dependencies.common.RuntimeLogger;
+
 import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static me.zhenxin.zmusic.dependencies.common.PrimitiveIO.t;
 
 /**
  * JAR缓存管理器，负责清理过期的重定向文件
@@ -52,9 +56,10 @@ public class JarCacheManager {
      * 清理过期的重定向文件
      */
     public void cleanupExpiredFiles() {
-        if (DependencyConfig.VERBOSE_LOGGING) {
-            System.out.println("[JarCacheManager] Starting cleanup of expired relocated JAR files...");
-        }
+        RuntimeLogger.debug(t(
+                "开始清理过期的重定向 JAR 文件...",
+                "Starting cleanup of expired relocated JAR files..."
+        ));
 
         String libraryPath = RuntimeEnv.ENV_DEPENDENCY.getDefaultLibrary();
         File libraryDir = new File(libraryPath);
@@ -87,16 +92,20 @@ public class JarCacheManager {
                 if (currentTime - file.lastModified() > maxAgeMs) {
                     if (file.delete()) {
                         cleanedCount++;
-                        if (DependencyConfig.VERBOSE_LOGGING) {
-                            System.out.println("[JarCacheManager] Cleaned up expired file: " + file.getName());
-                        }
+                        RuntimeLogger.debug(t(
+                                "清理过期文件: {0}",
+                                "Cleaned up expired file: {0}"
+                        ), file.getName());
                     }
                 }
             }
         }
 
-        if (cleanedCount > 0 && DependencyConfig.VERBOSE_LOGGING) {
-            System.out.println("[JarCacheManager] Cleaned up " + cleanedCount + " expired files in " + directory.getPath());
+        if (cleanedCount > 0) {
+            RuntimeLogger.debug(t(
+                    "在 {0} 中清理了 {1} 个过期文件",
+                    "Cleaned up {1} expired files in {0}"
+            ), directory.getPath(), cleanedCount);
         }
     }
 

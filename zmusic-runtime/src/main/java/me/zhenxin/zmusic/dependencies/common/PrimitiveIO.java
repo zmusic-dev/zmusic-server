@@ -20,7 +20,6 @@ import java.util.UUID;
  * @author 坏黑
  * @since 2023/3/31 14:59
  */
-@SuppressWarnings("CallToPrintStackTrace")
 public class PrimitiveIO {
     private static final char[] HEX_ARRAY = "0123456789abcdef".toCharArray();
     private static final int BUFFER_SIZE = 8192;
@@ -72,7 +71,10 @@ public class PrimitiveIO {
             byte[] hashBytes = digest.digest();
             return bytesToHex(hashBytes);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            RuntimeLogger.warning(t(
+                    "计算文件哈希失败: {0}",
+                    "Failed to calculate file hash: {0}"
+            ), ex.getMessage());
         }
         return "null (" + UUID.randomUUID() + ")";
     }
@@ -95,7 +97,10 @@ public class PrimitiveIO {
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
             return readFully(fileInputStream, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            e.printStackTrace();
+            RuntimeLogger.warning(t(
+                    "读取文件失败: {0} - {1}",
+                    "Failed to read file: {0} - {1}"
+            ), file.getName(), e.getMessage());
         }
         return "null (" + UUID.randomUUID() + ")";
     }
@@ -134,7 +139,10 @@ public class PrimitiveIO {
         try (FileInputStream fileIn = new FileInputStream(from); FileOutputStream fileOut = new FileOutputStream(to); FileChannel channelIn = fileIn.getChannel(); FileChannel channelOut = fileOut.getChannel()) {
             channelIn.transferTo(0, channelIn.size(), channelOut);
         } catch (IOException t) {
-            t.printStackTrace();
+            RuntimeLogger.warning(t(
+                    "复制文件失败: {0} -> {1} - {2}",
+                    "Failed to copy file: {0} -> {1} - {2}"
+            ), from.getName(), to.getName(), t.getMessage());
         }
         return to;
     }
@@ -145,18 +153,17 @@ public class PrimitiveIO {
      * @param url 地址
      * @param out 目标文件
      */
-    @SuppressWarnings("StatementWithEmptyBody")
     public static void downloadFile(URL url, File out) throws IOException {
         //noinspection ResultOfMethodCallIgnored
         out.getParentFile().mkdirs();
-        InputStream ins = url.openStream();
-        OutputStream outs = Files.newOutputStream(out.toPath());
-        byte[] buffer = new byte[BUFFER_SIZE];
-        for (int len; (len = ins.read(buffer)) > 0; outs.write(buffer, 0, len)) {
-
+        try (InputStream ins = url.openStream();
+             OutputStream outs = Files.newOutputStream(out.toPath())) {
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int len;
+            while ((len = ins.read(buffer)) > 0) {
+                outs.write(buffer, 0, len);
+            }
         }
-        outs.close();
-        ins.close();
     }
 
     /**

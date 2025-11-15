@@ -79,7 +79,7 @@ public class ClassAppender {
     }
 
     /**
-     * 判断类是否粗在
+     * 判断类是否存在
      */
     public static boolean isExists(String path) {
         try {

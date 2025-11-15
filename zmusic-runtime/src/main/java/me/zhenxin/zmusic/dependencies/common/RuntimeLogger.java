@@ -2,6 +2,8 @@ package me.zhenxin.zmusic.dependencies.common;
 
 import me.zhenxin.zmusic.dependencies.DependencyConfig;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 
 import static me.zhenxin.zmusic.dependencies.common.PrimitiveIO.t;
@@ -17,11 +19,11 @@ public class RuntimeLogger {
     private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger("ZMusic");
 
     /**
-     * 依赖加载统计
+     * 依赖加载统计（线程安全）
      */
-    private static int loadedDependencies = 0;
-    private static int failedDependencies = 0;
-    private static long totalLoadTime = 0;
+    private static final AtomicInteger loadedDependencies = new AtomicInteger(0);
+    private static final AtomicInteger failedDependencies = new AtomicInteger(0);
+    private static final AtomicLong totalLoadTime = new AtomicLong(0);
 
     /**
      * 输出 Info 日志
@@ -75,8 +77,8 @@ public class RuntimeLogger {
      */
     public static void logDependencyLoadSuccess(String dependency, long startTime) {
         long duration = System.currentTimeMillis() - startTime;
-        loadedDependencies++;
-        totalLoadTime += duration;
+        loadedDependencies.incrementAndGet();
+        totalLoadTime.addAndGet(duration);
         String[] parts = parseDependency(dependency);
         info(t("✓ 依赖加载成功: {0}:{1}:{2} (耗时: {3}ms)", "✓ Dependency loaded: {0}:{1}:{2} ({3}ms)"), parts[0], parts[1], parts[2], duration);
     }
@@ -86,8 +88,8 @@ public class RuntimeLogger {
      */
     public static void logDependencyLoadFailure(String dependency, long startTime, Throwable error) {
         long duration = System.currentTimeMillis() - startTime;
-        failedDependencies++;
-        totalLoadTime += duration;
+        failedDependencies.incrementAndGet();
+        totalLoadTime.addAndGet(duration);
         String[] parts = parseDependency(dependency);
         warning(t("✗ 依赖加载失败: {0}:{1}:{2} (耗时: {3}ms) - {4}", "✗ Failed to load dependency: {0}:{1}:{2} ({3}ms) - {4}"), parts[0], parts[1], parts[2], duration, error.getMessage());
     }
@@ -96,9 +98,12 @@ public class RuntimeLogger {
      * 输出依赖加载统计信息
      */
     public static void logDependencyStats() {
-        if (loadedDependencies > 0 || failedDependencies > 0) {
+        int loaded = loadedDependencies.get();
+        int failed = failedDependencies.get();
+        long totalTime = totalLoadTime.get();
+        if (loaded > 0 || failed > 0) {
             info(t("依赖加载统计: 成功 {0}, 失败 {1}, 总耗时 {2}ms", "Dependency loading summary: {0} loaded, {1} failed, total time {2}ms"),
-                    loadedDependencies, failedDependencies, totalLoadTime);
+                    loaded, failed, totalTime);
         }
     }
 
@@ -106,9 +111,9 @@ public class RuntimeLogger {
      * 重置统计信息
      */
     public static void resetStats() {
-        loadedDependencies = 0;
-        failedDependencies = 0;
-        totalLoadTime = 0;
+        loadedDependencies.set(0);
+        failedDependencies.set(0);
+        totalLoadTime.set(0);
     }
 
     /**
