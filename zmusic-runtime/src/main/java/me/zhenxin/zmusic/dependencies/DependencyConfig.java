@@ -1,11 +1,21 @@
 package me.zhenxin.zmusic.dependencies;
 
 /**
- * 依赖管理配置类
+ * 依赖管理配置类（静态版本）
  *
  * @author 真心
  * @since 2024
+ * @deprecated 使用 {@link DependencyConfiguration} 替代，提供对象化的配置管理
+ * <pre>{@code
+ * // 旧方式
+ * String repo = DependencyConfig.DEFAULT_REPOSITORY;
+ *
+ * // 新方式
+ * DependencyConfiguration config = new DependencyConfiguration();
+ * String repo = config.getRepository();
+ * }</pre>
  */
+@Deprecated
 public class DependencyConfig {
 
     // 默认Maven仓库地址

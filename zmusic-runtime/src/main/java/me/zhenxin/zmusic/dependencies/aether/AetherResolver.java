@@ -73,7 +73,7 @@ public class AetherResolver {
     }
 
     @SuppressWarnings("DuplicatedCode")
-    public static void inject(@NotNull File file, @Nullable List<JarRelocation> relocation, boolean isExternal) throws Throwable {
+    public static void inject(@NotNull File file, @Nullable List<JarRelocation> relocation, boolean isExternal) throws Exception {
         // 避免重复加载多个依赖
         String filePath = file.getPath();
         if (INJECTED_DEPENDENCIES.contains(filePath)) {
@@ -93,7 +93,7 @@ public class AetherResolver {
             File rel = cacheManager.getRelocatedFile(file, relocationHash);
 
             // 检查重定向文件是否需要重新生成
-            if (cacheManager.needsRelocate(file, rel)) {
+            if (cacheManager.needsRelocate(file, rel, relocationHash)) {
                 try {
                     // 获取重定向规则
                     List<Relocation> rules = relocation.stream().map(JarRelocation::toRelocation).collect(Collectors.toList());
@@ -101,6 +101,8 @@ public class AetherResolver {
                     File tempSourceFile = PrimitiveIO.copyFile(file, File.createTempFile(file.getName(), ".jar"));
                     // 运行
                     new JarRelocator(tempSourceFile, rel, rules).run();
+                    // 保存元数据
+                    cacheManager.saveMetadata(file, rel, relocationHash);
                 } catch (IOException e) {
                     throw new IllegalStateException(String.format("Unable to relocate %s%n", file), e);
                 }

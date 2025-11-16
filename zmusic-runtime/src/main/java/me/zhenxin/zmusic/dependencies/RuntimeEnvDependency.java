@@ -126,38 +126,97 @@ public class RuntimeEnvDependency {
         }
     }
 
+    /**
+     * 加载依赖 - 简化版
+     *
+     * @param url Maven 坐标
+     * @throws Throwable 加载失败
+     * @deprecated 使用 {@link DependencyLoader} 替代，提供更清晰的 Builder API
+     * <pre>{@code
+     * new DependencyLoader().coordinate("groupId:artifactId:version").load();
+     * }</pre>
+     */
+    @Deprecated
     public void loadDependency(@NotNull String url) throws Throwable {
         loadDependency(url, new File(defaultLibrary));
     }
 
+    /**
+     * 加载依赖 - 带仓库
+     *
+     * @param url        Maven 坐标
+     * @param repository 仓库 URL
+     * @throws Throwable 加载失败
+     * @deprecated 使用 {@link DependencyLoader} 替代
+     * <pre>{@code
+     * new DependencyLoader()
+     *     .coordinate("...")
+     *     .repository("...")
+     *     .load();
+     * }</pre>
+     */
+    @Deprecated
     public void loadDependency(@NotNull String url, @Nullable String repository) throws Throwable {
         loadDependency(url, new File(defaultLibrary), repository);
     }
 
+    /**
+     * 加载依赖 - 带重定向
+     *
+     * @param url        Maven 坐标
+     * @param relocation 重定向规则
+     * @throws Throwable 加载失败
+     * @deprecated 使用 {@link DependencyLoader} 替代
+     */
+    @Deprecated
     public void loadDependency(@NotNull String url, @NotNull List<JarRelocation> relocation) throws Throwable {
         loadDependency(url, new File(defaultLibrary), relocation, null, true, false, true, Arrays.asList(DependencyScope.RUNTIME, DependencyScope.COMPILE));
     }
 
+    /**
+     * @deprecated 使用 {@link DependencyLoader} 替代
+     */
+    @Deprecated
     public void loadDependency(@NotNull String url, @NotNull List<JarRelocation> relocation, @Nullable String repository) throws Throwable {
         loadDependency(url, new File(defaultLibrary), relocation, repository, true, false, true, Arrays.asList(DependencyScope.RUNTIME, DependencyScope.COMPILE));
     }
 
+    /**
+     * @deprecated 使用 {@link DependencyLoader} 替代
+     */
+    @Deprecated
     public void loadDependency(@NotNull String url, boolean transitive, @NotNull List<JarRelocation> relocation) throws Throwable {
         loadDependency(url, new File(defaultLibrary), relocation, null, true, false, transitive, Arrays.asList(DependencyScope.RUNTIME, DependencyScope.COMPILE));
     }
 
+    /**
+     * @deprecated 使用 {@link DependencyLoader} 替代
+     */
+    @Deprecated
     public void loadDependency(@NotNull String url, boolean transitive, @NotNull List<JarRelocation> relocation, @Nullable String repository) throws Throwable {
         loadDependency(url, new File(defaultLibrary), relocation, repository, true, false, transitive, Arrays.asList(DependencyScope.RUNTIME, DependencyScope.COMPILE));
     }
 
+    /**
+     * @deprecated 使用 {@link DependencyLoader} 替代
+     */
+    @Deprecated
     public void loadDependency(@NotNull String url, @NotNull File baseDir) throws Throwable {
         loadDependency(url, baseDir, null);
     }
 
+    /**
+     * @deprecated 使用 {@link DependencyLoader} 替代
+     */
+    @Deprecated
     public void loadDependency(@NotNull String url, @NotNull File baseDir, @Nullable String repository) throws Throwable {
         loadDependency(url, baseDir, new ArrayList<>(), repository, true, false, true, Arrays.asList(DependencyScope.RUNTIME, DependencyScope.COMPILE));
     }
 
+    /**
+     * @deprecated 使用 {@link DependencyLoader} 替代
+     */
+    @Deprecated
     public void loadDependency(
             @NotNull String url,
             @NotNull File baseDir,
