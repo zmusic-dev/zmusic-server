@@ -57,7 +57,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 * [Hutool](https://hutool.cn/) - A set of tools that keep Java sweet.
 * [TabooLib](https://github.com/TabooLib/taboolib) - Dynamic loading of dependent related code sources.
 * [Kotlin](https://kotlinlang.org/) - Statically typed programming language for modern multiplatform applications.
-* [JetBrains](https://www.jetbrains.com/zh-cn/) - Provides free development tools.
 
 ## Contributors
 
