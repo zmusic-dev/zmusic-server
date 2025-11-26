@@ -13,7 +13,7 @@
 
 [Documentation][docs-link] | [Discord][discord-link]
 
-[简体中文](README.md) | English
+[简体中文](README.md) | English | [繁體中文](README_ZH-TW.md) | [日本語](README_JP.md)
 
 </div>
 
@@ -52,11 +52,25 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
 
-## Thanks
+## Acknowledgments
 
-* [Hutool](https://hutool.cn/) - A set of tools that keep Java sweet.
-* [TabooLib](https://github.com/TabooLib/taboolib) - Dynamic loading of dependent related code sources.
-* [Kotlin](https://kotlinlang.org/) - Statically typed programming language for modern multiplatform applications.
+### Core Technologies
+
+* [Kotlin](https://kotlinlang.org/) - Modern JVM programming language
+* [Gradle](https://gradle.org/) - Powerful build automation tool
+
+### Main Dependencies
+
+* [Hutool](https://hutool.cn/) - Comprehensive Java utility library
+* [Night Config](https://github.com/TheElectronWill/night-config) - Lightweight configuration library
+* [Kyori Adventure](https://github.com/KyoriPowered/adventure) - Minecraft text component library
+* [Apache Maven Resolver](https://maven.apache.org/resolver/) - Dependency resolution engine
+* [Netty](https://netty.io/) - High-performance networking framework
+* [bStats](https://bstats.org/) - Plugin metrics service
+
+### Special Thanks
+
+* [TabooLib](https://github.com/TabooLib/taboolib) - Inspiration for dynamic dependency loading mechanism
 
 ## Contributors
 

@@ -11,35 +11,35 @@
 ![][downloads]
 ![][license]
 
-[文档][docs-link] | [QQ 群][qq-group-link] | [Discord][discord-link]
+[ドキュメント][docs-link] | [Discord][discord-link]
 
-简体中文 | [English](README_EN.md) | [繁體中文](README_ZH-TW.md) | [日本語](README_JP.md)
+[简体中文](README.md) | [English](README_EN.md) | [繁體中文](README_ZH-TW.md) | 日本語
 
 </div>
 
-## 简介
+## 概要
 
-这是一个功能强大的音乐系统，支持以下功能。
+これは強力な音楽システムで、以下の機能をサポートしています。
 
-* 全服点歌
-* 单独播放
-* 歌词显示
-* 歌词翻译显示
-* 多搜索源
-* 关键词搜索
-* 个人歌单
-* 全服歌单
-* 歌单播放
-* 音量调节
-* 支持BungeeCord
+* 全サーバー音楽リクエスト
+* 個別再生
+* 歌詞表示
+* 歌詞翻訳表示
+* 複数検索ソース
+* キーワード検索
+* 個人プレイリスト
+* 全サーバープレイリスト
+* プレイリスト再生
+* 音量調整
+* BungeeCord 対応
 
-## 文档
+## ドキュメント
 
-[点击查看使用文档][docs-link]
+[使用方法についてはこちら][docs-link]
 
-## 开源协议
+## オープンソースライセンス
 
-本项目使用 [GPL-3.0](LICENSE) 协议开放源代码
+本プロジェクトは [GPL-3.0](LICENSE) ライセンスでオープンソース化されています
 
 ```text
 ZMusic - Powerful Music System
@@ -56,27 +56,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
 
-## 鸣谢
+## 謝辞
 
-### 核心技术
+### コア技術
 
-* [Kotlin](https://kotlinlang.org/) - 现代化的 JVM 编程语言
-* [Gradle](https://gradle.org/) - 强大的构建自动化工具
+* [Kotlin](https://kotlinlang.org/) - モダンな JVM プログラミング言語
+* [Gradle](https://gradle.org/) - 強力なビルド自動化ツール
 
-### 主要依赖
+### 主な依存関係
 
-* [Hutool](https://hutool.cn/) - 全面、强大的 Java 工具类库
-* [Night Config](https://github.com/TheElectronWill/night-config) - 轻量级的配置库
-* [Kyori Adventure](https://github.com/KyoriPowered/adventure) - Minecraft 文本组件库
-* [Apache Maven Resolver](https://maven.apache.org/resolver/) - 依赖解析引擎
-* [Netty](https://netty.io/) - 高性能网络应用框架
-* [bStats](https://bstats.org/) - 插件统计服务
+* [Hutool](https://hutool.cn/) - 包括的で強力な Java ユーティリティライブラリ
+* [Night Config](https://github.com/TheElectronWill/night-config) - 軽量な設定ライブラリ
+* [Kyori Adventure](https://github.com/KyoriPowered/adventure) - Minecraft テキストコンポーネントライブラリ
+* [Apache Maven Resolver](https://maven.apache.org/resolver/) - 依存関係解決エンジン
+* [Netty](https://netty.io/) - 高性能ネットワークアプリケーションフレームワーク
+* [bStats](https://bstats.org/) - プラグイン統計サービス
 
-### 特别感谢
+### 特別な感謝
 
-* [TabooLib](https://github.com/TabooLib/taboolib) - 依赖动态加载机制的灵感来源
+* [TabooLib](https://github.com/TabooLib/taboolib) - 依存関係の動的ロード機構のインスピレーション
 
-## 贡献者
+## コントリビューター
 
 [![][contrib]](https://github.com/zmusic-dev/zmusic-server/graphs/contributors)
 
@@ -97,7 +97,5 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 [contrib]: https://contrib.rocks/image?repo=zmusic-dev/zmusic-server
 
 [docs-link]: https://zmusic.zhenxin.me
-
-[qq-group-link]: https://jq.qq.com/?_wv=1027&k=9Xs1RMt5
 
 [discord-link]: https://discord.gg/twQgJNufYn

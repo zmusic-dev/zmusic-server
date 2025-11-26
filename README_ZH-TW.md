@@ -11,35 +11,35 @@
 ![][downloads]
 ![][license]
 
-[文档][docs-link] | [QQ 群][qq-group-link] | [Discord][discord-link]
+[文件][docs-link] | [QQ 群][qq-group-link] | [Discord][discord-link]
 
-简体中文 | [English](README_EN.md) | [繁體中文](README_ZH-TW.md) | [日本語](README_JP.md)
+[简体中文](README.md) | [English](README_EN.md) | 繁體中文 | [日本語](README_JP.md)
 
 </div>
 
-## 简介
+## 簡介
 
-这是一个功能强大的音乐系统，支持以下功能。
+這是一個功能強大的音樂系統，支援以下功能。
 
-* 全服点歌
-* 单独播放
-* 歌词显示
-* 歌词翻译显示
-* 多搜索源
-* 关键词搜索
-* 个人歌单
-* 全服歌单
-* 歌单播放
-* 音量调节
-* 支持BungeeCord
+* 全服點歌
+* 單獨播放
+* 歌詞顯示
+* 歌詞翻譯顯示
+* 多搜尋源
+* 關鍵詞搜尋
+* 個人歌單
+* 全服歌單
+* 歌單播放
+* 音量調節
+* 支援 BungeeCord
 
-## 文档
+## 文件
 
-[点击查看使用文档][docs-link]
+[點選檢視使用文件][docs-link]
 
-## 开源协议
+## 開源協議
 
-本项目使用 [GPL-3.0](LICENSE) 协议开放源代码
+本專案使用 [GPL-3.0](LICENSE) 協議開放原始碼
 
 ```text
 ZMusic - Powerful Music System
@@ -56,27 +56,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
 
-## 鸣谢
+## 鳴謝
 
-### 核心技术
+### 核心技術
 
-* [Kotlin](https://kotlinlang.org/) - 现代化的 JVM 编程语言
-* [Gradle](https://gradle.org/) - 强大的构建自动化工具
+* [Kotlin](https://kotlinlang.org/) - 現代化的 JVM 程式語言
+* [Gradle](https://gradle.org/) - 強大的建置自動化工具
 
-### 主要依赖
+### 主要依賴
 
-* [Hutool](https://hutool.cn/) - 全面、强大的 Java 工具类库
-* [Night Config](https://github.com/TheElectronWill/night-config) - 轻量级的配置库
-* [Kyori Adventure](https://github.com/KyoriPowered/adventure) - Minecraft 文本组件库
-* [Apache Maven Resolver](https://maven.apache.org/resolver/) - 依赖解析引擎
-* [Netty](https://netty.io/) - 高性能网络应用框架
-* [bStats](https://bstats.org/) - 插件统计服务
+* [Hutool](https://hutool.cn/) - 全面、強大的 Java 工具類別庫
+* [Night Config](https://github.com/TheElectronWill/night-config) - 輕量級的設定庫
+* [Kyori Adventure](https://github.com/KyoriPowered/adventure) - Minecraft 文字元件庫
+* [Apache Maven Resolver](https://maven.apache.org/resolver/) - 依賴解析引擎
+* [Netty](https://netty.io/) - 高效能網路應用框架
+* [bStats](https://bstats.org/) - 外掛程式統計服務
 
-### 特别感谢
+### 特別感謝
 
-* [TabooLib](https://github.com/TabooLib/taboolib) - 依赖动态加载机制的灵感来源
+* [TabooLib](https://github.com/TabooLib/taboolib) - 依賴動態載入機制的靈感來源
 
-## 贡献者
+## 貢獻者
 
 [![][contrib]](https://github.com/zmusic-dev/zmusic-server/graphs/contributors)
 
