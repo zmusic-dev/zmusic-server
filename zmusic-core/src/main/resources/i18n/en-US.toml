@@ -24,6 +24,9 @@ loaded = [
     "&aAuthor: &b{author}",
 ]
 
+[disable]
+disabled = "&cPlugin Disabled!"
+
 [update]
 checking = "&aChecking for updates..."
 check_failed = "&cFailed to check for updates."
@@ -37,3 +40,6 @@ not_available = "&aNo new version available."
 
 [help]
 tips = "&aInput &a/&e{command} &bhelp &aShow Help."
+
+[config]
+outdated = "&cConfig is outdated, please delete the config file and restart the server."

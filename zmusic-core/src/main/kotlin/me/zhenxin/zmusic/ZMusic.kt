@@ -35,12 +35,10 @@ object ZMusic {
         LOGO.split("\n").forEach { logger.log("&b$it".colored()) }
         logger.log("\t&6v${ZMusicConstants.PLUGIN_VERSION}\tby ZhenXin".colored())
         logger.log("")
-        logger.info("Initializing ZMusic...")
-        logger.info("Initializing configuration...")
+
+        // 初始化配置和国际化
         initConfig()
-        logger.info("Initializing i18n...")
         initI18n()
-        logger.info("ZMusic is initialized.")
 
         I18n.Init.loaded.forEach {
             logger.info(
@@ -58,8 +56,7 @@ object ZMusic {
      * 插件禁用
      */
     fun onDisable() {
-        logger.info("Disabling ZMusic...")
-        logger.info("ZMusic is disabled.")
+        logger.info(I18n.Disable.disabled)
     }
 }
 

@@ -100,12 +100,11 @@ fun initConfig() {
 
     val currentVersion = 15
     if (Config.version != currentVersion) {
+        // 此时国际化尚未加载，使用英文错误信息
         logger.error("Config is outdated, please delete the config file and restart the server.")
         // TODO: disablePlugin()
-        return
-    } else {
-        logger.info("Configuration is initialized.")
     }
+    // 移除初始化成功的日志，避免割裂感
 }
 
 private var config: CommentedConfig = CommentedConfig.inMemory()

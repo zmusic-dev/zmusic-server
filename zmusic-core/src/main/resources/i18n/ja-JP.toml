@@ -24,6 +24,9 @@ loaded = [
     "&aこのプラグインの作者は&b{author}なのです！",
 ]
 
+[disable]
+disabled = "&cプラグインを停止したのです！"
+
 [update]
 checking = "&a更新を確認中なのです…"
 check_failed = "&c更新の確認に失敗しちゃったのです！"
@@ -37,3 +40,6 @@ not_available = "&a今は最新バージョンなのです！"
 
 [help]
 tips = "&a&a/&e{command} &bhelp&aって入力すると、使い方を見れるのです！"
+
+[config]
+outdated = "&c設定ファイルが古いので、設定ファイルを削除してサーバーを再起動してほしいのです。"

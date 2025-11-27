@@ -24,6 +24,9 @@ loaded = [
     "&a插件作者: &b{author}",
 ]
 
+[disable]
+disabled = "&c插件已卸载!"
+
 [update]
 checking = "&a正在检查更新..."
 check_failed = "&c检查更新失败!"
@@ -37,3 +40,6 @@ not_available = "&a当前已是最新版本!"
 
 [help]
 tips = "&a输入 &a/&e{command} &bhelp &a查看帮助."
+
+[config]
+outdated = "&c配置文件版本过旧，请删除配置文件后重启服务器。"
