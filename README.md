@@ -3,13 +3,18 @@
 
 ![][banner]
 
-![][tested-versions]
-![][players]
-![][servers]
+![][build-status]
+![][codefactor]
+![][language]
+![][last-commit]
 
 ![][releases]
 ![][downloads]
 ![][license]
+
+![][tested-versions]
+![][players]
+![][servers]
 
 [文档][docs-link] | [QQ 群][qq-group-link] | [Discord][discord-link]
 
@@ -81,6 +86,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 [![][contrib]](https://github.com/zmusic-dev/zmusic-server/graphs/contributors)
 
 [banner]: https://socialify.git.ci/zmusic-dev/zmusic-server/image?description=1&forks=1&issues=1&language=1&name=1&pulls=1&stargazers=1&theme=Auto
+
+[build-status]: https://img.shields.io/github/actions/workflow/status/zmusic-dev/zmusic-server/dev.yml?branch=v4&style=for-the-badge
+
+[codefactor]: https://img.shields.io/codefactor/grade/github/zmusic-dev/zmusic-server/v4?style=for-the-badge
+
+[language]: https://img.shields.io/github/languages/top/zmusic-dev/zmusic-server?style=for-the-badge
+
+[last-commit]: https://img.shields.io/github/last-commit/zmusic-dev/zmusic-server?style=for-the-badge
 
 [license]: https://img.shields.io/github/license/zmusic-dev/zmusic-server?style=for-the-badge
 
