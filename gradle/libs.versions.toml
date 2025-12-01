@@ -18,7 +18,7 @@ adventure = "4.25.0"
 bstats = "3.1.0"
 placeholderapi = "2.11.7"
 
-hutool = "5.8.41"
+hutool = "5.8.42"
 netty = "4.2.7.Final"
 nightconfig = "3.8.3"
 
