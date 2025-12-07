@@ -1,0 +1,10 @@
+{
+  "id": "zmusic",
+  "name": "ZMusic",
+  "version": "${version}",
+  "description": "A Minecraft music plugin supporting Bukkit, BungeeCord, and Velocity",
+  "url": "https://github.com/zhenxin/ZMusic",
+  "authors": ["ZhenXin"],
+  "dependencies": [],
+  "main": "me.zhenxin.zmusic.ZMusicVelocity"
+}

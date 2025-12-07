@@ -2,6 +2,10 @@ package me.zhenxin.zmusic.music;
 
 import com.google.gson.JsonObject;
 import me.zhenxin.zmusic.ZMusic;
+import me.zhenxin.zmusic.component.ZClickEvent;
+import me.zhenxin.zmusic.component.ZComponent;
+import me.zhenxin.zmusic.component.ZHoverEvent;
+import me.zhenxin.zmusic.component.ZTextComponent;
 import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.data.PlayerData;
 import me.zhenxin.zmusic.language.Lang;
@@ -9,11 +13,6 @@ import me.zhenxin.zmusic.music.searchSource.BiliBiliMusic;
 import me.zhenxin.zmusic.music.searchSource.KuwoMusic;
 import me.zhenxin.zmusic.music.searchSource.NeteaseCloudMusic;
 import me.zhenxin.zmusic.utils.OtherUtils;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,20 +104,19 @@ public class PlayMusic {
                 case "music":
                     String s = Lang.musicMessage;
                     String prefix = "§a" + s.split("%fullName%")[0];
-                    TextComponent message = new TextComponent(Config.prefix + prefix
+                    ZComponent message = ZTextComponent.of(Config.prefix + prefix
                         .replaceAll("%player%", ZMusic.player.getName(player))
                         .replaceAll("%source%", searchSourceName));
-                    TextComponent music = new TextComponent("§r[§e" + musicFullName + "§r]");
-                    music.setColor(ChatColor.YELLOW);
+                    ZComponent music = ZTextComponent.of("§r[§e" + musicFullName + "§r]");
                     if (supportId) {
-                        music.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm play " + source + " -id:" + musicID));
+                        music.setClickEvent(ZClickEvent.runCommand("/zm play " + source + " -id:" + musicID));
                     } else {
-                        music.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm play " + source + " " + musicName));
+                        music.setClickEvent(ZClickEvent.runCommand("/zm play " + source + " " + musicName));
                     }
-                    music.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b" + Lang.clickPlayText).create()));
-                    message.addExtra(music);
+                    music.setHoverEvent(ZHoverEvent.showText("§b" + Lang.clickPlayText));
+                    message.addChild(music);
                     String suffix = s.split("%fullName%")[1];
-                    message.addExtra(suffix);
+                    message.addChild(ZTextComponent.of(suffix));
                     for (Object p : players) {
                         ZMusic.message.sendJsonMessage(message, p);
                     }
@@ -167,18 +165,16 @@ public class PlayMusic {
             }
             ZMusic.music.play(musicUrl, p);
             time = System.currentTimeMillis() - time;
-            TextComponent success = new TextComponent(Config.prefix + "§a" + Lang.playSuccess
+            ZComponent success = ZTextComponent.of(Config.prefix + "§a" + Lang.playSuccess
                 .replaceAll("%source%", searchSourceName)
                 .replaceAll("%fullName%", musicFullName)
                 .replaceAll("%time%", String.valueOf(time)));
-            TextComponent stop = new TextComponent("§r[§e" + Lang.clickStop + "§r]");
-            stop.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm stop"));
-            stop.setColor(ChatColor.YELLOW);
-            success.addExtra(stop);
-            TextComponent loop = new TextComponent("§r[§e" + Lang.clickLoop + "§r]");
-            loop.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm loop"));
-            loop.setColor(ChatColor.YELLOW);
-            success.addExtra(loop);
+            ZComponent stop = ZTextComponent.of("§r[§e" + Lang.clickStop + "§r]");
+            stop.setClickEvent(ZClickEvent.runCommand("/zm stop"));
+            success.addChild(stop);
+            ZComponent loop = ZTextComponent.of("§r[§e" + Lang.clickLoop + "§r]");
+            loop.setClickEvent(ZClickEvent.runCommand("/zm loop"));
+            success.addChild(loop);
             ZMusic.message.sendJsonMessage(success, p);
             String title = "§a" + Lang.playing + "\n§e" + musicFullName;
             OtherUtils.sendAdv(p, title);

@@ -4,15 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import me.zhenxin.zmusic.ZMusic;
+import me.zhenxin.zmusic.component.ZClickEvent;
+import me.zhenxin.zmusic.component.ZComponent;
+import me.zhenxin.zmusic.component.ZHoverEvent;
+import me.zhenxin.zmusic.component.ZTextComponent;
 import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.data.PlayerData;
 import me.zhenxin.zmusic.language.Lang;
 import me.zhenxin.zmusic.utils.NetUtils;
 import me.zhenxin.zmusic.utils.OtherUtils;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.List;
 import java.util.Random;
@@ -199,20 +199,20 @@ public class PlayListPlayer extends Thread {
                     singleIsPlayEd = false;
                     successTime = System.currentTimeMillis() - successTime;
                     ZMusic.log.sendDebugMessage("[歌单] 歌单播放器(ID:" + getId() + ")为[" + ZMusic.player.getName(player) + "]播放歌单<" + playListName + ">中的" + fullName);
-                    TextComponent message = new TextComponent(Config.prefix + "§a" + Lang.playSuccess
+                    ZComponent message = ZTextComponent.of(Config.prefix + "§a" + Lang.playSuccess
                         .replaceAll("%source%", searchSourceName)
                         .replaceAll("%fullName%", fullName)
                         .replaceAll("%time%", String.valueOf(successTime)));
-                    TextComponent prev = new TextComponent("§r[§e" + Lang.clickPrev + "§r]§r");
-                    prev.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist prev"));
-                    prev.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b" + Lang.clickPrevText).create()));
-                    TextComponent next = new TextComponent("§r[§e" + Lang.clickNext + "§r]§r");
-                    next.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist next"));
-                    next.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b" + Lang.clickNextText).create()));
-                    message.addExtra(" ");
-                    message.addExtra(prev);
-                    message.addExtra(" ");
-                    message.addExtra(next);
+                    ZComponent prev = ZTextComponent.of("§r[§e" + Lang.clickPrev + "§r]§r");
+                    prev.setClickEvent(ZClickEvent.runCommand("/zm playlist prev"));
+                    prev.setHoverEvent(ZHoverEvent.showText("§b" + Lang.clickPrevText));
+                    ZComponent next = ZTextComponent.of("§r[§e" + Lang.clickNext + "§r]§r");
+                    next.setClickEvent(ZClickEvent.runCommand("/zm playlist next"));
+                    next.setHoverEvent(ZHoverEvent.showText("§b" + Lang.clickNextText));
+                    message.addChild(ZTextComponent.of(" "));
+                    message.addChild(prev);
+                    message.addChild(ZTextComponent.of(" "));
+                    message.addChild(next);
                     ZMusic.message.sendJsonMessage(message, player);
                     String title = "§a" + Lang.playing + "\n§e" + fullName;
                     OtherUtils.sendAdv(player, title);

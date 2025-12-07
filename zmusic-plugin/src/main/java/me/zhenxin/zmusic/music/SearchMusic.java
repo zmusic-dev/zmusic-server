@@ -3,15 +3,15 @@ package me.zhenxin.zmusic.music;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import me.zhenxin.zmusic.ZMusic;
+import me.zhenxin.zmusic.component.ZClickEvent;
+import me.zhenxin.zmusic.component.ZComponent;
+import me.zhenxin.zmusic.component.ZHoverEvent;
+import me.zhenxin.zmusic.component.ZTextComponent;
 import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.language.Lang;
 import me.zhenxin.zmusic.music.searchSource.BiliBiliMusic;
 import me.zhenxin.zmusic.music.searchSource.KuwoMusic;
 import me.zhenxin.zmusic.music.searchSource.NeteaseCloudMusic;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 
 public class SearchMusic {
 
@@ -50,27 +50,27 @@ public class SearchMusic {
                 musicName = j.getAsJsonObject().get("name").getAsString();
                 musicSinger = j.getAsJsonObject().get("singer").getAsString();
                 musicFullName = musicName + " - " + musicSinger;
-                TextComponent message = new TextComponent(Config.prefix + "§a" + i + "." + musicFullName);
+                ZComponent message = ZTextComponent.of(Config.prefix + "§a" + i + "." + musicFullName);
                 i++;
-                TextComponent play = new TextComponent("§r[§e" + Lang.clickPlay + "§r]§r");
-                TextComponent music = new TextComponent("§r[§e" + Lang.clickMusic + "§r]§r");
+                ZComponent play = ZTextComponent.of("§r[§e" + Lang.clickPlay + "§r]§r");
+                ZComponent music = ZTextComponent.of("§r[§e" + Lang.clickMusic + "§r]§r");
                 if (source.equalsIgnoreCase("163") ||
                     source.equalsIgnoreCase("netease") ||
                     source.equalsIgnoreCase("qq") ||
                     source.equalsIgnoreCase("bilibili")) {
                     musicID = j.getAsJsonObject().get("id").getAsString();
-                    play.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm play " + source + " -id:" + musicID));
-                    music.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm music " + source + " -id:" + musicID));
+                    play.setClickEvent(ZClickEvent.runCommand("/zm play " + source + " -id:" + musicID));
+                    music.setClickEvent(ZClickEvent.runCommand("/zm music " + source + " -id:" + musicID));
                 } else {
-                    play.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm play " + source + " " + musicName));
-                    music.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm music " + source + " " + musicName));
+                    play.setClickEvent(ZClickEvent.runCommand("/zm play " + source + " " + musicName));
+                    music.setClickEvent(ZClickEvent.runCommand("/zm music " + source + " " + musicName));
                 }
-                play.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b" + Lang.clickPlayText).create()));
-                music.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b" + Lang.clickMusicText).create()));
-                message.addExtra(" ");
-                message.addExtra(play);
-                message.addExtra(" ");
-                message.addExtra(music);
+                play.setHoverEvent(ZHoverEvent.showText("§b" + Lang.clickPlayText));
+                music.setHoverEvent(ZHoverEvent.showText("§b" + Lang.clickMusicText));
+                message.addChild(ZTextComponent.of(" "));
+                message.addChild(play);
+                message.addChild(ZTextComponent.of(" "));
+                message.addChild(music);
                 ZMusic.message.sendJsonMessage(message, player);
             }
             ZMusic.message.sendNormalMessage("§6=========================================", player);

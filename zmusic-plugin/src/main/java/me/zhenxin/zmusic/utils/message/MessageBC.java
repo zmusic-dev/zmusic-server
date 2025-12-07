@@ -1,6 +1,8 @@
 package me.zhenxin.zmusic.utils.message;
 
 import me.zhenxin.zmusic.ZMusicBC;
+import me.zhenxin.zmusic.component.ZComponent;
+import me.zhenxin.zmusic.component.adapter.BungeeComponentAdapter;
 import me.zhenxin.zmusic.config.Config;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -10,6 +12,8 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class MessageBC implements Message {
+
+    private final BungeeComponentAdapter adapter = BungeeComponentAdapter.INSTANCE;
 
     @Override
     public void sendNormalMessage(String message, Object playerObj) {
@@ -24,15 +28,17 @@ public class MessageBC implements Message {
     }
 
     @Override
-    public void sendJsonMessage(TextComponent message, Object playerObj) {
+    public void sendJsonMessage(ZComponent message, Object playerObj) {
         ProxiedPlayer player = (ProxiedPlayer) playerObj;
-        player.sendMessage(message);
+        TextComponent bungeeComponent = adapter.adapt(message);
+        player.sendMessage(bungeeComponent);
     }
 
     @Override
-    public void sendActionBarMessage(TextComponent message, Object playerObj) {
+    public void sendActionBarMessage(ZComponent message, Object playerObj) {
         ProxiedPlayer player = (ProxiedPlayer) playerObj;
-        player.sendMessage(ChatMessageType.ACTION_BAR, message);
+        TextComponent bungeeComponent = adapter.adapt(message);
+        player.sendMessage(ChatMessageType.ACTION_BAR, bungeeComponent);
     }
 
     @Override

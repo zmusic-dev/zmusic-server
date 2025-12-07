@@ -1,6 +1,8 @@
 package me.zhenxin.zmusic.utils.message;
 
 import me.zhenxin.zmusic.ZMusic;
+import me.zhenxin.zmusic.component.ZComponent;
+import me.zhenxin.zmusic.component.adapter.BungeeComponentAdapter;
 import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.language.Lang;
 import net.md_5.bungee.api.ChatMessageType;
@@ -10,6 +12,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MessageBukkit implements Message {
+
+    private final BungeeComponentAdapter adapter = BungeeComponentAdapter.INSTANCE;
 
     @Override
     public void sendNormalMessage(String message, Object playerObj) {
@@ -24,15 +28,17 @@ public class MessageBukkit implements Message {
     }
 
     @Override
-    public void sendJsonMessage(TextComponent message, Object playerObj) {
+    public void sendJsonMessage(ZComponent message, Object playerObj) {
         Player player = (Player) playerObj;
-        player.spigot().sendMessage(message);
+        TextComponent bungeeComponent = adapter.adapt(message);
+        player.spigot().sendMessage(bungeeComponent);
     }
 
     @Override
-    public void sendActionBarMessage(TextComponent message, Object playerObj) {
+    public void sendActionBarMessage(ZComponent message, Object playerObj) {
         Player player = (Player) playerObj;
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, message);
+        TextComponent bungeeComponent = adapter.adapt(message);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, bungeeComponent);
     }
 
     @Override

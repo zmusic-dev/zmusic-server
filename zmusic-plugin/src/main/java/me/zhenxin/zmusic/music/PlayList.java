@@ -2,15 +2,15 @@ package me.zhenxin.zmusic.music;
 
 import com.google.gson.*;
 import me.zhenxin.zmusic.ZMusic;
+import me.zhenxin.zmusic.component.ZClickEvent;
+import me.zhenxin.zmusic.component.ZComponent;
+import me.zhenxin.zmusic.component.ZHoverEvent;
+import me.zhenxin.zmusic.component.ZTextComponent;
 import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.data.PlayerData;
 import me.zhenxin.zmusic.music.searchSource.NeteaseCloudMusic;
 import me.zhenxin.zmusic.utils.HelpUtils;
 import me.zhenxin.zmusic.utils.OtherUtils;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -278,29 +278,29 @@ public class PlayList {
                     JsonObject j = gson.fromJson(OtherUtils.readFileToString(file), JsonObject.class);
                     String name = j.get("name").getAsString();
                     String songs = j.get("songs").getAsString();
-                    TextComponent message = new TextComponent(Config.prefix + "§a" + i + "." + id + " : " + name + "(§e共" + songs + "首§a)");
-                    TextComponent play = new TextComponent("§r[§e播放§r]§r");
-                    TextComponent show = new TextComponent("§r[§e查看§r]§r");
+                    ZComponent message = ZTextComponent.of(Config.prefix + "§a" + i + "." + id + " : " + name + "(§e共" + songs + "首§a)");
+                    ZComponent play = ZTextComponent.of("§r[§e播放§r]§r");
+                    ZComponent show = ZTextComponent.of("§r[§e查看§r]§r");
                     if (isGlobal) {
-                        play.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist global " + platform + " play " + id));
-                        show.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist global " + platform + " show " + id));
+                        play.setClickEvent(ZClickEvent.runCommand("/zm playlist global " + platform + " play " + id));
+                        show.setClickEvent(ZClickEvent.runCommand("/zm playlist global " + platform + " show " + id));
                     } else {
-                        play.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist " + platform + " play " + id));
-                        show.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist " + platform + " show " + id));
+                        play.setClickEvent(ZClickEvent.runCommand("/zm playlist " + platform + " play " + id));
+                        show.setClickEvent(ZClickEvent.runCommand("/zm playlist " + platform + " show " + id));
                     }
-                    play.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b点击播放此歌单").create()));
-                    show.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b点击查看此歌单").create()));
-                    message.addExtra(" ");
-                    message.addExtra(play);
-                    message.addExtra(" ");
-                    message.addExtra(show);
+                    play.setHoverEvent(ZHoverEvent.showText("§b点击播放此歌单"));
+                    show.setHoverEvent(ZHoverEvent.showText("§b点击查看此歌单"));
+                    message.addChild(ZTextComponent.of(" "));
+                    message.addChild(play);
+                    message.addChild(ZTextComponent.of(" "));
+                    message.addChild(show);
                     if (ZMusic.player.hasPermission(player, "zmusic.admin")) {
-                        TextComponent playAll = new TextComponent("§r[§e全服播放§r]§r");
+                        ZComponent playAll = ZTextComponent.of("§r[§e全服播放§r]§r");
                         if (isGlobal) {
-                            playAll.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist global " + platform + " playall " + id));
-                            playAll.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b点击为全体玩家播放此歌单").create()));
-                            message.addExtra(" ");
-                            message.addExtra(playAll);
+                            playAll.setClickEvent(ZClickEvent.runCommand("/zm playlist global " + platform + " playall " + id));
+                            playAll.setHoverEvent(ZHoverEvent.showText("§b点击为全体玩家播放此歌单"));
+                            message.addChild(ZTextComponent.of(" "));
+                            message.addChild(playAll);
                         }
                     }
                     ZMusic.message.sendJsonMessage(message, player);
@@ -310,15 +310,15 @@ public class PlayList {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            TextComponent message = new TextComponent(Config.prefix + "§c错误: 读取文件错误,请尝试");
-            TextComponent update = new TextComponent("§r[§e更新歌单§r]§r");
+            ZComponent message = ZTextComponent.of(Config.prefix + "§c错误: 读取文件错误,请尝试");
+            ZComponent update = ZTextComponent.of("§r[§e更新歌单§r]§r");
             if (isGlobal) {
-                update.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist global " + platform + " update"));
+                update.setClickEvent(ZClickEvent.runCommand("/zm playlist global " + platform + " update"));
             } else {
-                update.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist " + platform + " update"));
+                update.setClickEvent(ZClickEvent.runCommand("/zm playlist " + platform + " update"));
             }
-            update.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b点击更新此平台的全部歌单").create()));
-            message.addExtra(update);
+            update.setHoverEvent(ZHoverEvent.showText("§b点击更新此平台的全部歌单"));
+            message.addChild(update);
             ZMusic.message.sendJsonMessage(message, player);
         }
         ZMusic.message.sendNormalMessage("§6=========================================", player);
@@ -339,34 +339,34 @@ public class PlayList {
         file = new File(filePath);
         json = gson.fromJson(OtherUtils.readFileToString(file), JsonObject.class);
         JsonArray list = json.get("list").getAsJsonArray();
-        TextComponent messageStart = new TextComponent(Config.prefix + "§6================");
-        TextComponent messageEnd = new TextComponent("§6=================");
-        TextComponent prev = new TextComponent("§r[§e上一页§r]§r");
+        ZComponent messageStart = ZTextComponent.of(Config.prefix + "§6================");
+        ZComponent messageEnd = ZTextComponent.of("§6=================");
+        ZComponent prev = ZTextComponent.of("§r[§e上一页§r]§r");
         if ((start - 10) >= 0) {
             if (isGlobal) {
-                prev.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist global " + platform + " show " + id + " " + (start - 10)));
+                prev.setClickEvent(ZClickEvent.runCommand("/zm playlist global " + platform + " show " + id + " " + (start - 10)));
             } else {
-                prev.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist " + platform + " show " + id + " " + (start - 10)));
+                prev.setClickEvent(ZClickEvent.runCommand("/zm playlist " + platform + " show " + id + " " + (start - 10)));
             }
-            prev.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b点击返回上一页").create()));
+            prev.setHoverEvent(ZHoverEvent.showText("§b点击返回上一页"));
         } else {
-            prev.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b已经到达第一页").create()));
+            prev.setHoverEvent(ZHoverEvent.showText("§b已经到达第一页"));
         }
-        TextComponent next = new TextComponent("§r[§e下一页§r]§r");
+        ZComponent next = ZTextComponent.of("§r[§e下一页§r]§r");
         if ((start + 10) < list.size()) {
             if (isGlobal) {
-                next.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist global " + platform + " show " + id + " " + (start + 10)));
+                next.setClickEvent(ZClickEvent.runCommand("/zm playlist global " + platform + " show " + id + " " + (start + 10)));
             } else {
-                next.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist " + platform + " show " + id + " " + (start + 10)));
+                next.setClickEvent(ZClickEvent.runCommand("/zm playlist " + platform + " show " + id + " " + (start + 10)));
             }
-            next.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b点击前往下一页").create()));
+            next.setHoverEvent(ZHoverEvent.showText("§b点击前往下一页"));
         } else {
-            next.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b已经到达最后一页").create()));
+            next.setHoverEvent(ZHoverEvent.showText("§b已经到达最后一页"));
         }
-        TextComponent hr = new TextComponent();
-        hr.addExtra(messageStart);
-        hr.addExtra(prev);
-        hr.addExtra(messageEnd);
+        ZComponent hr = ZTextComponent.empty();
+        hr.addChild(messageStart);
+        hr.addChild(prev);
+        hr.addChild(messageEnd);
         ZMusic.message.sendJsonMessage(hr, player);
         for (int i = start; i < list.size(); i++) {
             if (i == start + 10) {
@@ -376,28 +376,28 @@ public class PlayList {
             String name = info.get("name").getAsString();
             String singer = info.get("singer").getAsString();
             String mid = info.get("id").getAsString();
-            TextComponent message = new TextComponent(Config.prefix + "§a" + (i + 1) + "." + name + " - " + singer);
-            TextComponent play = new TextComponent("§r[§e播放§r]§r");
-            TextComponent music = new TextComponent("§r[§e点歌§r]§r");
-            TextComponent jump = new TextComponent("§r[§e跳转§r]§r");
-            play.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm play " + platform + " -id:" + mid));
-            play.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b点击播放").create()));
-            music.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm music " + platform + " -id:" + mid));
-            music.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b点击点歌").create()));
-            jump.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm playlist jump " + (i + 1) + " " + id));
-            jump.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§b点击跳转").create()));
-            message.addExtra(" ");
-            message.addExtra(play);
-            message.addExtra(" ");
-            message.addExtra(music);
-            message.addExtra(" ");
-            message.addExtra(jump);
+            ZComponent message = ZTextComponent.of(Config.prefix + "§a" + (i + 1) + "." + name + " - " + singer);
+            ZComponent play = ZTextComponent.of("§r[§e播放§r]§r");
+            ZComponent music = ZTextComponent.of("§r[§e点歌§r]§r");
+            ZComponent jump = ZTextComponent.of("§r[§e跳转§r]§r");
+            play.setClickEvent(ZClickEvent.runCommand("/zm play " + platform + " -id:" + mid));
+            play.setHoverEvent(ZHoverEvent.showText("§b点击播放"));
+            music.setClickEvent(ZClickEvent.runCommand("/zm music " + platform + " -id:" + mid));
+            music.setHoverEvent(ZHoverEvent.showText("§b点击点歌"));
+            jump.setClickEvent(ZClickEvent.runCommand("/zm playlist jump " + (i + 1) + " " + id));
+            jump.setHoverEvent(ZHoverEvent.showText("§b点击跳转"));
+            message.addChild(ZTextComponent.of(" "));
+            message.addChild(play);
+            message.addChild(ZTextComponent.of(" "));
+            message.addChild(music);
+            message.addChild(ZTextComponent.of(" "));
+            message.addChild(jump);
             ZMusic.message.sendJsonMessage(message, player);
         }
-        hr = new TextComponent();
-        hr.addExtra(messageStart);
-        hr.addExtra(next);
-        hr.addExtra(messageEnd);
+        hr = ZTextComponent.empty();
+        hr.addChild(messageStart);
+        hr.addChild(next);
+        hr.addChild(messageEnd);
         ZMusic.message.sendJsonMessage(hr, player);
     }
 

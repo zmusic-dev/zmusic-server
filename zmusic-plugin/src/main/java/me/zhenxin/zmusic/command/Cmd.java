@@ -14,7 +14,6 @@ import me.zhenxin.zmusic.music.SearchMusic;
 import me.zhenxin.zmusic.utils.HelpUtils;
 import me.zhenxin.zmusic.utils.OtherUtils;
 import me.zhenxin.zmusic.utils.Vault;
-import net.md_5.bungee.api.chat.TextComponent;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -285,7 +284,7 @@ public class Cmd {
                                         for (int i = 0; i < 100; i++) {
                                             progressBar.setProgress(i);
                                             try {
-                                                ZMusic.message.sendActionBarMessage(new TextComponent(progressBar.getString()), sender);
+                                                ZMusic.message.sendActionBarMessage(progressBar.getString(), sender);
                                                 Thread.sleep(10);
                                             } catch (Exception ignored) {
                                             }

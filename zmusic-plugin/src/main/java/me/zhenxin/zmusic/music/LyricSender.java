@@ -8,7 +8,6 @@ import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.data.PlayerData;
 import me.zhenxin.zmusic.nms.ActionBar;
 import me.zhenxin.zmusic.utils.OtherUtils;
-import net.md_5.bungee.api.chat.TextComponent;
 
 public class LyricSender extends Thread {
 
@@ -73,13 +72,18 @@ public class LyricSender extends Thread {
     }
 
     private void initBossBar() {
-        if (ZMusic.isBC) {
+        if (ZMusic.isVelocity) {
+            // Velocity 不支持 BossBar，使用空实现
+            bossBar = null;
+        } else if (ZMusic.isBC) {
             bossBar = new BossBarBC(player, Config.lyricColor + fullName, BarColor.BLUE, BarStyle.SEGMENTED_20, maxTime);
         } else {
             bossBar = new BossBarBukkit(player, Config.lyricColor + fullName, BarColor.BLUE, BarStyle.SEGMENTED_20, maxTime);
         }
-        bossBar.showTitle();
-        PlayerData.setPlayerBoosBar(player, bossBar);
+        if (bossBar != null) {
+            bossBar.showTitle();
+            PlayerData.setPlayerBoosBar(player, bossBar);
+        }
     }
 
     @Override
@@ -194,7 +198,7 @@ public class LyricSender extends Thread {
             if (!lyricToInOne.isEmpty()) {
                 PlayerData.setPlayerLyric(player, lyricToInOne);
             }
-            if (Config.supportBossBar) {
+            if (Config.supportBossBar && bossBar != null) {
                 if (!lyricToInOne.isEmpty()) {
                     bossBar.setTitle(Config.lyricColor + lyricToInOne);
                 }
@@ -202,7 +206,7 @@ public class LyricSender extends Thread {
             if (Config.supportActionBar) {
                 if (!lyricToInOne.isEmpty()) {
                     if (!is1_8) {
-                        ZMusic.message.sendActionBarMessage(new TextComponent(Config.lyricColor + lyricToInOne), player);
+                        ZMusic.message.sendActionBarMessage(Config.lyricColor + lyricToInOne, player);
                     } else {
                         actionBar.sendActionBar(player, Config.lyricColor + lyricToInOne);
                     }

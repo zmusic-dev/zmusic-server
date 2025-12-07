@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew :zmusic-plugin:compileJava:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

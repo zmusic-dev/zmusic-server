@@ -11,6 +11,7 @@ allprojects {
         maven { url 'https://repo.tabooproject.org/repository/releases' }
         maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi' }
         maven { url 'https://libraries.minecraft.net' }
+        maven { url 'https://repo.velocitypowered.com/snapshots/' }
     }
 }
 

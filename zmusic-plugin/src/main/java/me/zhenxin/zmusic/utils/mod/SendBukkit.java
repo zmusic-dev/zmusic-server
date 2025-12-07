@@ -30,7 +30,6 @@ public class SendBukkit implements Send {
         }
     }
 
-
     @Override
     public void sendABF(Object playerObj, String data) {
         if (!version.isHigherThan("1.12")) {
@@ -43,5 +42,12 @@ public class SendBukkit implements Send {
                 ZMusic.log.sendDebugMessage("[Mod通信] 数据发送发生错误");
             }
         }
+    }
+
+    @Override
+    public void sendToZMusicAddon(Object playerObj, String data) {
+        // Bukkit 平台不需要实现 ZMusic Addon 通信
+        // ZMusic Addon 是 BungeeCord 专用功能
+        // Bukkit 可以通过其他方式传递数据，这里留空实现
     }
 }

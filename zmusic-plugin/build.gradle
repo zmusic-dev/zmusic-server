@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-version = '2.10.4'
+version = '2.11.0'
 
 dependencies {
     compileOnly 'ink.ptms:nms-all:1.0.0'
@@ -17,6 +17,11 @@ dependencies {
     implementation(project(":zmusic-nms:zmusic-nms-1.21.7"))
 
     compileOnly libs.bungeecord
+    compileOnly libs.velocity
+
+    // Adventure API (Velocity/Paper 使用) - 仅编译时依赖，运行时由平台提供
+    compileOnly libs.adventure.api
+    compileOnly libs.adventure.text.serializer.legacy
 
     compileOnly libs.placeholderapi
     compileOnly libs.vault
@@ -34,6 +39,10 @@ processResources {
     }
 
     filesMatching("plugin.yml") {
+        expand "version": project.version
+    }
+
+    filesMatching("velocity-plugin.json") {
         expand "version": project.version
     }
 }

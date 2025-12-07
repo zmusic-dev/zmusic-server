@@ -39,4 +39,21 @@ public class SendBC implements Send {
             ZMusic.log.sendDebugMessage("[Mod通信] 数据发送发生错误");
         }
     }
+
+    @Override
+    public void sendToZMusicAddon(Object playerObj, String data) {
+        ProxiedPlayer player = (ProxiedPlayer) playerObj;
+        if (player == null)
+            return;
+        try {
+            byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
+            ByteBuf buf = Unpooled.buffer(bytes.length + 1);
+            buf.writeByte(666);
+            buf.writeBytes(bytes);
+            ZMusic.runTask.runAsync(() -> player.getServer().getInfo().sendData("zmusic:channel", buf.array()));
+        } catch (
+            Exception e) {
+            ZMusic.log.sendDebugMessage("[Mod通信] 数据发送发生错误");
+        }
+    }
 }

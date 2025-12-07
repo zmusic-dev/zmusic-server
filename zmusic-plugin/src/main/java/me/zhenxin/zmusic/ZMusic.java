@@ -19,7 +19,8 @@ import java.util.List;
 public final class ZMusic {
 
     public static boolean isFolia = false;
-    public static boolean isBC;
+    public static boolean isBC = false;
+    public static boolean isVelocity = false;
 
     public static Log log;
     public static Message message;
