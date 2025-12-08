@@ -1,5 +1,5 @@
 name: ZMusic
 main: me.zhenxin.zmusic.ZMusicBC
 version: ${version}
-author: 真心
-description: 真心音乐系统
+author: ZhenXin
+description: A Minecraft music plugin supporting Bukkit, BungeeCord, and Velocity
