@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.2.21"
+kotlin = "2.3.0"
 blossom = "2.2.0"
 shadow = "9.3.0"
 
