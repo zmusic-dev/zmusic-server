@@ -49,6 +49,7 @@ bungeecord = { module = "net.md-5:bungeecord-api", version.ref = "bungeecord" }
 velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocity" }
 # Kyori Adventure
 adventure = { module = "net.kyori:adventure-api", version.ref = "adventure" }
+adventure-text-serializer-legacy = { module = "net.kyori:adventure-text-serializer-legacy", version.ref = "adventure" }
 # bStats
 bstats-bukkit = { module = "org.bstats:bstats-bukkit", version.ref = "bstats" }
 bstats-bungeecord = { module = "org.bstats:bstats-bungeecord", version.ref = "bstats" }

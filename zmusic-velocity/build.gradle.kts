@@ -5,6 +5,8 @@ dependencies {
     api(project(":zmusic-core"))
     compileOnly(libs.velocity)
     implementation(libs.bstats.velocity)
+    compileOnly(libs.adventure)
+    compileOnly(libs.adventure.text.serializer.legacy)
 }
 
 java {
