@@ -70,14 +70,27 @@ public class NeteaseLogin {
             String cookie = getString(json, "cookie", null);
             if (cookie != null && !cookie.isEmpty()) {
                 CookieUtils.saveCookies(cookie);
+                welcome();
+            } else {
+                ZMusic.log.sendErrorMessage("未获取到 Cookies，登录失败。");
             }
-            ZMusic.log.sendNormalMessage("请求成功, " + (cookie == null ? "未返回 cookie" : "登录状态已更新") + "。");
-        } else if (codeResult == 8810) {
+            // } else if (codeResult == 8810) {
+            // ↑ 不只是8810。没办法一个一个找出来，于是采用关键词
+        } else if (result.contains("安全风险")) {
             ZMusic.log.sendErrorMessage(
-                    "被拿下了喵。请使用手机验证码登录，或者使用扫码登录。");
+                    "被拿下了喵。请使用手机验证码登录，扫码登录，或者使用 raw 登录（从浏览器复制cookies）");
+        } else {
+            ZMusic.log.sendErrorMessage("登录失败: " + codeResult + "请检查服务器控制台获得完整错误信息。");
+            throw new IllegalStateException("登录失败: " + codeResult + ", 详细信息: \n" + String.valueOf(json));
         }
     }
 
+    // 验证码登录的流程是：
+    // 1. /captcha/sent?phone=xxx&ctcode=xxx
+    // 2. /captcha/verify?phone=xxx&ctcode=xxx&captcha=xxx
+    // 3. /login/cellphone?phone=xxx&ctcode=xxx&captcha=xxx
+
+    // step 1: send code
     public static void sendCode(String phone, String countrycode) {
         String url = API + "captcha/sent?phone=" + phone + "&ctcode=" + countrycode;
         String result = NetUtils.postNetString(url, null, "");
@@ -92,25 +105,35 @@ public class NeteaseLogin {
     }
 
     public static void verify(String phone, String code, String countrycode) {
-        throw new UnsupportedOperationException("暂未实现");
-        // String url = API + "captcha/verify?phone=" + phone + "&ctcode=" + countrycode
-        // + "&captcha=" + code;
-        // login_fromlink(url);
+        // step 2: verify code
+        String url_verify = API + "captcha/verify?phone=" + phone + "&ctcode=" + countrycode
+                + "&captcha=" + code;
+        String result_verify = NetUtils.postNetString(url_verify, null, "");
+        JsonObject json_verify = parseJsonObject(result_verify);
+        int code_verify = getInt(json_verify, "code", -1);
+        if (code_verify != 200) {
+            ZMusic.log.sendErrorMessage("验证码错误" + getString(json_verify, "data", "未知错误"));
+            return;
+        }
+
+        // step 3: login with code
+        String url = API + "login/cellphone?phone=" + phone + "&ctcode=" + countrycode + "&captcha=" + code;
+        login_fromlink(url);
     }
 
     public static void password_phone(String phone, String password, String countrycode, boolean isMD5) {
-        throw new UnsupportedOperationException("暂未实现");
-        // String url = API + "login/cellphone?phone=" + phone + "&ctcode=" +
-        // countrycode +
-        // (isMD5 ? "&md5_password=" : "&password=") + password;
-        // login_fromlink(url);
+        // throw new UnsupportedOperationException("暂未实现");
+        String url = API + "login/cellphone?phone=" + phone + "&ctcode=" +
+                countrycode +
+                (isMD5 ? "&md5_password=" : "&password=") + password;
+        login_fromlink(url);
     }
 
     public static void password_email(String email, String password, boolean isMD5) {
-        throw new UnsupportedOperationException("暂未实现");
-        // String url = API + "login?email=" + email +
-        // (isMD5 ? "&md5_password=" : "&password=") + password;
-        // login_fromlink(url);
+        // throw new UnsupportedOperationException("暂未实现");
+        String url = API + "login?email=" + email +
+                (isMD5 ? "&md5_password=" : "&password=") + password;
+        login_fromlink(url);
     }
 
     public static String nickname() {
@@ -153,12 +176,12 @@ public class NeteaseLogin {
     }
 
     private static JsonObject getObject(JsonObject parent, String key) {
-        throw new UnsupportedOperationException("暂未实现");
-        // if (parent == null || !parent.has(key) || parent.get(key) == null ||
-        // !parent.get(key).isJsonObject()) {
-        // return new JsonObject();
-        // }
-        // return parent.getAsJsonObject(key);
+        // throw new UnsupportedOperationException("暂未实现");
+        if (parent == null || !parent.has(key) || parent.get(key) == null ||
+                !parent.get(key).isJsonObject()) {
+            return new JsonObject();
+        }
+        return parent.getAsJsonObject(key);
     }
 
     private static String getString(JsonObject obj, String key, String defaultValue) {
@@ -186,38 +209,38 @@ public class NeteaseLogin {
     }
 
     public static void loginRaw(String rawCookies) {
-        throw new UnsupportedOperationException("暂未实现");
-        // if (rawCookies == null || rawCookies.isEmpty()) {
-        // ZMusic.log.sendErrorMessage("Cookies 不能为空！");
-        // return;
-        // }
-        // if (!rawCookies.contains("=")) {
-        // ZMusic.log.sendErrorMessage("无效的 Cookies 格式！");
-        // return;
-        // }
-        // String normalized = normalizeRawCookie(rawCookies);
-        // if (normalized.isEmpty() || !normalized.contains("=")) {
-        // ZMusic.log.sendErrorMessage("无效的 Cookies 格式！");
-        // return;
-        // }
-        // try {
-        // CookieUtils.saveCookies(normalized);
-        // ZMusic.log.sendNormalMessage("Cookies 已成功保存。");
-        // } catch (Exception e) {
-        // ZMusic.log.sendErrorMessage("保存 Cookies 时发生错误: " + e.getMessage());
-        // }
+        if (rawCookies == null || rawCookies.isEmpty()) {
+            ZMusic.log.sendErrorMessage("Cookies 不能为空！");
+            return;
+        }
+        if (!rawCookies.contains("=")) {
+            ZMusic.log.sendErrorMessage("无效的 Cookies 格式！");
+            return;
+        }
+        String normalized = normalizeRawCookie(rawCookies);
+        if (normalized.isEmpty() || !normalized.contains("=")) {
+            ZMusic.log.sendErrorMessage("无效的 Cookies 格式！");
+            return;
+        }
+        try {
+            CookieUtils.saveCookies(normalized);
+            ZMusic.log.sendNormalMessage("Cookies 已成功保存。");
+            welcome();
+        } catch (Exception e) {
+            ZMusic.log.sendErrorMessage("保存 Cookies 时发生错误: " + e.getMessage());
+        }
     }
 
     private static String normalizeRawCookie(String rawCookies) {
-        throw new UnsupportedOperationException("暂未实现");
-        // String cookie = rawCookies.trim();
-        // if (cookie.regionMatches(true, 0, "cookie:", 0, 7)) {
-        // cookie = cookie.substring(7).trim();
-        // }
-        // cookie = cookie.replace('\n', ';').replace('\r', ';');
-        // while (cookie.contains(";;")) {
-        // cookie = cookie.replace(";;", ";");
-        // }
-        // return cookie;
+        // throw new UnsupportedOperationException("暂未实现");
+        String cookie = rawCookies.trim();
+        if (cookie.regionMatches(true, 0, "cookie:", 0, 7)) {
+            cookie = cookie.substring(7).trim();
+        }
+        cookie = cookie.replace('\n', ';').replace('\r', ';');
+        while (cookie.contains(";;")) {
+            cookie = cookie.replace(";;", ";");
+        }
+        return cookie;
     }
 }

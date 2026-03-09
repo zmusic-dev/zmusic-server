@@ -7,7 +7,8 @@ public enum LoginMethod {
     PHONE("phone"),
     EMAIL("email"),
     SEND_CODE("sendcode"),
-    VERIFY("verify");
+    VERIFY("verify"),
+    RAW("raw");
 
     private final String token;
 

@@ -387,18 +387,6 @@ public class Cmd {
             return;
         }
 
-        if ("raw".equalsIgnoreCase(args[1])) {
-            if (args.length < 3) {
-                ZMusic.message.sendErrorMessage("用法: /zm login raw [cookie1|cookie2|...]", sender);
-                return;
-            }
-
-            String rawCookies = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-            NeteaseLogin.loginRaw(rawCookies);
-            ZMusic.message.sendNormalMessage("Cookies 已提交处理。", sender);
-            return;
-        }
-
         LoginMethod loginMethod = LoginMethod.fromToken(args[1]);
         if (loginMethod == null) {
             if ("status".equalsIgnoreCase(args[1])) {
@@ -450,6 +438,24 @@ public class Cmd {
                 }
 
                 loginByVerifyCode(sender, verifyInput.phone, verifyInput.ctCode, args[verifyInput.nextIndex]);
+                break;
+            case RAW:
+                if (args.length < 3) {
+                    String rawHelpMsg = "用法: /zm login raw [cookie1|cookie2|...]\n" +
+                            "可以在浏览器控制台执行下面的命令: \n" +
+                            "console.log(document.cookie);\n" +
+                            "然后粘贴。\n" +
+                            "如果超过256字符上限，请粘贴到命令方块内。\n\n" +
+                            "有效cookie的字段有: \n" +
+                            "MUSIC_R_T; MUSIC_U; MUSIC_A_T; __csrf; MUSIC_SNS; MUSIC_R_U; __remember_me";
+
+                    ZMusic.message.sendErrorMessage(rawHelpMsg, sender);
+                    return;
+                }
+
+                String rawCookies = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+                NeteaseLogin.loginRaw(rawCookies);
+                ZMusic.message.sendNormalMessage("Cookies 已提交处理。", sender);
                 break;
             default:
                 ZMusic.message.sendErrorMessage("未知登录方式", sender);
@@ -555,11 +561,6 @@ public class Cmd {
                 e.printStackTrace();
             } catch (NullPointerException e) {
                 ZMusic.message.sendErrorMessage("登录失败! 请检查后台错误. (空指针)", sender);
-                e.printStackTrace();
-            } catch (Exception e) {
-                String errname = e.getClass().getName();
-                ZMusic.message.sendErrorMessage("登录失败! 请检查后台错误. (未知错误: " + errname + ")",
-                        sender);
                 e.printStackTrace();
             }
         });
