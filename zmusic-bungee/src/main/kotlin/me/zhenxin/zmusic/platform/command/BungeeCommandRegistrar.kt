@@ -14,7 +14,7 @@ class BungeeCommandRegistrar(private val plugin: Plugin) {
 
     private class RootCommand : Command(
         ZMusicCommandManager.ROOT_COMMAND,
-        ZMusicCommandManager.rootPermission().node,
+        null,
         "music",
         "zm"
     ) {
