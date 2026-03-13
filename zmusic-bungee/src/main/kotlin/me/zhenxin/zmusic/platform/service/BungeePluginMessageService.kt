@@ -6,6 +6,7 @@ import me.zhenxin.zmusic.api.service.PluginMessageService
 import me.zhenxin.zmusic.platform.entity.BungeePlayer
 import net.md_5.bungee.api.ProxyServer
 import net.md_5.bungee.api.connection.ProxiedPlayer
+import net.md_5.bungee.api.connection.Server
 import net.md_5.bungee.api.event.PluginMessageEvent
 import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.api.plugin.Plugin
@@ -57,9 +58,29 @@ class BungeePluginMessageService(private val plugin: Plugin) : PluginMessageServ
     @EventHandler
     fun onPluginMessage(event: PluginMessageEvent) {
         val channel = event.tag
-        if (channel in registeredChannels && event.sender is ProxiedPlayer) {
-            val player = BungeePlayer(event.sender as ProxiedPlayer)
+        if (channel in registeredChannels) {
+            val player = resolvePlayer(event) ?: return
             listeners[channel]?.forEach { it.onPluginMessageReceived(player, channel, event.data) }
         }
+    }
+
+    private fun resolvePlayer(event: PluginMessageEvent): BungeePlayer? {
+        val sender = event.sender
+        if (sender is ProxiedPlayer) {
+            return BungeePlayer(sender)
+        }
+
+        val receiver = event.receiver
+        if (receiver is ProxiedPlayer) {
+            return BungeePlayer(receiver)
+        }
+
+        if (sender is Server) {
+            return ProxyServer.getInstance().players
+                .firstOrNull { it.server == sender }
+                ?.let(::BungeePlayer)
+        }
+
+        return null
     }
 }

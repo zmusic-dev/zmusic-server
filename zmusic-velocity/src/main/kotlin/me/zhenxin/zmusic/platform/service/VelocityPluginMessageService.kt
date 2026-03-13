@@ -4,6 +4,7 @@ import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.PluginMessageEvent
 import com.velocitypowered.api.proxy.Player
 import com.velocitypowered.api.proxy.ProxyServer
+import com.velocitypowered.api.proxy.ServerConnection
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier
 import me.zhenxin.zmusic.api.entity.ZPlayer
 import me.zhenxin.zmusic.api.service.PluginMessageListener
@@ -64,9 +65,29 @@ class VelocityPluginMessageService(
     @Subscribe
     fun onPluginMessage(event: PluginMessageEvent) {
         val channel = event.identifier.id
-        if (channel in channelIdentifiers && event.source is Player) {
-            val player = VelocityPlayer(event.source as Player)
+        if (channel in channelIdentifiers) {
+            val player = resolvePlayer(event) ?: return
             listeners[channel]?.forEach { it.onPluginMessageReceived(player, channel, event.data) }
         }
+    }
+
+    private fun resolvePlayer(event: PluginMessageEvent): VelocityPlayer? {
+        val source = event.source
+        if (source is Player) {
+            return VelocityPlayer(source)
+        }
+        if (source is ServerConnection) {
+            return VelocityPlayer(source.player)
+        }
+
+        val target = event.target
+        if (target is Player) {
+            return VelocityPlayer(target)
+        }
+        if (target is ServerConnection) {
+            return VelocityPlayer(target.player)
+        }
+
+        return null
     }
 }
