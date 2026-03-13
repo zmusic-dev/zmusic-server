@@ -4,6 +4,7 @@ import me.zhenxin.zmusic.dependencies.RuntimeDependency;
 import me.zhenxin.zmusic.enums.Platform;
 import me.zhenxin.zmusic.platform.BungeeLoggerImpl;
 import me.zhenxin.zmusic.platform.BungeePlatformService;
+import me.zhenxin.zmusic.platform.command.BungeeCommandRegistrar;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
 
@@ -34,6 +35,7 @@ public class BungeePlugin extends Plugin {
         ZMusicKt.setPlatformService(new BungeePlatformService(this));
         new Metrics(this, 8864);
         ZMusic.INSTANCE.onEnable();
+        new BungeeCommandRegistrar(this).register();
     }
 
     @Override

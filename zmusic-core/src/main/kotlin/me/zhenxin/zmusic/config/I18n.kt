@@ -54,6 +54,59 @@ object I18n {
         val outdated: String
             get() = getI18nValue("config.outdated")
     }
+
+    object Command {
+        val noPermission: String
+            get() = getI18nValue("command.no_permission")
+
+        val playerOnly: String
+            get() = getI18nValue("command.player_only")
+
+        val unknownSubcommand: String
+            get() = getI18nValue("command.unknown_subcommand")
+
+        val invalidUsage: String
+            get() = getI18nValue("command.invalid_usage")
+
+        val internalError: String
+            get() = getI18nValue("command.internal_error")
+
+        val helpHeader: String
+            get() = getI18nValue("command.help_header")
+
+        val helpEntry: String
+            get() = getI18nValue("command.help_entry")
+
+        val helpDetailHeader: String
+            get() = getI18nValue("command.help_detail_header")
+
+        val helpDescription: String
+            get() = getI18nValue("command.help_description")
+
+        val infoDescription: String
+            get() = getI18nValue("command.info_description")
+
+        val reloadDescription: String
+            get() = getI18nValue("command.reload_description")
+
+        val reloadSuccess: String
+            get() = getI18nValue("command.reload_success")
+
+        val reloadFailed: String
+            get() = getI18nValue("command.reload_failed")
+
+        val infoHeader: String
+            get() = getI18nValue("command.info_header")
+
+        val infoVersion: String
+            get() = getI18nValue("command.info_version")
+
+        val infoPlatform: String
+            get() = getI18nValue("command.info_platform")
+
+        val infoOnlinePlayers: String
+            get() = getI18nValue("command.info_online_players")
+    }
 }
 
 /**
