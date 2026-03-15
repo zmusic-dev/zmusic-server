@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+此文件为 AI 智能体提供项目开发指导。
 
 ## 项目概览
 
@@ -84,10 +84,10 @@ zmusic-core     → 核心业务逻辑（Kotlin，依赖 runtime）
 所有依赖版本定义在 `gradle/libs.versions.toml`
 
 ### 关键依赖
-- Kotlin：2.2.21
-- Hutool：5.8.41（工具库）
+- Kotlin：2.3.10
+- Hutool：5.8.44（工具库）
 - Night Config：3.8.3（TOML 解析）
-- Adventure：4.25.0（文本组件）
+- Adventure：4.26.1（文本组件）
 
 ### Maven 仓库
 - PaperMC：`https://repo.papermc.io/repository/maven-public/`
@@ -97,7 +97,7 @@ zmusic-core     → 核心业务逻辑（Kotlin，依赖 runtime）
 
 | 平台 | Java 版本 | API 版本 |
 |------|----------|----------|
-| Bukkit/Spigot | Java 8+ | 1.21.10-R0.1 |
+| Bukkit/Spigot | Java 8+ | 1.21.11-R0.2-SNAPSHOT |
 | BungeeCord | Java 8+ | 1.21-R0.4 |
 | Velocity | Java 21+ | 3.4.0-SNAPSHOT |
 
