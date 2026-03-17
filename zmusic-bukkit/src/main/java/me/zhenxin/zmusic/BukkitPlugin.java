@@ -3,6 +3,8 @@ package me.zhenxin.zmusic;
 import me.zhenxin.zmusic.dependencies.RuntimeDependency;
 import me.zhenxin.zmusic.enums.Platform;
 import me.zhenxin.zmusic.platform.BukkitLoggerImpl;
+import me.zhenxin.zmusic.platform.BukkitPlatformService;
+import me.zhenxin.zmusic.platform.command.BukkitCommandRegistrar;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -48,7 +50,9 @@ public class BukkitPlugin extends JavaPlugin {
         } else {
             ZMusicKt.setCurrentPlatform(Platform.BUKKIT);
         }
+        ZMusicKt.setPlatformService(new BukkitPlatformService(this));
         new Metrics(this, 7291);
         ZMusic.INSTANCE.onEnable();
+        new BukkitCommandRegistrar(this).register();
     }
 }

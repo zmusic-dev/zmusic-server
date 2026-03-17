@@ -3,6 +3,8 @@ dependencies {
 
     compileOnly(libs.bungeecord)
     compileOnly(libs.bstats.bungeecord)
+    compileOnly(libs.adventure)
+    compileOnly(libs.adventure.text.serializer.legacy)
 }
 
 tasks.processResources {

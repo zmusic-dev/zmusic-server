@@ -10,6 +10,8 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import me.zhenxin.zmusic.dependencies.RuntimeDependency;
 import me.zhenxin.zmusic.enums.Platform;
 import me.zhenxin.zmusic.platform.VelocityLoggerImpl;
+import me.zhenxin.zmusic.platform.VelocityPlatformService;
+import me.zhenxin.zmusic.platform.command.VelocityCommandRegistrar;
 import org.bstats.velocity.Metrics;
 
 import java.nio.file.Path;
@@ -47,8 +49,10 @@ public class VelocityPlugin {
         ZMusicKt.setLogger(new VelocityLoggerImpl(server.getConsoleCommandSource()));
         ZMusicKt.setDataFolder(dataDirectory.toFile());
         ZMusicKt.setCurrentPlatform(Platform.VELOCITY);
+        ZMusicKt.setPlatformService(new VelocityPlatformService(server, this));
         metricsFactory.make(this, 12426);
         ZMusic.INSTANCE.onEnable();
+        new VelocityCommandRegistrar(server).register();
     }
 
     @Subscribe

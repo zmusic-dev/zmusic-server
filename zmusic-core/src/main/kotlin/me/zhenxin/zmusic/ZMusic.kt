@@ -1,5 +1,6 @@
 package me.zhenxin.zmusic
 
+import me.zhenxin.zmusic.api.service.PlatformService
 import me.zhenxin.zmusic.config.I18n
 import me.zhenxin.zmusic.config.initConfig
 import me.zhenxin.zmusic.config.initI18n
@@ -40,6 +41,9 @@ object ZMusic {
         initConfig()
         initI18n()
 
+        // 初始化平台服务
+        platformService.initialize()
+
         I18n.Init.loaded.forEach {
             logger.info(
                 it.replace("{version}", ZMusicConstants.PLUGIN_VERSION)
@@ -56,6 +60,7 @@ object ZMusic {
      * 插件禁用
      */
     fun onDisable() {
+        platformService.shutdown()
         logger.info(I18n.Disable.disabled)
     }
 }
@@ -74,3 +79,8 @@ lateinit var dataFolder: File
  * 日志
  */
 lateinit var logger: PlatformLogger
+
+/**
+ * 平台服务
+ */
+lateinit var platformService: PlatformService

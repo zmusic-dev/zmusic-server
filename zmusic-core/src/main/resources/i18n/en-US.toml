@@ -43,3 +43,22 @@ tips = "&aInput &a/&e{command} &bhelp &aShow Help."
 
 [config]
 outdated = "&cConfig is outdated, please delete the config file and restart the server."
+
+[command]
+no_permission = "&cYou do not have permission to use this command."
+player_only = "&cThis command can only be used by players."
+unknown_subcommand = "&cUnknown subcommand: &e{input}"
+invalid_usage = "&cUsage: &e/{usage}"
+internal_error = "&cCommand execution failed, please check the server log."
+help_header = "&bZMusic Command Help:"
+help_entry = "&e/{usage} &7- {description}"
+help_detail_header = "&bCommand Help: &e/{usage}"
+help_description = "Show help information"
+info_description = "Show plugin status"
+reload_description = "Reload configuration and language files"
+reload_success = "&aConfiguration and language files reloaded."
+reload_failed = "&cReload failed, please check the server log."
+info_header = "&bZMusic Status:"
+info_version = "&7Version: &e{value}"
+info_platform = "&7Platform: &e{value}"
+info_online_players = "&7Online Players: &e{value}"
