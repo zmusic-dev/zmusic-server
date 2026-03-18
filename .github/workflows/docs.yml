@@ -1,0 +1,57 @@
+name: Build And Deploy Docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.node-version'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.node-version'
+
+      - name: Enable corepack
+        run: corepack enable pnpm
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Project
+        run: pnpm docs:build
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo -e "LogLevel ERROR\nHost *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+      - name: Deploy to Server
+        run: |
+          server="${{ secrets.DEPLOY_SERVER_IP }}"
+          port="${{ secrets.DEPLOY_SERVER_PORT }}"
+          deployed_dir="/opt/1panel/www/sites/zmusic.zhenxin.me"
+          echo "🚀 部署到 $server"
+          echo "📁 创建远程目录..."
+          ssh root@$server -p $port "mkdir -p ${deployed_dir}"
+          echo "📦 上传产物到服务器..."
+          scp -r -P $port docs/.vitepress/dist/* root@$server:${deployed_dir}/index-new
+          ssh root@$server -p $port "rm -rf ${deployed_dir}/index"
+          ssh root@$server -p $port "cd ${deployed_dir} && mv index-new index"
+          echo "🔑 设置文件权限..."
+          ssh root@$server -p $port "chown -R 1000:1000 ${deployed_dir}"
+          echo "✅ 部署完成！"
