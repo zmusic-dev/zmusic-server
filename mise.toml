@@ -1,5 +1,5 @@
 [tools]
 # Gradle 9.x 需要 Java 17+，项目 Velocity 模块需要 Java 21
-java = "21"
+java = "temurin-21"
 # Node.js LTS（文档构建）
 node = "lts"
