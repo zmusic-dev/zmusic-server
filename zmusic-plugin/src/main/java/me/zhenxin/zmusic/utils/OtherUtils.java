@@ -169,9 +169,11 @@ public class OtherUtils {
                     switch (mill.length()) {
                         case 2:
                             mill = String.valueOf(Integer.parseInt(mill));
+                            break;
                         case 3:
                             mill = mill.substring(0, mill.length() - 1);
                             mill = String.valueOf(Integer.parseInt(mill));
+                            break;
                     }
                 }
                 long time = timeToSec(min, sec, mill);

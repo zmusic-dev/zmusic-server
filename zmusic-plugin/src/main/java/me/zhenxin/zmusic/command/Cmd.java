@@ -18,14 +18,13 @@ import me.zhenxin.zmusic.login.LoginMethod;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-
-import org.checkerframework.checker.units.qual.N;
 
 public class Cmd {
 
-    static Map<Object, Integer> cooldown = new HashMap<>();
-    static List<Object> cooldownStats = new ArrayList<>();
+    static Map<Object, Integer> cooldown = new ConcurrentHashMap<>();
+    static List<Object> cooldownStats = Collections.synchronizedList(new ArrayList<>());
 
     public static boolean cmd(Object sender, String[] args) { // 指令输出
         if (ZMusic.isEnableEd) {
@@ -567,15 +566,16 @@ public class Cmd {
     }
 
     private static void loginByPhone(Object sender, String username, String password, String ctCode) {
-        ZMusic.message.sendErrorMessage("提示: 密码登录容易引发风控，建议使用二维码登录.", sender);
+        ZMusic.message.sendErrorMessage("警告: 密码登录容易引发风控，建议使用二维码登录。", sender);
+        ZMusic.message.sendErrorMessage("安全提示: 密码可能会被服务器日志记录，请确保服务器安全。", sender);
 
         String md5 = OtherUtils.md5(password);
         NeteaseLogin.password_phone(username, md5, ctCode, true);
     }
 
     private static void loginByEmail(Object sender, String username, String password) {
-        ZMusic.message.sendErrorMessage("提示: 密码登录容易引发风控，建议使用二维码登录.", sender);
-        // use md5 method
+        ZMusic.message.sendErrorMessage("警告: 密码登录容易引发风控，建议使用二维码登录。", sender);
+        ZMusic.message.sendErrorMessage("安全提示: 密码可能会被服务器日志记录，请确保服务器安全。", sender);
 
         String md5 = OtherUtils.md5(password);
         NeteaseLogin.password_email(username, md5, true);
@@ -592,7 +592,7 @@ public class Cmd {
 
     }
 
-    private static ParsedPhoneInput parseCtCodeAndPhone(Object[] args, int startIndex, Object sender, String usage) {
+    private static ParsedPhoneInput parseCtCodeAndPhone(String[] args, int startIndex, Object sender, String usage) {
         if (args.length <= startIndex) {
             ZMusic.message.sendErrorMessage(usage, sender);
             return null;

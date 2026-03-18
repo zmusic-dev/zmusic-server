@@ -27,7 +27,13 @@ public class NeteaseLogin {
     public static String key() {
         String result = NetUtils.postNetString(API + "login/qr/key", null, "");
         JsonObject json = GSON.fromJson(result, JsonObject.class);
+        if (json == null || !json.has("data") || !json.get("data").isJsonObject()) {
+            throw new IllegalStateException("获取 QR key 失败: 响应格式错误");
+        }
         JsonObject data = json.getAsJsonObject("data");
+        if (!data.has("unikey")) {
+            throw new IllegalStateException("获取 QR key 失败: 缺少 unikey 字段");
+        }
         return data.get("unikey").getAsString();
     }
 
@@ -35,7 +41,13 @@ public class NeteaseLogin {
         String params = "key=" + key;
         String result = NetUtils.postNetString(API + "login/qr/create", null, params);
         JsonObject json = GSON.fromJson(result, JsonObject.class);
+        if (json == null || !json.has("data") || !json.get("data").isJsonObject()) {
+            throw new IllegalStateException("创建二维码失败: 响应格式错误");
+        }
         JsonObject data = json.getAsJsonObject("data");
+        if (!data.has("qrurl")) {
+            throw new IllegalStateException("创建二维码失败: 缺少 qrurl 字段");
+        }
         String url = data.get("qrurl").getAsString();
         return "https://api.2dcode.biz/v1/create-qr-code?data=" + URLEncoder.encode(url, "UTF-8");
     }
@@ -44,7 +56,10 @@ public class NeteaseLogin {
         String params = "key=" + key + "&noCookie=true";
         String result = NetUtils.postNetString(API + "login/qr/check", null, params);
         JsonObject json = GSON.fromJson(result, JsonObject.class);
-        if (json.get("code").getAsInt() == 803) {
+        if (json == null || !json.has("code")) {
+            return -1;
+        }
+        if (json.get("code").getAsInt() == 803 && json.has("cookie")) {
             String cookie = json.get("cookie").getAsString();
             CookieUtils.saveCookies(cookie);
         }
@@ -80,8 +95,8 @@ public class NeteaseLogin {
             ZMusic.log.sendErrorMessage(
                     "被拿下了喵。请使用手机验证码登录，扫码登录，或者使用 raw 登录（从浏览器复制cookies）");
         } else {
-            ZMusic.log.sendErrorMessage("登录失败: " + codeResult + "请检查服务器控制台获得完整错误信息。");
-            throw new IllegalStateException("登录失败: " + codeResult + ", 详细信息: \n" + String.valueOf(json));
+            ZMusic.log.sendErrorMessage("登录失败: " + codeResult + "，请检查服务器控制台获得完整错误信息。");
+            throw new IllegalStateException("登录失败: " + codeResult + ", 详细信息: \n" + json);
         }
     }
 

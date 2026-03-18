@@ -1,7 +1,5 @@
 package me.zhenxin.zmusic.login;
 
-import java.lang.ref.PhantomReference;
-
 public enum LoginMethod {
     QR("qr"),
     PHONE("phone"),
