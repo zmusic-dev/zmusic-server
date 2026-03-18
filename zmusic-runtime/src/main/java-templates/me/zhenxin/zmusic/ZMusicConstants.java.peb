@@ -39,8 +39,8 @@ public class ZMusicConstants {
     public static final String NIGHT_CONFIG_VERSION = "{{ nightConfigVersion }}";
 
     /**
-     * bStats 版本
+     * Adventure 版本
      */
-    public static final String BSTATS_VERSION = "{{ bstatsVersion }}";
+    public static final String ADVENTURE_VERSION = "{{ adventureVersion }}";
 
 }

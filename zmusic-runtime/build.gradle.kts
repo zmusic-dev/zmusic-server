@@ -26,7 +26,7 @@ sourceSets {
                 property("hutoolVersion", libs.versions.hutool.get())
                 property("nettyVersion", libs.versions.netty.get())
                 property("nightConfigVersion", libs.versions.nightconfig.get())
-                property("bstatsVersion", libs.versions.bstats.get())
+                property("adventureVersion", libs.versions.adventure.get())
             }
         }
     }

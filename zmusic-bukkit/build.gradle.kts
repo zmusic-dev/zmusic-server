@@ -3,7 +3,7 @@ dependencies {
 
     compileOnly(libs.spigot)
     compileOnly(libs.placeholderapi)
-    compileOnly(libs.bstats.bukkit)
+    implementation(libs.bstats.bukkit)
     compileOnly(libs.adventure)
     compileOnly(libs.adventure.text.serializer.legacy)
 }

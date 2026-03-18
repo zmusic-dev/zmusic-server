@@ -1,89 +1,48 @@
 package me.zhenxin.zmusic;
 
-import me.zhenxin.zmusic.dependencies.RuntimeDependency;
-import me.zhenxin.zmusic.dependencies.RuntimeEnv;
-import me.zhenxin.zmusic.dependencies.common.RuntimeLogger;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
-import static me.zhenxin.zmusic.dependencies.common.PrimitiveIO.t;
+import me.zhenxin.zmusic.dependencies.KotlinBootstrapLoader;
+import me.zhenxin.zmusic.dependencies.common.BootstrapContext;
+import java.lang.reflect.Method;
 
 /**
- * ZMusic 运行时依赖
+ * ZMusic Java Bootstrap。
+ * 仅负责加载 Kotlin 运行时，然后将后续初始化委托给 Kotlin 入口。
  *
  * @author 真心
  * @since 2023/7/24 18:14
  */
-@RuntimeDependency(
-        value = "!cn.hutool:hutool-core:" + ZMusicConstants.HUTOOL_VERSION,
-        test = "!cn.hutool.core.text.StrUtil"
-)
-@RuntimeDependency(
-        value = "!cn.hutool:hutool-http:" + ZMusicConstants.HUTOOL_VERSION,
-        test = "!cn.hutool.http.HttpUtil"
-)
-@RuntimeDependency(
-        value = "!cn.hutool:hutool-log:" + ZMusicConstants.HUTOOL_VERSION,
-        test = "!cn.hutool.log.LogUtil"
-)
-@RuntimeDependency(
-        value = "!cn.hutool:hutool-json:" + ZMusicConstants.HUTOOL_VERSION,
-        test = "!cn.hutool.json.JSONUtil"
-)
-@RuntimeDependency(
-        value = "!io.netty:netty-buffer:" + ZMusicConstants.NETTY_VERSION,
-        test = "!io.netty.buffer.ByteBuf"
-)
-@RuntimeDependency(
-        value = "!com.electronwill.night-config:core:" + ZMusicConstants.NIGHT_CONFIG_VERSION,
-        test = "!com.electronwill.nightconfig.core.Config"
-)
-@RuntimeDependency(
-        value = "!com.electronwill.night-config:toml:" + ZMusicConstants.NIGHT_CONFIG_VERSION,
-        test = "!com.electronwill.nightconfig.toml.TomlFormat"
-)
-@RuntimeDependency(
-        value = "!org.bstats:bstats-base:" + ZMusicConstants.BSTATS_VERSION,
-        test = "!me.zhenxin.zmusic.library.bstats.MetricsBase",
-        relocate = {"!org.bstats.", "!me.zhenxin.zmusic.library.bstats."}
-)
 public class ZMusicRuntime {
 
-    public static void setup(String dataFolder, Class<?>... classes) {
-        // 目录检测
-        RuntimeLogger.info(t(
-                "正在初始化运行时依赖，请稍等...",
-                "Initializing runtime dependencies, please wait..."
-        ));
-        RuntimeEnv.ENV.runtimeInit(dataFolder);
+    private static final String KOTLIN_RUNTIME_CLASS = "me.zhenxin.zmusic.ZMusicRuntimeCore";
+
+    public static void setup(String dataFolder) { runRuntimePhase(() -> KotlinBootstrapLoader.bootstrap(dataFolder)); }
+
+    public static void initialize(String dataFolder, Class<?>... classes) { runRuntimePhase(() -> invokeKotlinRuntime(dataFolder, classes)); }
+
+    private static void invokeKotlinRuntime(String dataFolder, Class<?>[] classes) throws Throwable {
+        Class<?> runtimeCoreClass = Class.forName(KOTLIN_RUNTIME_CLASS, true, ZMusicRuntime.class.getClassLoader());
+        Method setupMethod = runtimeCoreClass.getDeclaredMethod("setup", String.class, Class[].class);
+        setupMethod.invoke(null, dataFolder, (Object) classes);
+    }
+
+    private static void runRuntimePhase(ThrowingRunnable runnable) {
         try {
-            RuntimeEnv.ENV.inject(ZMusicRuntime.class);
-            for (Class<?> clazz : classes) {
-                RuntimeEnv.ENV.inject(clazz);
-            }
+            runnable.run();
         } catch (Throwable t) {
-            RuntimeLogger.warning(t(
+            BootstrapContext.warning(BootstrapContext.t(
                     "加载运行时依赖失败，请检查运行环境！{0}",
                     "Failed to load runtime dependencies, please check the runtime environment! {0}"
             ), t.getMessage());
-            RuntimeLogger.debug(t(
+            BootstrapContext.debug(BootstrapContext.t(
                     "异常堆栈: {0}",
                     "Exception stack trace: {0}"
-            ), getStackTrace(t));
+            ), BootstrapContext.stackTraceOf(t));
         }
-        RuntimeLogger.info(t(
-                "运行时依赖加载完成！",
-                "Runtime dependencies loaded!"
-        ));
-        // 输出依赖加载统计信息
-        RuntimeLogger.logDependencyStats();
     }
 
-    private static String getStackTrace(Throwable throwable) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        throwable.printStackTrace(pw);
-        return sw.toString();
+    @FunctionalInterface
+    private interface ThrowingRunnable {
+
+        void run() throws Throwable;
     }
 }
