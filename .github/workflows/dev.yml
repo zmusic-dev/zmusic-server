@@ -1,5 +1,9 @@
 name: Dev Build
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   workflow_dispatch:
   push:
@@ -11,7 +15,6 @@ on:
       - "**/src/**"
       - "**/build.gradle.kts"
       - "settings.gradle.kts"
-      - "gradle.properties"
     branches:
       - "v4"
   pull_request:
