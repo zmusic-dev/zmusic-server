@@ -1,0 +1,27 @@
+{
+  "name": "zmusic-docs",
+  "version": "1.0.0",
+  "description": "ZMusic Documentation",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "test": "vitepress build docs"
+  },
+  "keywords": [
+    "vitepress",
+    "minecraft",
+    "zmusic",
+    "docs"
+  ],
+  "author": "ZhenXin",
+  "license": "GPL-3.0-only",
+  "packageManager": "pnpm@10.32.1",
+  "devDependencies": {
+    "vitepress": "2.0.0-alpha.16",
+    "vue": "^3.5.30"
+  }
+}

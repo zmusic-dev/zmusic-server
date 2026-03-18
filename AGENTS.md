@@ -119,3 +119,56 @@ zmusic-core     → 核心业务逻辑（Kotlin，依赖 runtime）
 2. **依赖重定位**：所有依赖都会重定位到 `me.zhenxin.zmusic.libs` 包下
 3. **运行时依赖**：某些依赖（如 Netty、Guava）会在运行时动态下载
 4. **测试**：项目目前没有单元测试，添加新功能时建议补充测试
+
+## 文档站点
+
+项目文档位于 `docs/` 目录，基于 VitePress 构建。
+
+### 文档命令
+
+```bash
+# 安装依赖
+pnpm install
+
+# 启动开发服务器
+pnpm docs:dev
+
+# 构建生产版本
+pnpm docs:build
+
+# 预览构建结果
+pnpm docs:preview
+```
+
+### 文档结构
+
+```text
+docs/
+├── .vitepress/
+│   ├── config.mts         # VitePress 主配置
+│   └── theme/             # 自定义主题
+│       ├── components/    # 自定义组件
+│       ├── data/          # 数据文件
+│       ├── utils/         # 工具函数
+│       ├── index.ts       # 主题入口
+│       └── style.css      # 全局样式
+├── guide/                 # 中文指南
+├── en/                    # 英文文档
+├── zh-tw/                 # 繁体中文文档
+├── ja/                    # 日文文档
+└── public/                # 静态资源
+```
+
+### 多语言配置
+
+路由映射：
+- `/`：简体中文 (root locale)
+- `/en/`：English
+- `/zh-tw/`：繁體中文
+- `/ja/`：日本語
+
+新增页面需同步更新 `docs/.vitepress/config.mts` 中的 `localeSidebarCopy` 和调用处。
+
+### 部署
+
+推送到 `main` 分支后，GitHub Actions 执行构建并部署到服务器。

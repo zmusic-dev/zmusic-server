@@ -21,3 +21,8 @@ local.properties
 # Test server
 run/
 IMPLEMENTATION_PLAN.md
+
+# Node.js
+node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
