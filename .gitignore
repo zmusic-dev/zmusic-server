@@ -20,3 +20,13 @@ local.properties
 
 .idea
 *.iml
+
+# disabled files
+*.del
+
+# VS Code
+.vscode/
+
+# Android Studio
+.idea/
+bin/

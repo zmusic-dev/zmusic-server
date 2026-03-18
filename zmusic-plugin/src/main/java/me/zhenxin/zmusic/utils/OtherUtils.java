@@ -94,7 +94,8 @@ public class OtherUtils {
         };
         if (aSync) {
             ZMusic.runTask.runAsync(r);
-        } else r.run();
+        } else
+            r.run();
     }
 
     /**
@@ -124,7 +125,6 @@ public class OtherUtils {
         }
         return stringBuilder.toString();
     }
-
 
     /**
      * 格式化歌词信息
@@ -169,9 +169,11 @@ public class OtherUtils {
                     switch (mill.length()) {
                         case 2:
                             mill = String.valueOf(Integer.parseInt(mill));
+                            break;
                         case 3:
                             mill = mill.substring(0, mill.length() - 1);
                             mill = String.valueOf(Integer.parseInt(mill));
+                            break;
                     }
                 }
                 long time = timeToSec(min, sec, mill);
@@ -338,6 +340,22 @@ public class OtherUtils {
                     Toast.sendToast(player, title);
                 });
             }
+        }
+    }
+
+    public static String md5(String str) {
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(str.getBytes("UTF8"));
+            byte s[] = m.digest();
+            StringBuilder result = new StringBuilder();
+            for (byte value : s) {
+                result.append(Integer.toHexString((0x000000FF & value) | 0xFFFFFF00).substring(6));
+            }
+            return result.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
