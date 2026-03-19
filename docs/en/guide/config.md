@@ -2,7 +2,7 @@
 title: Configuration
 ---
 
-# Configuration
+# Configuration {#configuration}
 
 ::: warning V4 Documentation
 This version is still under development and may contain errors or incomplete features.

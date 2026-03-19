@@ -2,7 +2,7 @@
 title: Commands
 ---
 
-# Commands
+# Commands {#commands}
 
 ::: warning V4 Documentation
 This version is still under development and may contain errors or incomplete features.

@@ -2,9 +2,9 @@
 title: NetEase Cloud Music API
 ---
 
-# NetEase Cloud Music API
+# NetEase Cloud Music API {#netease-cloud-music-api}
 
-## パブリックサーバー
+## パブリックサーバー {#public-servers}
 
 ::: warning
 **パブリックサーバーでのログイン操作は慎重に行ってください。**
@@ -20,7 +20,7 @@ title: NetEase Cloud Music API
 以下のデプロイガイドに従っていることを確認し、ログイン方法をメールアドレスログインに変更してください。
 :::
 
-## 置換場所
+## 置換場所 {#replace-location}
 
 ### V4
 
@@ -31,7 +31,7 @@ title: NetEase Cloud Music API
 netease-link = "https://ncm.zhenxin.me"
 ```
 
-### V2
+### V2 {#v2}
 
 ```json {8}
 /// API設定
@@ -45,7 +45,7 @@ netease-link = "https://ncm.zhenxin.me"
   },
 ```
 
-## デプロイ
+## デプロイ {#deployment}
 
 デプロイ前に以下の環境がインストールされていることを確認してください
 

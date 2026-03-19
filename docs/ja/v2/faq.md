@@ -2,11 +2,11 @@
 title: よくある質問 (V2)
 ---
 
-# よくある質問 (V2)
+# よくある質問 (V2) {#faq-v2}
 
 注意: この FAQ は V2 バージョンにのみ適用されます。V4 については [よくある質問](/ja/faq) を確認してください。
 
-## 音楽再生時に音が出ません
+## 音楽再生時に音が出ません {#no-sound}
 
 `KCauldron` を使用している場合、申し訳ありませんがサポートしていません。
 
@@ -30,40 +30,40 @@ title: よくある質問 (V2)
 
 実際には、自分で管理できるサーバー環境で運用することも推奨します。
 
-## サーバー起動後に `/zm` コマンドを使うと「プラグインの読み込みが完了するまで待ってください」と表示されます
+## サーバー起動後に `/zm` コマンドを使うと「プラグインの読み込みが完了するまで待ってください」と表示されます {#wait-for-plugin}
 
 この問題が発生した場合は、ZMusic を最新バージョンに更新してください。
 
-## プラグインが読み込めず、AllMusic/AudioBuffer を削除するように表示されます
+## プラグインが読み込めず、AllMusic/AudioBuffer を削除するように表示されます {#uninstall-allmusic}
 
 サーバーの `plugins` フォルダから AllMusic/AudioBuffer プラグインを削除してください。<br>
 新しい ZMusic では BossBarAPI、ActionBarAPI、AudioBuffer を廃止しており、Mod 通信チャンネルの競合を防ぐためです。
 
-## 再生成功後にクライアント側で非常に長い経過時間が表示されますが、実際の再生時間は短いです
+## 再生成功後にクライアント側で非常に長い経過時間が表示されますが、実際の再生時間は短いです {#long-elapsed-time}
 
 同じリクエストボタンを短時間に連続でクリックすると、内部スレッドの処理が追いつかず誤った経過時間が表示されることがあります。実際の再生には影響しません。
 
-## NetEase Cloud Music へのログイン時に `java.net.UnknownHostException` が発生します
+## NetEase Cloud Music へのログイン時に `java.net.UnknownHostException` が発生します {#unknown-host}
 
 多くの場合、設定ファイルの外部 API ドメインが誤っています。<br>
 ドメインが正しい場合は、サーバーの DNS が正常か確認するか、DNS キャッシュをフラッシュしてください。<br>
 パネル型ホスティングでは通常この問題は起こりません。
 
-## プラグイン読み込み時に `java.lang.NoClassDefFoundError com/google/gson/xxx` が発生します
+## プラグイン読み込み時に `java.lang.NoClassDefFoundError com/google/gson/xxx` が発生します {#no-class-def-found}
 
 サーバーに `gson` ライブラリが含まれていません。`gson` を同梱したプラグインを入れてください。
 
-## 曲のリクエスト成功後、コンソールに黄色い警告が出続けます
+## 曲のリクエスト成功後、コンソールに黄色い警告が出続けます {#yellow-warning}
 
 2.5 以降、旧来の進行表示コールバックは廃止されています。最新バージョンへ更新してください。
 
-## ZMusic を導入した後、クライアントが起動しません (Fabric)
+## ZMusic を導入した後、クライアントが起動しません (Fabric) {#client-cannot-start}
 
 - ダウンロードした Mod の種類が正しいか確認してください。たとえば Fabric を使っているのに `zmusic-forge-X.X.X-X.X.X.jar` を入れると動作しません。<br>
 - Fabric 版を使う場合は `Fabric-API` がインストールされているか確認してください。<br>
 - この Mod は `CardBoard` と互換性がありません。
 
-## プラグイン起動後に「プラグインの読み込みが完了するまで待ってください」というエラーが出ます
+## プラグイン起動後に「プラグインの読み込みが完了するまで待ってください」というエラーが出ます {#wait-loading}
 
 次の点を確認してください。
 
@@ -72,7 +72,7 @@ title: よくある質問 (V2)
 - サーバーが非同期スレッドをサポートしているか
 - `ZMusic` ディレクトリ内に `language` フォルダを作成し、リポジトリの `master` ブランチにある `zh_cn.json` を配置してから再読み込みまたは再起動する
 
-## `1.7.10` はサポートされていますか？
+## `1.7.10` はサポートされていますか？ {#support-1-7-10}
 
 `1.7.10` の利用は推奨していません。どうしても使う場合は次を理解してください。
 
@@ -83,7 +83,7 @@ title: よくある質問 (V2)
 - Uranium 用 Mod を併用すると Title/ActionBar 表示が使える場合がある
 - `1.7.10` に関する不具合報告は受け付けていない
 
-## プラグインはサーバーを重くしますか？
+## プラグインはサーバーを重くしますか？ {#cause-lag}
 
 <font size="25">いいえ。</font>
 ラグが起きる場合、たまたま別のプラグインが同じタイミングで負荷を出していることがほとんどです。<br>
@@ -93,20 +93,20 @@ title: よくある質問 (V2)
 もし本当に上記のようなクラッシュが起きたなら、クラッシュ前に表示された赤いスタックトレースを送ってください。できるだけ早く調査します。<br>
 安全のため、プロキシ構成なら ZMusic はプロキシ側のプラグインディレクトリに置くことを勧めます。
 
-## DeluxeMenu/TrMenu などのメニュープラグインから ZMusic コマンドを実行できません (BungeeCord/WaterFall)
+## DeluxeMenu/TrMenu などのメニュープラグインから ZMusic コマンドを実行できません (BungeeCord/WaterFall) {#menu-plugin-cannot-call}
 
 これはプロキシ構成でよくある制限です。ZMusic のコマンドはプロキシコア側に登録されますが、メニュープラグインは Spigot/Paper 側のコマンドしか実行できません。<br>
 現実的な回避策は、ユーザーに自分でコマンドを入力してもらうことです。
 
-## [`zmusic.use` 権限があるはずなのに権限不足と表示される](https://www.mcbbs.net/forum.php?mod=viewthread&tid=1310665)
+## [`zmusic.use` 権限があるはずなのに権限不足と表示される](https://www.mcbbs.net/forum.php?mod=viewthread&tid=1310665) {#no-permission}
 
 BungeeCord/Waterfall を使用している場合は、プロキシ側に LuckPerms-Bungee を入れ、`/lpb` で権限を付与してください。
 
-## [[Sponge] サーバー側でオンライン音楽を読み込めません](https://www.mcbbs.net/forum.php?mod=viewthread&tid=1048579)
+## [[Sponge] サーバー側でオンライン音楽を読み込めません](https://www.mcbbs.net/forum.php?mod=viewthread&tid=1048579) {#sponge-not-supported}
 
 このプラグインは Sponge をサポートしていません。3.0 をお待ちください。現在の 3.0 テスト版でも Sponge は部分対応のみです。
 
-## 上記に該当する問題が見つかりません
+## 上記に該当する問題が見つかりません {#other-issues}
 
 コミュニティに参加してください。エラーメッセージがある場合は、コンソール出力を [mclo.gs](https://mclo.gs) にアップロードし<br>
 リンクを共有してください。<br>

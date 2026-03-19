@@ -2,9 +2,9 @@
 title: Netease Cloud Music API
 ---
 
-# Netease Cloud Music API
+# Netease Cloud Music API {#netease-cloud-music-api}
 
-## Public Servers
+## Public Servers {#public-servers}
 
 ::: warning
 **Be careful when using public servers to perform login operations.**
@@ -20,7 +20,7 @@ If you cannot log in when using a self-hosted API,
 please make sure you followed the deployment guide below and switched the login method to email login.
 :::
 
-## Replace Location
+## Replace Location {#replace-location}
 
 ### V4
 
@@ -31,7 +31,7 @@ please make sure you followed the deployment guide below and switched the login 
 netease-link = "https://ncm.zhenxin.me"
 ```
 
-### V2
+### V2 {#v2}
 
 ```json {8}
 /// API settings
@@ -45,7 +45,7 @@ netease-link = "https://ncm.zhenxin.me"
   },
 ```
 
-## Deployment
+## Deployment {#deployment}
 
 Make sure the following software is installed before deployment:
 

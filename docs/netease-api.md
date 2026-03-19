@@ -2,9 +2,9 @@
 title: 网易云音乐 API
 ---
 
-# 网易云音乐 API
+# 网易云音乐 API {#netease-cloud-music-api}
 
-## 公共服务器
+## 公共服务器 {#public-servers}
 
 ::: warning
 **请谨慎使用公共服务器执行登录操作。**
@@ -20,7 +20,7 @@ title: 网易云音乐 API
 请确保您遵循了下方的部署指南，并且将登录方式改为邮箱登录。
 :::
 
-## 替换位置
+## 替换位置 {#replace-location}
 
 ### V4
 
@@ -31,7 +31,7 @@ title: 网易云音乐 API
 netease-link = "https://ncm.zhenxin.me"
 ```
 
-### V2
+### V2 {#v2}
 
 ```json {8}
 /// API设置
@@ -45,7 +45,7 @@ netease-link = "https://ncm.zhenxin.me"
   },
 ```
 
-## 部署
+## 部署 {#deployment}
 
 部署前确保已安装如下环境
 
