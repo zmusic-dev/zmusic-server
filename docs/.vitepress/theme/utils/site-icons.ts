@@ -88,9 +88,9 @@ const docIconMap: Record<string, SiteIconName> = {
   '/guide/permissions': 'shield',
   '/guide/config': 'settings',
   '/faq': 'circle-help',
-  '/faq-v2': 'circle-help',
-  '/netease-api': 'music',
-  '/v2': 'book-open'
+  '/v2': 'book-open',
+  '/v2/faq': 'circle-help',
+  '/netease-api': 'music'
 }
 
 function normalizeDocLink(link: string) {

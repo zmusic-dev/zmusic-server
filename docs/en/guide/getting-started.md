@@ -4,7 +4,11 @@ title: Getting Started
 
 # Getting Started
 
-<V4Warning />
+::: warning V4 Documentation
+This version is still under development and may contain errors or incomplete features.
+
+The current long-term support version is V2. See [V2 Docs](/en/v2/)
+:::
 
 ## Download
 

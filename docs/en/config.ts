@@ -1,0 +1,99 @@
+import { defineAdditionalConfig, type DefaultTheme } from 'vitepress'
+
+export default defineAdditionalConfig({
+  themeConfig: {
+    nav: nav(),
+    sidebar: sidebar(),
+    search: { options: searchOptions() },
+
+    editLink: {
+      pattern: 'https://github.com/zmusic-dev/zmusic-server/edit/main/docs/:path',
+      text: 'Edit this page on GitHub'
+    },
+
+    footer: {
+      message:
+        '<a href="https://beian.miit.gov.cn" target="_blank" rel="noreferrer">辽ICP备19016520号-4</a>',
+      copyright:
+        '&copy;2026 <a href="https://zhenxin.me" target="_blank" rel="noreferrer">ZhenXin</a> All Rights Reserved.'
+    },
+
+    docFooter: {
+      prev: 'Previous page',
+      next: 'Next page'
+    },
+
+    outline: {
+      label: 'On this page'
+    },
+
+    lastUpdated: {
+      text: 'Last updated'
+    },
+
+    notFound: {
+      title: 'Page Not Found',
+      quote: 'Looks like you have visited a page that does not exist.',
+      linkLabel: 'Go to Home',
+      linkText: 'Take me home'
+    },
+
+    langMenuLabel: 'Language',
+    returnToTopLabel: 'Return to top',
+    sidebarMenuLabel: 'Menu',
+    darkModeSwitchLabel: 'Theme',
+    lightModeSwitchTitle: 'Switch to light theme',
+    darkModeSwitchTitle: 'Switch to dark theme',
+    skipToContentLabel: 'Skip to content'
+  }
+})
+
+function nav(): DefaultTheme.NavItem[] {
+  return [
+    { text: 'Home', link: '/en/' },
+    {
+      text: 'Guide',
+      link: '/en/guide/introduction',
+      activeMatch: '^/en/guide/'
+    },
+    { text: 'FAQ', link: '/en/faq' },
+    { text: 'Discord', link: 'https://discord.gg/twQgJNufYn' },
+    {
+      text: '4.0.0-dev',
+      items: [
+        { text: '2.11.0 (LTS)', link: '/en/v2/' },
+        { text: 'Changelog', link: 'https://github.com/zmusic-dev/zmusic-server/blob/main/CHANGELOG.md' }
+      ]
+    }
+  ]
+}
+
+function sidebar(): DefaultTheme.Sidebar {
+  return [
+    {
+      text: 'Guide',
+      collapsed: false,
+      items: [
+        { text: 'Introduction', link: '/en/guide/introduction' },
+        { text: 'Getting Started', link: '/en/guide/getting-started' },
+        { text: 'Commands', link: '/en/guide/commands' },
+        { text: 'Permissions', link: '/en/guide/permissions' },
+        { text: 'Configuration', link: '/en/guide/config' }
+      ]
+    },
+    { text: 'FAQ', link: '/en/faq' },
+    { text: 'Netease Cloud Music API', link: '/en/netease-api' },
+    { text: 'V2 Docs', link: '/en/v2/' }
+  ]
+}
+
+function searchOptions(): DefaultTheme.LocalSearchOptions {
+  return {
+    translations: {
+      button: {
+        buttonText: 'Search docs',
+        buttonAriaLabel: 'Search docs'
+      }
+    }
+  }
+}

@@ -5,7 +5,6 @@ import DownloadTable from './components/DownloadTable.vue'
 import DocPageHeading from './components/DocPageHeading.vue'
 import HomeHeroScene from './components/HomeHeroScene.vue'
 import NeteaseApiTable from './components/NeteaseApiTable.vue'
-import V4Warning from './components/V4Warning.vue'
 import './style.css'
 
 export default {
@@ -18,6 +17,5 @@ export default {
   enhanceApp({ app }) {
     app.component('DownloadTable', DownloadTable)
     app.component('NeteaseApiTable', NeteaseApiTable)
-    app.component('V4Warning', V4Warning)
   }
 } satisfies Theme
