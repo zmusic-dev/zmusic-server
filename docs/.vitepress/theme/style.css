@@ -553,8 +553,12 @@ body::before {
 
 @media (max-width: 767px) {
   .VPNavScreen {
-    background: transparent !important;
-    backdrop-filter: blur(18px) saturate(140%);
+    background: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+  }
+  .dark .VPNavScreen {
+    background: rgba(15, 23, 42, 0.6) !important;
   }
 
   .VPNavScreen .container {
@@ -717,5 +721,16 @@ body::before {
 @media (max-width: 640px) {
   .VPHero .image-src {
     max-width: 248px;
+  }
+}
+
+@media (max-width: 959px) {
+  .VPSidebar {
+    background: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(24px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  }
+  .dark .VPSidebar {
+    background: rgba(15, 23, 42, 0.6) !important;
   }
 }
