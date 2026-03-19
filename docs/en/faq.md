@@ -7,7 +7,7 @@ title: FAQ
 ::: warning
 **The FAQ here only applies to the V4 version**
 
-**For the V2 version, please refer to [FAQ (V2 Archive)](/en/faq-v2)**
+**For the V2 version, please refer to [FAQ (V2 Archive)](/en/v2/faq)**
 :::
 
 ### Why can't I play music from Bilibili?
