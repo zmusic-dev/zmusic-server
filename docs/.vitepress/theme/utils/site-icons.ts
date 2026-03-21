@@ -90,7 +90,12 @@ const docIconMap: Record<string, SiteIconName> = {
   '/faq': 'circle-help',
   '/v2': 'book-open',
   '/v2/faq': 'circle-help',
-  '/netease-api': 'music'
+  '/netease-api': 'music',
+  '/netease-api/public': 'music',
+  '/netease-api/standard': 'music',
+  '/netease-api/enhanced': 'music',
+  '/netease-api-standard': 'music',
+  '/netease-api-enhanced': 'music'
 }
 
 function normalizeDocLink(link: string) {

@@ -1,5 +1,8 @@
+export type NeteaseApiType = 'standard' | 'enhanced'
+
 export interface NeteaseApiData {
   link: string
+  type: NeteaseApiType
   location: Record<string, string>
   provider: {
     name: string
@@ -8,8 +11,10 @@ export interface NeteaseApiData {
 }
 
 const neteaseApiList: NeteaseApiData[] = [
+  // 标准版 (NeteaseCloudMusicApi)
   {
     link: 'https://ncm.zhenxin.me',
+    type: 'standard',
     location: {
       '/': '上海',
       '/en/': 'Shanghai',
@@ -23,6 +28,7 @@ const neteaseApiList: NeteaseApiData[] = [
   },
   {
     link: 'https://zm.i9mr.com',
+    type: 'standard',
     location: {
       '/': '扬州',
       '/en/': 'Yangzhou',
@@ -36,6 +42,7 @@ const neteaseApiList: NeteaseApiData[] = [
   },
   {
     link: 'https://music.mcseekeri.com',
+    type: 'standard',
     location: {
       '/': '美国',
       '/en/': 'USA',
@@ -49,6 +56,7 @@ const neteaseApiList: NeteaseApiData[] = [
   },
   {
     link: 'https://zm.wwoyun.cn',
+    type: 'standard',
     location: {
       '/': '宁波',
       '/en/': 'Ningbo',
@@ -58,6 +66,21 @@ const neteaseApiList: NeteaseApiData[] = [
     provider: {
       name: '蓝钦',
       link: 'https://github.com/LanQin996'
+    }
+  },
+  // 增强版 (NeteaseCloudMusicApi-Enhanced)
+  {
+    link: 'https://ncme.zhenxin.me',
+    type: 'enhanced',
+    location: {
+      '/': '上海',
+      '/en/': 'Shanghai',
+      '/zh-tw/': '上海',
+      '/ja/': '上海'
+    },
+    provider: {
+      name: '真心',
+      link: 'https://github.com/RealHeart'
     }
   }
 ]

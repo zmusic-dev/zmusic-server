@@ -81,8 +81,16 @@ function sidebar(): DefaultTheme.Sidebar {
         { text: '設定ファイル', link: '/ja/guide/config' }
       ]
     },
+    {
+      text: 'NetEase Cloud Music API',
+      collapsed: false,
+      items: [
+        { text: 'パブリックサーバー', link: '/ja/netease-api/public' },
+        { text: '標準版デプロイ', link: '/ja/netease-api/standard' },
+        { text: '拡張版デプロイ', link: '/ja/netease-api/enhanced' }
+      ]
+    },
     { text: 'よくある質問', link: '/ja/faq' },
-    { text: 'NetEase Cloud Music API', link: '/ja/netease-api' },
     { text: 'V2 ドキュメント', link: '/ja/v2/' }
   ]
 }

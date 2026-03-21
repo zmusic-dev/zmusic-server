@@ -81,8 +81,16 @@ function sidebar(): DefaultTheme.Sidebar {
         { text: 'Configuration', link: '/en/guide/config' }
       ]
     },
+    {
+      text: 'Netease Cloud Music API',
+      collapsed: false,
+      items: [
+        { text: 'Public Servers', link: '/en/netease-api/public' },
+        { text: 'Standard Deployment', link: '/en/netease-api/standard' },
+        { text: 'Enhanced Deployment', link: '/en/netease-api/enhanced' }
+      ]
+    },
     { text: 'FAQ', link: '/en/faq' },
-    { text: 'Netease Cloud Music API', link: '/en/netease-api' },
     { text: 'V2 Docs', link: '/en/v2/' }
   ]
 }

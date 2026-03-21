@@ -81,8 +81,16 @@ function sidebar(): DefaultTheme.Sidebar {
         { text: '配置文件', link: '/guide/config' }
       ]
     },
+    {
+      text: '网易云音乐 API',
+      collapsed: false,
+      items: [
+        { text: '公共服务器', link: '/netease-api/public' },
+        { text: '标准版部署', link: '/netease-api/standard' },
+        { text: '增强版部署', link: '/netease-api/enhanced' }
+      ]
+    },
     { text: '常见问题', link: '/faq' },
-    { text: '网易云音乐 API', link: '/netease-api' },
     { text: 'V2 文档', link: '/v2/' }
   ]
 }

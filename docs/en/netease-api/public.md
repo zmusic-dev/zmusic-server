@@ -1,0 +1,41 @@
+---
+title: Netease Cloud Music API
+---
+
+# Netease Cloud Music API {#netease-cloud-music-api}
+
+## Public Servers {#public-servers}
+
+::: warning
+**Be careful when using public servers to perform login operations.**
+
+**We are not responsible for account theft or other issues caused by public servers.**
+:::
+
+<NeteaseApiTable />
+
+## Configuration {#configuration}
+
+### V4
+
+```toml {4}
+# API settings
+[api]
+# Netease Cloud Music
+netease-link = "https://ncm.zhenxin.me"
+```
+
+### V2 {#v2}
+
+```json {8}
+/// API settings
+  "api": {
+    /// Netease Cloud Music API address
+    "netease": "https://ncm.zhenxin.me"
+  },
+```
+
+## Self-hosted {#self-hosted}
+
+- [Standard Deployment](/en/netease-api/standard) - Based on NeteaseCloudMusicApi
+- [Enhanced Deployment](/en/netease-api/enhanced) - Based on NeteaseCloudMusicApiEnhanced, supports song unlocking and lossless audio
