@@ -10,6 +10,7 @@ on:
       - v4
     paths:
       - 'docs/**'
+      - 'scripts/postbuild.ts'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - '.node-version'
@@ -49,7 +50,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build Project
-        run: pnpm docs:build
+        run: pnpm build
 
       - name: Set up SSH key
         run: |
