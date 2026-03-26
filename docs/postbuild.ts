@@ -7,7 +7,7 @@ type Redirect = {
   lang: string
 }
 
-const distDir = path.resolve('docs/.vitepress/dist')
+const distDir = path.resolve('.vitepress/dist')
 
 const redirects: Redirect[] = [
   {

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
-    "postbuild": "node scripts/postbuild.ts",
+    "postbuild": "node docs/postbuild.ts",
     "preview": "vitepress preview docs"
   },
   "keywords": [
