@@ -53,7 +53,9 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/zmusic-dev/zmusic-server' }
     ],
-    i18nRouting: true
+    i18nRouting: true,
+    repo: 'zmusic-dev/zmusic-server',
+    modRepo: 'zmusic-dev/zmusic-client'
   },
   locales: {
     root: {

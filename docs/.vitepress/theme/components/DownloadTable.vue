@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue'
-import { useRoute } from 'vitepress'
+import { useData, useRoute } from 'vitepress'
 import { getSiteLocale } from '../utils/locale'
 
 interface DownloadFile {
@@ -119,7 +119,8 @@ const t = computed(() => i18n[locale.value])
 const list = ref<DownloadItem[]>([])
 const loading = ref(true)
 
-const REPO = 'zmusic-dev/zmusic-server'
+const { theme } = useData()
+const REPO = computed(() => theme.value.repo as string)
 
 const safeFetch = async <T,>(fn: () => Promise<T>): Promise<T | null> => {
   try {

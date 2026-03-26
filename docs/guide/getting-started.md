@@ -23,8 +23,11 @@ title: 快速开始
 
 ## 下载 Mod {#download-mod}
 
-- 对于 1.8-1.11 的客户端，请安装 [AudioBuffer](https://www.mcbbs.net/thread-832205-1-1.html) Mod
-- 对于 1.12.2-1.19 的客户端，请安装 [ZMusic](https://github.com/zmusic-dev/zmusic-client/releases) Mod
+<ModDownload />
+
+::: info 旧版本客户端
+对于 1.8-1.11 的客户端，请安装 [AudioBuffer](https://www.mcbbs.net/thread-832205-1-1.html) Mod
+:::
 
 ## 安装 Mod {#install-mod}
 
