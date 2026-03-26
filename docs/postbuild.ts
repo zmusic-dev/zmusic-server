@@ -7,7 +7,7 @@ type Redirect = {
   lang: string
 }
 
-const distDir = path.resolve('.vitepress/dist')
+const distDir = path.resolve(import.meta.dirname, '.vitepress/dist')
 
 const redirects: Redirect[] = [
   {
