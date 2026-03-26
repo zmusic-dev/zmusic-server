@@ -25,10 +25,6 @@ title: 快速开始
 
 <ModDownload />
 
-::: info 旧版本客户端
-对于 1.8-1.11 的客户端，请安装 [AudioBuffer](https://www.mcbbs.net/thread-832205-1-1.html) Mod
-:::
-
 ## 安装 Mod {#install-mod}
 
 - 将下载的 jar 文件放入客户端 `mods` 目录

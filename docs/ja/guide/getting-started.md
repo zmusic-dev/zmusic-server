@@ -25,10 +25,6 @@ title: はじめに
 
 <ModDownload />
 
-::: info 旧バージョンのクライアント
-1.8-1.11 のクライアントの場合は [AudioBuffer](https://www.mcbbs.net/thread-832205-1-1.html) Mod をインストール
-:::
-
 ## Mod のインストール {#install-mod}
 
 - ダウンロードした jar ファイルをクライアントの `mods` ディレクトリに配置

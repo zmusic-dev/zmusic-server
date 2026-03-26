@@ -25,10 +25,6 @@ You can download the latest ZMusic plugin/mod from the following channels.
 
 <ModDownload />
 
-::: info Legacy Clients
-For Minecraft 1.8-1.11 clients, install the [AudioBuffer](https://www.mcbbs.net/thread-832205-1-1.html) mod
-:::
-
 ## Install the Mod {#install-mod}
 
 - Put the downloaded `.jar` file into the client `mods` directory
