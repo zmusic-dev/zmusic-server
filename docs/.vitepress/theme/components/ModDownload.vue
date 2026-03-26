@@ -5,26 +5,6 @@
     <template v-else>
       <div class="mod-selectors">
         <div class="selector-group">
-          <label class="selector-label">{{ t.version }}</label>
-          <div class="custom-select" :class="{ active: openVersion }">
-            <button class="select-trigger" @click="openVersion = !openVersion">
-              <span>{{ selectedVersion || t.select }}</span>
-              <span class="arrow" :class="{ up: openVersion }">▼</span>
-            </button>
-            <div v-if="openVersion" class="select-dropdown">
-              <button
-                v-for="v in versions"
-                :key="v"
-                class="select-option"
-                :class="{ selected: v === selectedVersion }"
-                @click="selectVersion(v)"
-              >
-                {{ v }}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="selector-group">
           <label class="selector-label">{{ t.loader }}</label>
           <div class="custom-select" :class="{ active: openLoader }">
             <button class="select-trigger" @click="openLoader = !openLoader">
@@ -33,7 +13,7 @@
             </button>
             <div v-if="openLoader" class="select-dropdown">
               <button
-                v-for="l in filteredLoaders"
+                v-for="l in loaders"
                 :key="l"
                 class="select-option"
                 :class="{ selected: l === selectedLoader }"
@@ -95,7 +75,6 @@ const route = useRoute()
 
 const i18n = {
   '/': {
-    version: 'Mod 版本',
     loader: '加载器',
     mcVersion: 'Minecraft 版本',
     download: '下载',
@@ -105,7 +84,6 @@ const i18n = {
     noResult: '未找到对应的文件，请检查选择。'
   },
   '/en/': {
-    version: 'Mod Version',
     loader: 'Loader',
     mcVersion: 'Minecraft Version',
     download: 'Download',
@@ -115,7 +93,6 @@ const i18n = {
     noResult: 'No matching file found.'
   },
   '/zh-tw/': {
-    version: 'Mod 版本',
     loader: '載入器',
     mcVersion: 'Minecraft 版本',
     download: '下載',
@@ -125,7 +102,6 @@ const i18n = {
     noResult: '未找到對應的檔案。'
   },
   '/ja/': {
-    version: 'Mod バージョン',
     loader: 'ローダー',
     mcVersion: 'Minecraft バージョン',
     download: 'ダウンロード',
@@ -146,16 +122,13 @@ const files = ref<ModFile[]>([])
 const loading = ref(true)
 const error = ref(false)
 
-const selectedVersion = ref<string>('')
 const selectedLoader = ref<string>('')
 const selectedMcVersion = ref<string>('')
 
-const openVersion = ref(false)
 const openLoader = ref(false)
 const openMcVersion = ref(false)
 
 const closeAllDropdowns = () => {
-  openVersion.value = false
   openLoader.value = false
   openMcVersion.value = false
 }
@@ -175,11 +148,6 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 
-const selectVersion = (v: string) => {
-  selectedVersion.value = v
-  openVersion.value = false
-}
-
 const selectLoader = (l: string) => {
   selectedLoader.value = l
   openLoader.value = false
@@ -190,44 +158,24 @@ const selectMcVersion = (m: string) => {
   openMcVersion.value = false
 }
 
-const versions = computed(() => {
-  const v = new Set(files.value.map(f => f.version))
-  return Array.from(v).sort((a, b) => b.localeCompare(a))
+// Get latest version
+const latestVersion = computed(() => {
+  const versions = new Set(files.value.map(f => f.version))
+  return Array.from(versions).sort((a, b) => b.localeCompare(a))[0] || ''
+})
+
+// Filter files to only latest version
+const latestFiles = computed(() => {
+  return files.value.filter(f => f.version === latestVersion.value)
 })
 
 const loaders = computed(() => {
-  const l = new Set(files.value.map(f => f.loader))
-  return Array.from(l).sort()
-})
-
-const mcVersions = computed(() => {
-  const m = new Set(files.value.map(f => f.mcVersion))
-  return Array.from(m).sort((a, b) => {
-    const parseVer = (v: string) => v.split('.').map(Number)
-    const aParts = parseVer(a)
-    const bParts = parseVer(b)
-    for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
-      const aVal = aParts[i] || 0
-      const bVal = bParts[i] || 0
-      if (aVal !== bVal) return bVal - aVal
-    }
-    return 0
-  })
-})
-
-const filteredLoaders = computed(() => {
-  if (!selectedVersion.value) return loaders.value
-  const l = new Set(
-    files.value
-      .filter(f => f.version === selectedVersion.value)
-      .map(f => f.loader)
-  )
+  const l = new Set(latestFiles.value.map(f => f.loader))
   return Array.from(l).sort()
 })
 
 const filteredMcVersions = computed(() => {
-  const filtered = files.value.filter(f => {
-    if (selectedVersion.value && f.version !== selectedVersion.value) return false
+  const filtered = latestFiles.value.filter(f => {
     if (selectedLoader.value && f.loader !== selectedLoader.value) return false
     return true
   })
@@ -246,21 +194,14 @@ const filteredMcVersions = computed(() => {
 })
 
 const selectedFile = computed(() => {
-  return files.value.find(f =>
-    f.version === selectedVersion.value &&
+  return latestFiles.value.find(f =>
     f.loader === selectedLoader.value &&
     f.mcVersion === selectedMcVersion.value
   )
 })
 
-// Auto-select first option when filtered list changes
-watch(versions, (v) => {
-  if (v.length && !selectedVersion.value) {
-    selectedVersion.value = v[0]
-  }
-})
-
-watch(filteredLoaders, (l) => {
+// Auto-select first option when list changes
+watch(loaders, (l) => {
   if (l.length && !l.includes(selectedLoader.value)) {
     selectedLoader.value = l[0]
   }
