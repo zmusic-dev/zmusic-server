@@ -12,9 +12,13 @@ title: 快速开始
 
 ## 下载 {#download}
 
-你可以从以下渠道下载最新版本的 ZMusic 插件/模组。
+### GitHub {#download-github}
 
 <DownloadTable />
+
+### 其他渠道 {#download-other}
+
+<ExternalLinks />
 
 ## 安装 {#install}
 
@@ -23,7 +27,13 @@ title: 快速开始
 
 ## 下载 Mod {#download-mod}
 
+### GitHub {#download-mod-github}
+
 <ModDownload />
+
+### 其他渠道 {#download-mod-other}
+
+<ModExternalLinks />
 
 ## 安装 Mod {#install-mod}
 

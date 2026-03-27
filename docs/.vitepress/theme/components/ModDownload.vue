@@ -7,7 +7,7 @@
         <div class="selector-group">
           <label class="selector-label">{{ t.loader }}</label>
           <div class="custom-select" :class="{ active: openLoader }">
-            <button class="select-trigger" @click="openLoader = !openLoader">
+            <button class="select-trigger" @click="openLoader = !openLoader; openMcVersion = false">
               <span>{{ selectedLoader || t.select }}</span>
               <span class="arrow" :class="{ up: openLoader }">▼</span>
             </button>
@@ -27,7 +27,7 @@
         <div class="selector-group">
           <label class="selector-label">{{ t.mcVersion }}</label>
           <div class="custom-select" :class="{ active: openMcVersion }">
-            <button class="select-trigger" @click="openMcVersion = !openMcVersion">
+            <button class="select-trigger" @click="openMcVersion = !openMcVersion; openLoader = false">
               <span>{{ selectedMcVersion || t.select }}</span>
               <span class="arrow" :class="{ up: openMcVersion }">▼</span>
             </button>

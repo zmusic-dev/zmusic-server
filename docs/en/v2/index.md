@@ -31,12 +31,15 @@ ZMusic is a powerful music system that supports the following functions.
 - Volume adjustment (Minecraft 1.12 and above)
 - Support for BungeeCord
 
-## About Client Mod {#client-mod}
+## Download {#download}
 
-The ZMusic plugin **requires** the client to install the matching mod to play music normally.
+You can download the latest ZMusic plugin from the following channels.
 
-- For Minecraft 1.8-1.11 clients, please install the [AudioBuffer](https://www.mcbbs.net/thread-832205-1-1.html) mod
-- For Minecraft 1.12.2-1.19 clients, please install the [ZMusic](https://github.com/zmusic-dev/zmusic-client/releases) mod
+<DownloadTable />
+
+## Download Mod {#download-mod}
+
+<ModDownload />
 
 ## BungeeCord Description {#bungeecord}
 

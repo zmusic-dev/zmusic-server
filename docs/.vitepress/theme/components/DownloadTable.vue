@@ -1,424 +1,469 @@
 <template>
-  <div class="download-section">
-    <div v-if="loading" class="download-loading">{{ t.loading }}</div>
-    <div v-else-if="!list.length" class="download-empty">{{ t.empty }}</div>
-    <div v-else class="download-cards">
-      <div v-for="item in list" :key="item.source.link" class="download-card">
-        <div class="card-header">
-          <a :href="item.source.link" target="_blank" rel="noreferrer" class="card-title">
-            {{ item.source.name }}
-          </a>
-          <span class="card-version">{{ item.version }}</span>
-        </div>
-        <div class="card-desc">
-          <span class="desc-main">{{ item.descMain }}</span>
-          <span v-if="item.descSub" class="desc-tag">{{ item.descSub }}</span>
-        </div>
-        <div class="card-actions">
-          <a :href="item.release" target="_blank" rel="noreferrer" class="btn-secondary">
-            {{ t.viewRelease }}
-          </a>
-          <div class="download-buttons">
-            <a
-              v-for="downloadItem in item.download"
-              :key="downloadItem.link"
-              :href="downloadItem.link"
-              target="_blank"
-              rel="noreferrer"
-              class="btn-primary"
-            >
-              {{ downloadItem.name }}
-            </a>
-          </div>
-        </div>
-      </div>
+    <div class="download-section">
+        <div v-if="loading" class="download-loading">{{ t.loading }}</div>
+        <div v-else-if="error" class="download-empty">{{ t.empty }}</div>
+        <template v-else>
+            <div class="download-tabs">
+                <button
+                    v-for="tab in tabs"
+                    :key="tab.key"
+                    class="tab-button"
+                    :class="{ active: activeTab === tab.key }"
+                    @click="activeTab = tab.key"
+                >
+                    {{ tab.label }}
+                </button>
+            </div>
+
+            <div class="download-content">
+                <!-- 稳定版 -->
+                <div v-if="activeTab === 'stable'" class="tab-panel">
+                    <div class="panel-header">
+                        <span class="version-tag">{{ stableVersion }}</span>
+                        <a
+                            :href="`https://github.com/${getRepo()}/releases/latest`"
+                            target="_blank"
+                            rel="noreferrer"
+                            class="btn-secondary"
+                        >
+                            {{ t.viewRelease }}
+                        </a>
+                    </div>
+                    <div class="download-list">
+                        <div
+                            v-for="file in stableFiles"
+                            :key="file.link"
+                            class="download-row"
+                        >
+                            <span class="download-filename">{{
+                                file.name
+                            }}</span>
+                            <a
+                                :href="file.link"
+                                target="_blank"
+                                rel="noreferrer"
+                                class="btn-download"
+                                >{{ t.download }}</a
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 开发版 -->
+                <div v-if="activeTab === 'dev'" class="tab-panel">
+                    <div class="panel-header">
+                        <span class="version-tag">{{ devVersion }}</span>
+                        <a
+                            :href="devReleaseUrl"
+                            target="_blank"
+                            rel="noreferrer"
+                            class="btn-secondary"
+                        >
+                            {{ t.viewBuild }}
+                        </a>
+                    </div>
+                    <p class="panel-desc">{{ t.devWarning }}</p>
+                    <div class="download-list">
+                        <div
+                            v-for="file in devFiles"
+                            :key="file.link"
+                            class="download-row"
+                        >
+                            <span class="download-filename">{{
+                                file.name
+                            }}</span>
+                            <a
+                                :href="file.link"
+                                target="_blank"
+                                rel="noreferrer"
+                                class="btn-download"
+                                >{{ t.download }}</a
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Addon -->
+                <div v-if="activeTab === 'addon'" class="tab-panel">
+                    <div class="panel-header">
+                        <span class="version-tag">{{ addonVersion }}</span>
+                        <a
+                            :href="addonReleaseUrl"
+                            target="_blank"
+                            rel="noreferrer"
+                            class="btn-secondary"
+                        >
+                            {{ t.viewRelease }}
+                        </a>
+                    </div>
+                    <div class="download-list">
+                        <div
+                            v-for="file in addonFiles"
+                            :key="file.link"
+                            class="download-row"
+                        >
+                            <span class="download-filename">{{
+                                file.name
+                            }}</span>
+                            <a
+                                :href="file.link"
+                                target="_blank"
+                                rel="noreferrer"
+                                class="btn-download"
+                                >{{ t.download }}</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
-  </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
-import { useData, useRoute } from 'vitepress'
-import { getSiteLocale } from '../utils/locale'
+import { computed, onMounted, ref } from "vue";
+import { useData, useRoute } from "vitepress";
+import { getSiteLocale } from "../utils/locale";
 
 interface DownloadFile {
-  name: string
-  link: string
+    name: string;
+    link: string;
 }
 
-interface DownloadItem {
-  source: { name: string; link: string }
-  descMain: string
-  descSub?: string
-  version: string
-  release: string
-  download: DownloadFile[]
-}
-
-const route = useRoute()
+const route = useRoute();
 
 const i18n = {
-  '/': {
-    download: '下载',
-    viewRelease: '查看',
-    loading: '正在加载下载信息…',
-    empty: '暂时无法获取下载信息，请稍后再试。',
-    desc: {
-      githubReleases: { main: '最新稳定发布版本' },
-      githubActions: { main: '最新开发版本', sub: '不建议生产使用' },
-      codeberg: { main: '最新稳定版本', sub: '发布可能延迟' },
-      gitee: { main: '最新稳定版本', sub: '发布可能延迟' },
-      spigotmc: { main: '最新稳定版本', sub: '发布可能延迟' }
-    }
-  },
-  '/en/': {
-    download: 'Download',
-    viewRelease: 'View',
-    loading: 'Loading download information...',
-    empty: 'Download information is currently unavailable.',
-    desc: {
-      githubReleases: { main: 'Latest stable release' },
-      githubActions: { main: 'Latest development build', sub: 'not recommended for production' },
-      codeberg: { main: 'Latest stable release', sub: 'may be delayed' },
-      gitee: { main: 'Latest stable release', sub: 'may be delayed' },
-      spigotmc: { main: 'Latest stable release', sub: 'may be delayed' }
-    }
-  },
-  '/zh-tw/': {
-    download: '下載',
-    viewRelease: '查看',
-    loading: '正在載入下載資訊…',
-    empty: '暫時無法取得下載資訊，請稍後再試。',
-    desc: {
-      githubReleases: { main: '最新穩定發布版本' },
-      githubActions: { main: '最新開發版本', sub: '不建議生產使用' },
-      codeberg: { main: '最新穩定版本', sub: '發布可能延遲' },
-      gitee: { main: '最新穩定版本', sub: '發布可能延遲' },
-      spigotmc: { main: '最新穩定版本', sub: '發布可能延遲' }
-    }
-  },
-  '/ja/': {
-    download: 'ダウンロード',
-    viewRelease: '表示',
-    loading: 'ダウンロード情報を読み込み中...',
-    empty: 'ダウンロード情報を取得できませんでした。',
-    desc: {
-      githubReleases: { main: '最新の安定版リリース' },
-      githubActions: { main: '最新の開発ビルド', sub: '本番環境では推奨されません' },
-      codeberg: { main: '最新の安定版リリース', sub: '公開が遅れる可能性があります' },
-      gitee: { main: '最新の安定版リリース', sub: '公開が遅れる可能性があります' },
-      spigotmc: { main: '最新の安定版リリース', sub: '公開が遅れる可能性があります' }
-    }
-  }
-} as const
-
-const locale = computed(() => getSiteLocale(route.path))
-
-const t = computed(() => i18n[locale.value])
-
-const list = ref<DownloadItem[]>([])
-const loading = ref(true)
-
-const { theme } = useData()
-const REPO = computed(() => theme.value.repo as string)
-
-const safeFetch = async <T,>(fn: () => Promise<T>): Promise<T | null> => {
-  try {
-    return await fn()
-  } catch (error) {
-    console.error(error)
-    return null
-  }
-}
-
-const githubLatestRelease = async (): Promise<DownloadItem> => {
-  const response = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`)
-  const data = await response.json()
-  const desc = t.value.desc.githubReleases
-
-  return {
-    source: {
-      name: 'GitHub Releases',
-      link: `https://github.com/${REPO}/releases`
+    "/": {
+        loading: "正在加载下载信息…",
+        empty: "暂时无法获取下载信息，请稍后再试。",
+        download: "下载",
+        viewRelease: "查看发布",
+        viewBuild: "查看构建",
+        devWarning: "开发版可能不稳定，不建议在生产环境使用。",
+        tabs: {
+            stable: "稳定版",
+            dev: "开发版",
+            addon: "Addon",
+        },
     },
-    descMain: desc.main,
-    descSub: desc.sub,
-    version: data.tag_name,
-    release: data.html_url,
-    download: data.assets.map((item: { name: string; browser_download_url: string }) => ({
-      name: item.name,
-      link: item.browser_download_url
-    }))
-  }
-}
-
-const githubLatestBuild = async (): Promise<DownloadItem> => {
-  const response = await fetch(
-    `https://api.github.com/repos/${REPO}/actions/workflows/dev.yml/runs?per_page=1&status=success`
-  )
-  const data = await response.json()
-  const run = data.workflow_runs[0]
-  const desc = t.value.desc.githubActions
-
-  const artifactsResponse = await fetch(
-    `https://api.github.com/repos/${REPO}/actions/runs/${run.id}/artifacts`
-  )
-  const artifactsData = await artifactsResponse.json()
-
-  return {
-    source: {
-      name: 'GitHub Actions',
-      link: `https://github.com/${REPO}/actions/workflows/dev.yml`
+    "/en/": {
+        loading: "Loading download information...",
+        empty: "Download information is currently unavailable.",
+        download: "Download",
+        viewRelease: "View Release",
+        viewBuild: "View Build",
+        devWarning:
+            "Development builds may be unstable and are not recommended for production.",
+        tabs: {
+            stable: "Stable",
+            dev: "Dev",
+            addon: "Addon",
+        },
     },
-    descMain: desc.main,
-    descSub: desc.sub,
-    version: `v4.0.0-dev.${run.head_sha.substring(0, 7)}`,
-    release: run.html_url,
-    download: artifactsData.artifacts.map((item: { name: string; id: number }) => ({
-      name: `${item.name}.zip`,
-      link: `https://github.com/${REPO}/actions/runs/${run.id}/artifacts/${item.id}`
-    }))
-  }
-}
-
-const codebergLatestRelease = async (): Promise<DownloadItem> => {
-  const response = await fetch(`https://codeberg.org/api/v1/repos/${REPO}/releases/latest`)
-  const data = await response.json()
-  const desc = t.value.desc.codeberg
-
-  return {
-    source: {
-      name: 'Codeberg',
-      link: `https://codeberg.org/${REPO}/releases`
+    "/zh-tw/": {
+        loading: "正在載入下載資訊…",
+        empty: "暫時無法取得下載資訊，請稍後再試。",
+        download: "下載",
+        viewRelease: "查看發布",
+        viewBuild: "查看建置",
+        devWarning: "開發版可能不穩定，不建議在生產環境使用。",
+        tabs: {
+            stable: "穩定版",
+            dev: "開發版",
+            addon: "Addon",
+        },
     },
-    descMain: desc.main,
-    descSub: desc.sub,
-    version: data.tag_name,
-    release: data.html_url,
-    download: data.assets
-      .filter((item: { name: string }) => item.name.endsWith('.jar'))
-      .map((item: { name: string; browser_download_url: string }) => ({
-        name: item.name,
-        link: item.browser_download_url
-      }))
-  }
-}
-
-const giteeLatestRelease = async (): Promise<DownloadItem> => {
-  const response = await fetch(`https://gitee.com/api/v5/repos/${REPO}/releases/latest`)
-  const data = await response.json()
-  const desc = t.value.desc.gitee
-
-  return {
-    source: {
-      name: 'Gitee',
-      link: `https://gitee.com/${REPO}/releases`
+    "/ja/": {
+        loading: "ダウンロード情報を読み込み中...",
+        empty: "ダウンロード情報を取得できませんでした。",
+        download: "ダウンロード",
+        viewRelease: "リリースを見る",
+        viewBuild: "ビルドを見る",
+        devWarning:
+            "開発ビルドは不安定な可能性があり、本番環境では推奨されません。",
+        tabs: {
+            stable: "安定版",
+            dev: "開発版",
+            addon: "Addon",
+        },
     },
-    descMain: desc.main,
-    descSub: desc.sub,
-    version: data.tag_name,
-    release: `https://gitee.com/${REPO}/releases/tag/${data.tag_name}`,
-    download: data.assets
-      .filter((item: { name: string }) => item.name.endsWith('.jar'))
-      .map((item: { name: string; browser_download_url: string }) => ({
-        name: item.name,
-        link: item.browser_download_url
-      }))
-  }
-}
+} as const;
 
-const spigotLatestVersion = async (): Promise<DownloadItem> => {
-  const [versionResponse, updateResponse] = await Promise.all([
-    fetch('https://api.spiget.org/v2/resources/83027/versions/latest'),
-    fetch('https://api.spiget.org/v2/resources/83027/updates/latest')
-  ])
-  const versionData = await versionResponse.json()
-  const updateData = await updateResponse.json()
-  const desc = t.value.desc.spigotmc
+const locale = computed(() => getSiteLocale(route.path));
+const t = computed(() => i18n[locale.value]);
 
-  return {
-    source: {
-      name: 'SpigotMC',
-      link: 'https://www.spigotmc.org/resources/83027/'
-    },
-    descMain: desc.main,
-    descSub: desc.sub,
-    version: versionData.name,
-    release: `https://www.spigotmc.org/resources/83027/update?update=${updateData.id}`,
-    download: [
-      {
-        name: 'ZMusic Latest',
-        link: `https://www.spigotmc.org/resources/83027/download?version=${versionData.id}`
-      }
-    ]
-  }
-}
+const tabs = computed(() => [
+    { key: "stable", label: t.value.tabs.stable },
+    { key: "dev", label: t.value.tabs.dev },
+    { key: "addon", label: t.value.tabs.addon },
+]);
+
+const activeTab = ref("stable");
+
+const loading = ref(true);
+const error = ref(false);
+
+// 稳定版数据
+const stableVersion = ref("");
+const stableFiles = ref<DownloadFile[]>([]);
+
+// 开发版数据
+const devVersion = ref("");
+const devFiles = ref<DownloadFile[]>([]);
+const devReleaseUrl = ref("");
+
+// Addon 数据
+const addonVersion = ref("");
+const addonFiles = ref<DownloadFile[]>([]);
+const addonReleaseUrl = ref("");
+
+const { theme } = useData();
+const getRepo = () => theme.value.repo as string;
 
 onMounted(async () => {
-  const results = await Promise.all([
-    safeFetch(githubLatestRelease),
-    safeFetch(githubLatestBuild),
-    safeFetch(codebergLatestRelease),
-    safeFetch(giteeLatestRelease),
-    safeFetch(spigotLatestVersion)
-  ])
+    try {
+        const repo = getRepo();
 
-  list.value = results.filter((item): item is DownloadItem => item !== null)
-  loading.value = false
-})
+        const [releasesData, actionsData] = await Promise.all([
+            fetch(`https://api.github.com/repos/${repo}/releases?per_page=50`),
+            fetch(
+                `https://api.github.com/repos/${repo}/actions/workflows/dev.yml/runs?per_page=1&status=success`,
+            ),
+        ]);
+
+        const releases = await releasesData.json();
+        const actions = await actionsData.json();
+
+        // 稳定版：最新的 release，过滤掉预发布版本
+        const stableRelease = releases.find(
+            (r: { prerelease: boolean }) => !r.prerelease,
+        );
+        if (stableRelease) {
+            const tag = stableRelease.tag_name;
+            stableVersion.value = tag.startsWith("v") ? tag : `v${tag}`;
+            stableFiles.value = stableRelease.assets
+                .filter(
+                    (a: { name: string }) =>
+                        a.name.endsWith(".jar") && !a.name.includes("Addon"),
+                )
+                .map((a: { name: string; browser_download_url: string }) => ({
+                    name: a.name,
+                    link: a.browser_download_url,
+                }));
+        }
+
+        // Addon：找到包含 Addon.jar 的最新 release
+        const addonRelease = releases.find(
+            (r: { assets: { name: string }[] }) =>
+                r.assets.some((a: { name: string }) =>
+                    a.name.includes("Addon"),
+                ),
+        );
+        if (addonRelease) {
+            addonReleaseUrl.value = addonRelease.html_url;
+            addonFiles.value = addonRelease.assets
+                .filter(
+                    (a: { name: string }) =>
+                        a.name.includes("Addon") && a.name.endsWith(".jar"),
+                )
+                .map((a: { name: string; browser_download_url: string }) => ({
+                    name: a.name,
+                    link: a.browser_download_url,
+                }));
+            // 从文件名解析 Addon 版本号
+            if (addonFiles.value.length > 0) {
+                const match = addonFiles.value[0].name.match(
+                    /addon-(\d+\.\d+\.\d+)/i,
+                );
+                addonVersion.value = match
+                    ? `v${match[1]}`
+                    : addonRelease.tag_name;
+            }
+        }
+
+        // 开发版
+        if (actions.workflow_runs?.[0]) {
+            const run = actions.workflow_runs[0];
+            devVersion.value = `v4.0.0-dev.${run.head_sha.substring(0, 7)}`;
+            devReleaseUrl.value = run.html_url;
+
+            const artifactsResponse = await fetch(
+                `https://api.github.com/repos/${repo}/actions/runs/${run.id}/artifacts`,
+            );
+            const artifactsData = await artifactsResponse.json();
+
+            devFiles.value = artifactsData.artifacts.map(
+                (a: { name: string; id: number }) => ({
+                    name: `${a.name}.zip`,
+                    link: `https://github.com/${repo}/actions/runs/${run.id}/artifacts/${a.id}`,
+                }),
+            );
+        }
+
+        loading.value = false;
+    } catch (e) {
+        console.error(e);
+        error.value = true;
+        loading.value = false;
+    }
+});
 </script>
 
 <style scoped>
 .download-section {
-  margin: 1rem 0;
+    margin: 1rem 0;
 }
 
 .download-loading,
 .download-empty {
-  text-align: center;
-  padding: 2rem;
-  color: var(--vp-c-text-2);
+    text-align: center;
+    padding: 2rem;
+    color: var(--vp-c-text-2);
 }
 
-.download-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1rem;
+.download-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--vp-c-divider);
+    padding-bottom: 0.5rem;
 }
 
-.download-card {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  padding: 1.25rem;
-  background: transparent;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: border-color 0.25s, box-shadow 0.25s;
+.tab-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--vp-c-text-2);
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-.download-card:hover {
-  border-color: var(--vp-c-brand-1);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+.tab-button:hover {
+    color: var(--vp-c-text-1);
+    background: var(--vp-c-default-soft);
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-  gap: 0.5rem;
+.tab-button.active {
+    color: var(--vp-c-brand-1);
+    background: var(--vp-c-brand-soft);
 }
 
-.card-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-  text-decoration: none;
+.download-content {
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 12px;
+    padding: 1.25rem;
+    background: transparent;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
-.card-title:hover {
-  color: var(--vp-c-brand-1);
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 0.75rem;
 }
 
-.card-version {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--vp-c-brand-1);
-  background: var(--vp-c-brand-soft);
-  padding: 0.2rem 0.6rem;
-  border-radius: 6px;
-  white-space: nowrap;
+.version-tag {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--vp-c-brand-1);
+    background: var(--vp-c-brand-soft);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
 }
 
-.card-desc {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  line-height: 1.5;
+.panel-desc {
+    font-size: 0.85rem;
+    color: var(--vp-c-warning-1);
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--vp-c-warning-soft);
+    border-radius: 6px;
 }
 
-.desc-main {
-  color: var(--vp-c-text-2);
+.download-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.desc-tag {
-  font-size: 0.75rem;
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
-  background: var(--vp-c-warning-soft);
-  color: var(--vp-c-warning-1);
-  white-space: nowrap;
+.download-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 8px;
+    transition: border-color 0.2s;
 }
 
-.card-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+.download-row:hover {
+    border-color: var(--vp-c-brand-1);
+}
+
+.download-filename {
+    font-family: var(--vp-font-family-mono);
+    font-size: 0.875rem;
+    color: var(--vp-c-text-1);
+    word-break: break-all;
+}
+
+.btn-download {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--vp-c-white);
+    background: var(--vp-c-brand-1);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.btn-download:hover {
+    background: var(--vp-c-brand-2);
 }
 
 .btn-secondary {
-  font-size: 0.85rem;
-  color: var(--vp-c-text-2);
-  text-decoration: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  border: 1px solid var(--vp-c-divider);
-  transition: all 0.2s;
+    font-size: 0.85rem;
+    color: var(--vp-c-text-2);
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid var(--vp-c-divider);
+    transition: all 0.2s;
 }
 
 .btn-secondary:hover {
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-text-2);
-}
-
-.download-buttons {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.btn-primary {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--vp-c-white);
-  background: var(--vp-c-brand-1);
-  text-decoration: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  transition: all 0.2s;
-}
-
-.btn-primary:hover {
-  background: var(--vp-c-brand-2);
+    color: var(--vp-c-text-1);
+    border-color: var(--vp-c-text-2);
 }
 
 @media (max-width: 639px) {
-  .download-cards {
-    grid-template-columns: 1fr;
-  }
+    .download-tabs {
+        flex-wrap: wrap;
+    }
 
-  .card-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-  .card-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
+    .download-row {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
 
-  .download-buttons {
-    flex-direction: column;
-  }
-
-  .btn-primary,
-  .btn-secondary {
-    text-align: center;
-    justify-content: center;
-  }
+    .btn-download {
+        justify-content: center;
+        text-align: center;
+    }
 }
 </style>

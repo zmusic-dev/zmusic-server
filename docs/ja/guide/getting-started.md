@@ -12,9 +12,13 @@ title: はじめに
 
 ## ダウンロード {#download}
 
-以下のチャンネルから最新版の ZMusic プラグイン/Mod をダウンロードできます。
+### GitHub {#download-github}
 
 <DownloadTable />
+
+### 他のチャネル {#download-other}
+
+<ExternalLinks />
 
 ## インストール {#install}
 
@@ -23,7 +27,13 @@ title: はじめに
 
 ## Mod のダウンロード {#download-mod}
 
+### GitHub {#download-mod-github}
+
 <ModDownload />
+
+### 他のチャネル {#download-mod-other}
+
+<ModExternalLinks />
 
 ## Mod のインストール {#install-mod}
 

@@ -22,12 +22,15 @@ title: V2 使用文档
 - 音量调节（1.12 及以上支持）
 - 支持 BungeeCord
 
-## 客户端 Mod 说明 {#client-mod}
+## 下载 {#download}
 
-本插件需要客户端安装配套 Mod 才能正常播放
+你可以从以下渠道下载最新版本的 ZMusic 插件。
 
-- 对于 1.8-1.11 的客户端，请安装 [AudioBuffer](https://www.mcbbs.net/thread-832205-1-1.html) Mod
-- 对于 1.12.2-1.19 的客户端，请安装 [ZMusic](https://github.com/zmusic-dev/zmusic-client/releases) Mod
+<DownloadTable />
+
+## 下载 Mod {#download-mod}
+
+<ModDownload />
 
 ## BungeeCord 说明 {#bungeecord}
 
