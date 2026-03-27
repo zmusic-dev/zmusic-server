@@ -18,7 +18,6 @@ const neteaseApiList: NeteaseApiData[] = [
     location: {
       '/': '上海',
       '/en/': 'Shanghai',
-      '/zh-tw/': '上海',
       '/ja/': '上海'
     },
     provider: {
@@ -32,7 +31,6 @@ const neteaseApiList: NeteaseApiData[] = [
     location: {
       '/': '扬州',
       '/en/': 'Yangzhou',
-      '/zh-tw/': '揚州',
       '/ja/': '揚州'
     },
     provider: {
@@ -46,7 +44,6 @@ const neteaseApiList: NeteaseApiData[] = [
     location: {
       '/': '美国',
       '/en/': 'USA',
-      '/zh-tw/': '美國',
       '/ja/': 'アメリカ'
     },
     provider: {
@@ -60,7 +57,6 @@ const neteaseApiList: NeteaseApiData[] = [
     location: {
       '/': '宁波',
       '/en/': 'Ningbo',
-      '/zh-tw/': '寧波',
       '/ja/': '寧波'
     },
     provider: {
@@ -75,7 +71,6 @@ const neteaseApiList: NeteaseApiData[] = [
     location: {
       '/': '上海',
       '/en/': 'Shanghai',
-      '/zh-tw/': '上海',
       '/ja/': '上海'
     },
     provider: {

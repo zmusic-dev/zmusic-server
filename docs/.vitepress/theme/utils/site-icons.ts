@@ -12,9 +12,9 @@ export type SiteIconName =
   | 'shield'
   | 'settings'
 
-const localeLabels = new Set(['简体中文', 'English', '繁體中文', '日本語'])
+const localeLabels = new Set(['简体中文', 'English', '日本語'])
 
-const homeLabels = new Set(['首页', 'Home', '首頁', 'ホーム'])
+const homeLabels = new Set(['首页', 'Home', 'ホーム'])
 
 const docIconMap: Record<string, SiteIconName> = {
   '/': 'home',
@@ -38,7 +38,7 @@ const docIconMap: Record<string, SiteIconName> = {
 function normalizeDocLink(link: string) {
   const path = link.split(/[?#]/, 1)[0]
   const withoutHtml = path.replace(/\.html$/, '')
-  const withoutLocale = withoutHtml.replace(/^\/(?:en|zh-tw|ja)(?=\/|$)/, '')
+  const withoutLocale = withoutHtml.replace(/^\/(?:en|ja)(?=\/|$)/, '')
 
   if (withoutLocale === '') return '/'
   if (withoutLocale !== '/' && withoutLocale.endsWith('/')) {

@@ -60,8 +60,8 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import { useData, useRoute } from 'vitepress'
-import { getSiteLocale } from '../utils/locale'
+import { useData } from 'vitepress'
+import { useI18n } from '../utils/i18n'
 
 interface ModFile {
   name: string
@@ -71,49 +71,7 @@ interface ModFile {
   mcVersion: string
 }
 
-const route = useRoute()
-
-const i18n = {
-  '/': {
-    loader: '加载器',
-    mcVersion: 'Minecraft 版本',
-    download: '下载',
-    select: '请选择',
-    loading: '正在加载版本信息…',
-    error: '获取版本信息失败，请稍后再试。',
-    noResult: '未找到对应的文件，请检查选择。'
-  },
-  '/en/': {
-    loader: 'Loader',
-    mcVersion: 'Minecraft Version',
-    download: 'Download',
-    select: 'Select',
-    loading: 'Loading version information...',
-    error: 'Failed to fetch version information.',
-    noResult: 'No matching file found.'
-  },
-  '/zh-tw/': {
-    loader: '載入器',
-    mcVersion: 'Minecraft 版本',
-    download: '下載',
-    select: '請選擇',
-    loading: '正在載入版本資訊…',
-    error: '取得版本資訊失敗，請稍後再試。',
-    noResult: '未找到對應的檔案。'
-  },
-  '/ja/': {
-    loader: 'ローダー',
-    mcVersion: 'Minecraft バージョン',
-    download: 'ダウンロード',
-    select: '選択',
-    loading: 'バージョン情報を読み込み中...',
-    error: 'バージョン情報の取得に失敗しました。',
-    noResult: '一致するファイルが見つかりません。'
-  }
-} as const
-
-const locale = computed(() => getSiteLocale(route.path))
-const t = computed(() => i18n[locale.value])
+const t = useI18n()
 
 const { theme } = useData()
 const REPO = computed(() => theme.value.modRepo as string)

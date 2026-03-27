@@ -68,7 +68,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vitepress'
 import neteaseApiList from '../data/netease-api'
-import { getSiteLocale } from '../utils/locale'
+import { getSiteLocale } from '../utils/i18n'
 
 const route = useRoute()
 
@@ -88,14 +88,6 @@ const i18n = {
     version: 'Version',
     standard: 'Standard',
     enhanced: 'Enhanced'
-  },
-  '/zh-tw/': {
-    apiUrl: 'API 位址',
-    location: '位置',
-    provider: '提供者',
-    version: '版本',
-    standard: '標準版',
-    enhanced: '增強版'
   },
   '/ja/': {
     apiUrl: 'API URL',

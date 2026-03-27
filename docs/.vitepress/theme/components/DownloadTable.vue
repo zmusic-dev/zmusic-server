@@ -1,7 +1,7 @@
 <template>
     <div class="download-section">
         <div v-if="loading" class="download-loading">{{ t.loading }}</div>
-        <div v-else-if="error" class="download-empty">{{ t.empty }}</div>
+        <div v-else-if="error" class="download-empty">{{ t.error }}</div>
         <template v-else>
             <div class="download-tabs">
                 <button
@@ -122,75 +122,15 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, ref } from "vue";
-import { useData, useRoute } from "vitepress";
-import { getSiteLocale } from "../utils/locale";
+import { useData } from "vitepress";
+import { useI18n } from "../utils/i18n";
 
 interface DownloadFile {
     name: string;
     link: string;
 }
 
-const route = useRoute();
-
-const i18n = {
-    "/": {
-        loading: "正在加载下载信息…",
-        empty: "暂时无法获取下载信息，请稍后再试。",
-        download: "下载",
-        viewRelease: "查看发布",
-        viewBuild: "查看构建",
-        devWarning: "开发版可能不稳定，不建议在生产环境使用。",
-        tabs: {
-            stable: "稳定版",
-            dev: "开发版",
-            addon: "Addon",
-        },
-    },
-    "/en/": {
-        loading: "Loading download information...",
-        empty: "Download information is currently unavailable.",
-        download: "Download",
-        viewRelease: "View Release",
-        viewBuild: "View Build",
-        devWarning:
-            "Development builds may be unstable and are not recommended for production.",
-        tabs: {
-            stable: "Stable",
-            dev: "Dev",
-            addon: "Addon",
-        },
-    },
-    "/zh-tw/": {
-        loading: "正在載入下載資訊…",
-        empty: "暫時無法取得下載資訊，請稍後再試。",
-        download: "下載",
-        viewRelease: "查看發布",
-        viewBuild: "查看建置",
-        devWarning: "開發版可能不穩定，不建議在生產環境使用。",
-        tabs: {
-            stable: "穩定版",
-            dev: "開發版",
-            addon: "Addon",
-        },
-    },
-    "/ja/": {
-        loading: "ダウンロード情報を読み込み中...",
-        empty: "ダウンロード情報を取得できませんでした。",
-        download: "ダウンロード",
-        viewRelease: "リリースを見る",
-        viewBuild: "ビルドを見る",
-        devWarning:
-            "開発ビルドは不安定な可能性があり、本番環境では推奨されません。",
-        tabs: {
-            stable: "安定版",
-            dev: "開発版",
-            addon: "Addon",
-        },
-    },
-} as const;
-
-const locale = computed(() => getSiteLocale(route.path));
-const t = computed(() => i18n[locale.value]);
+const t = useI18n();
 
 const tabs = computed(() => [
     { key: "stable", label: t.value.tabs.stable },
@@ -314,11 +254,16 @@ onMounted(async () => {
     margin: 1rem 0;
 }
 
-.download-loading,
-.download-empty {
+.download-loading {
     text-align: center;
     padding: 2rem;
     color: var(--vp-c-text-2);
+}
+
+.download-empty {
+    text-align: center;
+    padding: 2rem;
+    color: var(--vp-c-danger-1);
 }
 
 .download-tabs {

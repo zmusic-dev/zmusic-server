@@ -44,7 +44,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useRoute, withBase } from 'vitepress'
-import { getSiteLocale } from '../utils/locale'
+import { getSiteLocale } from '../utils/i18n'
 
 const route = useRoute()
 const heroImageDarkSrc = withBase('/images/hero-zmusic.svg')
@@ -60,11 +60,6 @@ const copy = {
     status: 'Now Playing',
     signal: 'Smooth Output',
     platform: 'Platforms'
-  },
-  '/zh-tw/': {
-    status: '正在播放',
-    signal: '平滑輸出',
-    platform: '跨平台'
   },
   '/ja/': {
     status: '再生中',
