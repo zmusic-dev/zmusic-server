@@ -131,13 +131,13 @@ zmusic-core     → 核心业务逻辑（Kotlin，依赖 runtime）
 pnpm install
 
 # 启动开发服务器
-pnpm docs:dev
+pnpm dev
 
 # 构建生产版本
-pnpm docs:build
+pnpm build
 
 # 预览构建结果
-pnpm docs:preview
+pnpm preview
 ```
 
 ### 文档结构
@@ -149,12 +149,11 @@ docs/
 │   └── theme/             # 自定义主题
 │       ├── components/    # 自定义组件
 │       ├── data/          # 数据文件
-│       ├── utils/         # 工具函数
+│       ├── utils/         # 工具函数（i18n 等）
 │       ├── index.ts       # 主题入口
 │       └── style.css      # 全局样式
 ├── guide/                 # 中文指南
 ├── en/                    # 英文文档
-├── zh-tw/                 # 繁体中文文档
 ├── ja/                    # 日文文档
 └── public/                # 静态资源
 ```
@@ -164,10 +163,53 @@ docs/
 路由映射：
 - `/`：简体中文 (root locale)
 - `/en/`：English
-- `/zh-tw/`：繁體中文
 - `/ja/`：日本語
 
 新增页面需同步更新 `docs/.vitepress/config.mts` 中的 `localeSidebarCopy` 和调用处。
+
+### 国际化系统
+
+文档使用集中式 i18n 系统，位于 `docs/.vitepress/theme/utils/i18n.ts`：
+
+```typescript
+import { useI18n, useLocale, getSiteLocale } from '../utils/i18n'
+
+// 获取翻译文本
+const t = useI18n()
+// 模板中使用：{{ t.loading }}
+// 脚本中使用：t.value.loading
+
+// 获取当前语言
+const locale = useLocale() // 返回 '/' | '/en/' | '/ja/'
+```
+
+**支持的翻译键**：`note`, `loading`, `error`, `download`, `viewRelease`, `viewBuild`, `devWarning`, `loader`, `mcVersion`, `select`, `noResult`, `tabs.{stable,dev,addon}`
+
+### 组件架构
+
+#### 下载组件
+
+| 组件 | 用途 |
+|------|------|
+| `DownloadTable.vue` | 服务端插件下载（稳定版/开发版/Addon） |
+| `ModDownload.vue` | 客户端 Mod 下载（Fabric/Forge 选择器） |
+| `ExternalLinks.vue` | 服务端外部链接（Codeberg/Gitee/SpigotMC） |
+| `ModExternalLinks.vue` | 客户端外部链接（Modrinth/CurseForge） |
+| `ExternalLinkCard.vue` | 通用外部链接卡片（被上述两个组件复用） |
+
+#### 其他组件
+
+| 组件 | 用途 |
+|------|------|
+| `GiscusComments.vue` | GitHub Discussions 评论（使用 @giscus/vue） |
+| `SiteIcon.vue` | 功能图标（使用 @lucide/vue） |
+| `HomeHeroScene.vue` | 首页 Hero 动画场景 |
+| `NeteaseApiTable.vue` | 网易云 API 列表展示 |
+
+#### 图标库
+
+- **品牌图标**：使用 `simple-icons` npm 包（Codeberg、Gitee、SpigotMC、Modrinth、CurseForge）
+- **功能图标**：使用 `@lucide/vue` npm 包
 
 ### 部署
 
