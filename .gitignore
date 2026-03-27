@@ -18,6 +18,10 @@ local.properties
 # Claude Code
 .claude/
 
+# MCP
+.playwright-mcp/
+.playwright-cli/
+
 # Test server
 run/
 IMPLEMENTATION_PLAN.md

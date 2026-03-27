@@ -13,7 +13,7 @@ const giscusLangMap: Record<string, string> = {
 </script>
 
 <template>
-  <div class="giscus-container">
+  <div>
     <Giscus
       repo="zmusic-dev/zmusic-comments"
       repo-id="R_kgDORwUV4A"
@@ -30,9 +30,3 @@ const giscusLangMap: Record<string, string> = {
     />
   </div>
 </template>
-
-<style scoped>
-.giscus-container {
-  margin-top: 2rem;
-}
-</style>

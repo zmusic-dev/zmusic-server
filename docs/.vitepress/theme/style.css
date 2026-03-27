@@ -130,7 +130,24 @@ body::before {
 
 .VPNavBar {
     background: transparent !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    isolation: isolate;
+}
+
+.VPNavBar::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    content: "";
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
+}
+
+.dark .VPNavBar::before {
+    background: rgba(10, 16, 25, 0.12);
 }
 
 .VPNavBar:not(.home),
@@ -516,8 +533,6 @@ body::before {
 }
 
 .VPNavBarSearchButton,
-.VPFlyout .menu,
-.VPMenu,
 .VPNavScreenAppearance,
 .VPNavScreenMenu,
 .VPNavScreenTranslations,
@@ -528,10 +543,7 @@ body::before {
 }
 
 .VPNavBarSearchButton,
-.VPFlyout .menu,
-.VPMenu,
 .VPLocalSearchBox,
-.VPSidebar,
 .VPLocalNav,
 .VPDocAsideOutline,
 .VPFooter {
@@ -556,36 +568,92 @@ body::before {
     padding-top: 8px;
 }
 
-.VPNavBarTranslations .menu,
-.VPNavBarTranslations .VPMenu,
-.VPNavBarTranslations .VPMenu .items {
-    border: 1px solid var(--vp-c-divider);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.55) !important;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-    -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
-    backdrop-filter: blur(24px) saturate(140%) !important;
+.VPNavBarMenuGroup .menu,
+.VPNavBarTranslations .menu {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    transition: none !important;
 }
 
-.VPNavBarTranslations .VPMenuLink,
-.VPNavBarTranslations .VPMenuLink .link {
+.VPNavBarMenuGroup .VPMenu,
+.VPNavBarTranslations .VPMenu {
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 12px;
+    background: transparent !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    backdrop-filter: blur(16px) !important;
+}
+
+.VPNavBarTranslations .VPMenu .items,
+.VPNavBarTranslations .VPMenuLink {
     background: transparent !important;
 }
 
-.dark .VPNavBarTranslations .menu,
-.dark .VPNavBarTranslations .VPMenu,
-.dark .VPNavBarTranslations .VPMenu .items {
-    background: rgba(0, 0, 0, 0.55) !important;
+.dark .VPNavBarMenuGroup .VPMenu,
+.dark .VPNavBarTranslations .VPMenu {
+    background: transparent !important;
+}
+
+@media (min-width: 960px) {
+    .VPSidebar {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+
+    .VPSidebar .curtain {
+        background: transparent !important;
+    }
+
+    .VPSidebar .nav {
+        position: relative;
+        background: transparent !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        backdrop-filter: blur(16px) !important;
+    }
+
+    .VPSidebar .group + .group::before {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+
+    .VPSidebarItem.level-0 > .item,
+    .VPSidebarItem.level-0 > .items,
+    .VPSidebarItem.level-1 > .items {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
 }
 
 @media (max-width: 767px) {
     .VPNavScreen {
-        background: rgba(255, 255, 255, 0.5) !important;
-        backdrop-filter: blur(24px) saturate(140%);
-        -webkit-backdrop-filter: blur(24px) saturate(140%);
+        background: rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: blur(18px) saturate(140%) !important;
+        -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+        transition: none !important;
     }
     .dark .VPNavScreen {
-        background: rgba(15, 23, 42, 0.6) !important;
+        background: rgba(15, 23, 42, 0.28) !important;
+    }
+
+    .VPNavScreen.fade-enter-active,
+    .VPNavScreen.fade-leave-active,
+    .VPNavScreen.fade-enter-active .container,
+    .VPNavScreen.fade-leave-active .container {
+        transition: none !important;
+    }
+
+    .VPNavScreen.fade-enter-from,
+    .VPNavScreen.fade-leave-to {
+        opacity: 1 !important;
+    }
+
+    .VPNavScreen.fade-enter-from .container,
+    .VPNavScreen.fade-leave-to .container {
+        transform: none !important;
     }
 
     .VPNavScreen .container {
@@ -597,11 +665,30 @@ body::before {
     .VPNavScreenTranslations,
     .VPNavScreenAppearance,
     .VPNavScreenSocialLinks {
-        border: 1px solid rgba(148, 163, 184, 0.16);
+        border: 1px solid rgba(255, 255, 255, 0.24);
         border-radius: 16px;
-        background: transparent !important;
-        box-shadow: 0 18px 40px rgba(2, 6, 23, 0.18);
-        backdrop-filter: blur(18px) saturate(150%);
+        background: rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1) !important;
+        backdrop-filter: blur(24px) saturate(160%) !important;
+        -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+        transition: none !important;
+    }
+
+    .dark .VPNavScreenMenu,
+    .dark .VPNavScreenTranslations,
+    .dark .VPNavScreenAppearance,
+    .dark .VPNavScreenSocialLinks {
+        border-color: rgba(148, 163, 184, 0.18);
+        background: rgba(15, 23, 42, 0.18) !important;
+        box-shadow: 0 18px 40px rgba(2, 6, 23, 0.24) !important;
+    }
+
+    .VPNavScreenMenu {
+        background: rgba(255, 255, 255, 0.12) !important;
+    }
+
+    .dark .VPNavScreenMenu {
+        background: rgba(15, 23, 42, 0.24) !important;
     }
 
     .VPNavScreenMenu {
@@ -633,6 +720,66 @@ body::before {
     .VPNavScreenMenuGroup,
     .VPNavScreenMenuGroup .button {
         border-color: rgba(255, 255, 255, 0.08);
+    }
+}
+
+@media (max-width: 1279px) {
+    .VPLocalNav {
+        background: transparent !important;
+        border-bottom-color: rgba(255, 255, 255, 0.16) !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        isolation: isolate;
+    }
+
+    .VPLocalNav::before {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        content: "";
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.16);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+        backdrop-filter: blur(18px) saturate(140%);
+    }
+
+    .dark .VPLocalNav {
+        border-bottom-color: rgba(148, 163, 184, 0.14) !important;
+    }
+
+    .dark .VPLocalNav::before {
+        background: rgba(15, 23, 42, 0.22);
+    }
+
+    .VPLocalNav .VPLocalNavOutlineDropdown .items {
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        background: transparent !important;
+        box-shadow: none !important;
+        backdrop-filter: blur(24px) saturate(160%) !important;
+        -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+    }
+
+    .dark .VPLocalNav .VPLocalNavOutlineDropdown .items {
+        border-color: rgba(148, 163, 184, 0.18);
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .VPLocalNav .VPLocalNavOutlineDropdown .header,
+    .VPLocalNav .VPLocalNavOutlineDropdown .outline {
+        background: transparent !important;
+    }
+
+    .VPLocalNav .VPLocalNavOutlineDropdown .items,
+    .VPLocalNav .VPLocalNavOutlineDropdown .flyout-enter-active,
+    .VPLocalNav .VPLocalNavOutlineDropdown .flyout-leave-active {
+        transition: none !important;
+    }
+
+    .VPLocalNav .VPLocalNavOutlineDropdown .flyout-enter-from,
+    .VPLocalNav .VPLocalNavOutlineDropdown .flyout-leave-to {
+        opacity: 1 !important;
+        transform: none !important;
     }
 }
 
@@ -753,11 +900,53 @@ body::before {
 
 @media (max-width: 959px) {
     .VPSidebar {
-        background: rgba(255, 255, 255, 0.5) !important;
-        backdrop-filter: blur(24px) saturate(140%) !important;
-        -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+        background: transparent !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        isolation: isolate;
+        opacity: 1 !important;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12) !important;
+        transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1) !important;
     }
+
+    .VPSidebar.open {
+        opacity: 1 !important;
+        transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1) !important;
+    }
+
+    .VPSidebar::before {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        content: "";
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.12);
+        -webkit-backdrop-filter: blur(24px) saturate(160%);
+        backdrop-filter: blur(24px) saturate(160%);
+    }
+
     .dark .VPSidebar {
-        background: rgba(15, 23, 42, 0.6) !important;
+        box-shadow: 0 18px 40px rgba(2, 6, 23, 0.24) !important;
+    }
+
+    .dark .VPSidebar::before {
+        background: rgba(15, 23, 42, 0.18);
+    }
+
+    .VPBackdrop {
+        background: rgba(255, 255, 255, 0.14) !important;
+        -webkit-backdrop-filter: blur(14px) saturate(130%);
+        backdrop-filter: blur(14px) saturate(130%);
+    }
+
+    .dark .VPBackdrop {
+        background: rgba(15, 23, 42, 0.28) !important;
+    }
+
+    .VPSidebar,
+    .VPSidebar .item,
+    .VPSidebar .link,
+    .VPSidebar .caret {
+        -webkit-tap-highlight-color: transparent;
     }
 }
