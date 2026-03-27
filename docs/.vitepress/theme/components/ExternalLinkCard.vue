@@ -96,7 +96,7 @@ defineProps<{
 
 /* Brand colors */
 .icon-codeberg :deep(svg) { fill: #2185D0; }
-.icon-gitee :deep(svg) { fill: #C71D23; }
+.icon-cnb :deep(svg) { fill: #FF6200; }
 .icon-spigotmc :deep(svg) { fill: #ED8106; }
 .icon-modrinth :deep(svg) { fill: #00AF5C; }
 .icon-curseforge :deep(svg) { fill: #F16436; }

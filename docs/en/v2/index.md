@@ -63,7 +63,7 @@ ZMusic is a powerful music system that supports the following functions.
 
 ## Feedback {#feedback}
 
-- Submit issues on [Gitee](https://gitee.com/zmusic-dev/zmusic-server) or [GitHub](https://github.com/zmusic-dev/zmusic-server)
+- Submit issues on [GitHub](https://github.com/zmusic-dev/zmusic-server)
 - Join our Discord: [https://discord.gg/twQgJNufYn](https://discord.gg/twQgJNufYn)
 
 # Command {#commands}
