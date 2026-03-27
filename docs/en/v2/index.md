@@ -33,13 +33,23 @@ ZMusic is a powerful music system that supports the following functions.
 
 ## Download {#download}
 
-You can download the latest ZMusic plugin from the following channels.
+### GitHub {#download-github}
 
 <DownloadTable />
 
+### Other Channels {#download-other}
+
+<ExternalLinks />
+
 ## Download Mod {#download-mod}
 
+### GitHub {#download-mod-github}
+
 <ModDownload />
+
+### Other Channels {#download-mod-other}
+
+<ModExternalLinks />
 
 ## BungeeCord Description {#bungeecord}
 

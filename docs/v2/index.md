@@ -24,13 +24,23 @@ title: V2 使用文档
 
 ## 下载 {#download}
 
-你可以从以下渠道下载最新版本的 ZMusic 插件。
+### GitHub {#download-github}
 
 <DownloadTable />
 
+### 其他渠道 {#download-other}
+
+<ExternalLinks />
+
 ## 下载 Mod {#download-mod}
 
+### GitHub {#download-mod-github}
+
 <ModDownload />
+
+### 其他渠道 {#download-mod-other}
+
+<ModExternalLinks />
 
 ## BungeeCord 说明 {#bungeecord}
 
