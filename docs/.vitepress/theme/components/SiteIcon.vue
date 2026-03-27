@@ -1,26 +1,44 @@
 <template>
-  <svg
-    class="site-icon"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.9"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
-    v-html="icon"
-  />
+  <component :is="icon" class="site-icon" aria-hidden="true" />
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
-import { siteIcons, type SiteIconName } from '../utils/site-icons'
+import {
+  Home,
+  Lightbulb,
+  CircleHelp,
+  Info,
+  Music,
+  MessageCircle,
+  MessagesSquare,
+  BookOpen,
+  Signpost,
+  Terminal,
+  Shield,
+  Settings
+} from '@lucide/vue'
 
 const props = defineProps<{
-  name: SiteIconName
+  name: string
 }>()
 
-const icon = computed(() => siteIcons[props.name])
+const iconMap: Record<string, typeof Home> = {
+  home: Home,
+  lightbulb: Lightbulb,
+  'circle-help': CircleHelp,
+  'circle-info': Info,
+  music: Music,
+  'message-circle': MessageCircle,
+  'messages-square': MessagesSquare,
+  'book-open': BookOpen,
+  signpost: Signpost,
+  terminal: Terminal,
+  shield: Shield,
+  settings: Settings
+}
+
+const icon = computed(() => iconMap[props.name] || Home)
 </script>
 
 <style scoped>
