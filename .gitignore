@@ -16,7 +16,7 @@ gradle-app.setting
 local.properties
 
 # Claude Code
-.claude/
+.claude/*.local.*
 
 # MCP
 .playwright-mcp/
