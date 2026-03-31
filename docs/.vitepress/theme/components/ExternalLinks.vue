@@ -3,10 +3,9 @@
 </template>
 
 <script lang="ts" setup>
-import { siCodeberg, siSpigotmc } from 'simple-icons'
+import { siCodeberg, siSpigotmc, siCloudnativebuild } from 'simple-icons'
 import ExternalLinkCard from './ExternalLinkCard.vue'
 import { useI18n } from '../utils/i18n'
-import cnbSvg from '../assets/cnb.svg?raw'
 
 const t = useI18n()
 
@@ -21,7 +20,7 @@ const links = [
     url: 'https://cnb.cool/zmusic-dev/zmusic-server/-/releases',
     label: 'CNB',
     icon: 'cnb',
-    svg: cnbSvg
+    svg: siCloudnativebuild.svg
   },
   {
     url: 'https://www.spigotmc.org/resources/zmusic.83027/',
