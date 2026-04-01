@@ -6,7 +6,6 @@ const { isDark, lang } = useData()
 
 const giscusLangMap: Record<string, string> = {
   'zh-CN': 'zh-CN',
-  'zh-TW': 'zh-TW',
   'en-US': 'en',
   'ja-JP': 'ja'
 }

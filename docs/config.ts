@@ -57,7 +57,7 @@ function nav(): DefaultTheme.NavItem[] {
       activeMatch: '^/guide/'
     },
     { text: '常见问题', link: '/faq' },
-    { text: 'QQ群', link: 'https://jq.qq.com/?_wv=1027&k=9Xs1RMt5' },
+    { text: 'QQ群', link: 'https://qm.qq.com/q/buxuatfTCo' },
     {
       text: '4.0.0-dev',
       items: [

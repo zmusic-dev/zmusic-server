@@ -18,7 +18,7 @@
 
 [ドキュメント][docs-link] | [Discord][discord-link]
 
-[简体中文](README.md) | [English](README_EN.md) | [繁體中文](README_ZH-TW.md) | 日本語
+[简体中文](README.md) | [English](README_EN.md) | 日本語
 
 </div>
 

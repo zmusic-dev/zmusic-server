@@ -18,7 +18,7 @@
 
 [文档][docs-link] | [QQ 群][qq-group-link] | [Discord][discord-link]
 
-简体中文 | [English](README_EN.md) | [繁體中文](README_ZH-TW.md) | [日本語](README_JP.md)
+简体中文 | [English](README_EN.md) | [日本語](README_JP.md)
 
 </div>
 
@@ -111,6 +111,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 [docs-link]: https://zmusic.zhenxin.me
 
-[qq-group-link]: https://jq.qq.com/?_wv=1027&k=9Xs1RMt5
+[qq-group-link]: https://qm.qq.com/q/buxuatfTCo
 
 [discord-link]: https://discord.gg/twQgJNufYn

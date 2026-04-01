@@ -12,7 +12,7 @@ function nav(): DefaultTheme.NavItem[] {
     { text: '首页', link: '/' },
     { text: '指南', link: '/guide/introduction' },
     { text: '常见问题', link: '/faq' },
-    { text: 'QQ群', link: 'https://jq.qq.com/?_wv=1027&k=9Xs1RMt5' },
+    { text: 'QQ群', link: 'https://qm.qq.com/q/buxuatfTCo' },
     {
       text: '2.11.0',
       items: [
