@@ -1,0 +1,40 @@
+.docs_pipeline: &docs_pipeline
+  name: docs-deploy
+  docker:
+    image: node:lts
+  breakIfModify: true
+  imports:
+    - https://cnb.cool/zmusic-dev/zmusic-secrets/-/blob/main/envs.yml
+  env:
+    DEPLOY_HOST_ALIAS: tencent-shanghai
+    DEPLOY_HISTORY_LIMIT: "5"
+  lock:
+    key: docs-deploy-v4
+    cancel-in-progress: true
+  stages:
+    - name: install deploy tools
+      script: |
+        set -eu
+        apt-get update
+        apt-get install -y --no-install-recommends openssh-client rsync
+        rm -rf /var/lib/apt/lists/*
+    - name: enable corepack
+      script: corepack enable
+    - name: install dependencies
+      script: pnpm install --frozen-lockfile
+    - name: build docs
+      script: pnpm build
+    - name: deploy docs
+      script: bash scripts/deploy-docs.sh
+
+v4:
+  push:
+    - <<: *docs_pipeline
+      ifModify:
+        - "docs/**"
+        - "package.json"
+        - "pnpm-lock.yaml"
+        - ".node-version"
+        - ".cnb.yml"
+        - ".cnb/**"
+        - "scripts/deploy-docs.sh"
