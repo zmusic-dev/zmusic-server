@@ -12,6 +12,12 @@
     key: docs-deploy-v4
     cancel-in-progress: true
   stages:
+    - name: install deploy tools
+      script: |
+        set -eu
+        apt-get update
+        apt-get install -y --no-install-recommends openssh-client rsync
+        rm -rf /var/lib/apt/lists/*
     - name: enable corepack
       script: corepack enable
     - name: install dependencies
@@ -19,12 +25,7 @@
     - name: build docs
       script: pnpm build
     - name: deploy docs
-      script: |
-        set -eu
-        apt-get update
-        apt-get install -y --no-install-recommends openssh-client rsync
-        rm -rf /var/lib/apt/lists/*
-        bash scripts/deploy-docs.sh
+      script: bash scripts/deploy-docs.sh
 
 v4:
   push:
