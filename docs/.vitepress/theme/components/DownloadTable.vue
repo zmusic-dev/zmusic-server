@@ -18,7 +18,7 @@
             <div class="download-content">
                 <!-- 稳定版 -->
                 <div v-if="activeTab === 'stable'" class="tab-panel">
-                    <div class="panel-header">
+                    <div class="download-header">
                         <span class="version-tag">{{ stableVersion }}</span>
                         <a
                             :href="`https://github.com/${getRepo()}/releases/latest`"
@@ -51,7 +51,7 @@
 
                 <!-- 开发版 -->
                 <div v-if="activeTab === 'dev'" class="tab-panel">
-                    <div class="panel-header">
+                    <div class="download-header">
                         <span class="version-tag">{{ devVersion }}</span>
                         <a
                             :href="devReleaseUrl"
@@ -85,7 +85,7 @@
 
                 <!-- Addon -->
                 <div v-if="activeTab === 'addon'" class="tab-panel">
-                    <div class="panel-header">
+                    <div class="download-header">
                         <span class="version-tag">{{ addonVersion }}</span>
                         <a
                             :href="addonReleaseUrl"
@@ -305,7 +305,7 @@ onMounted(async () => {
     -webkit-backdrop-filter: blur(16px);
 }
 
-.panel-header {
+.download-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -395,7 +395,7 @@ onMounted(async () => {
         flex-wrap: wrap;
     }
 
-    .panel-header {
+    .download-header {
         flex-direction: column;
         align-items: flex-start;
     }
