@@ -129,8 +129,7 @@ main() {
   release_name="$(date -u +%Y%m%d-%H%M%S)"
   release_stage="$releases_dir/${release_name}.tmp"
   release_path="$releases_dir/$release_name"
-  current_tmp="$deploy_root/.index.tmp"
-  legacy_release="$releases_dir/${release_name}-migrated-live"
+  current_tmp="$deploy_root/.current.tmp"
 
   prepare_ssh
 
@@ -147,7 +146,6 @@ main() {
       CURRENT_TMP="$current_tmp" \
       DEPLOY_TARGET="$DEPLOY_TARGET" \
       HISTORY_LIMIT="$history_limit" \
-      LEGACY_RELEASE="$legacy_release" \
       RELEASE_NAME="$release_name" \
       RELEASE_PATH="$release_path" \
       RELEASE_STAGE="$release_stage" \
@@ -155,21 +153,16 @@ main() {
     sh <<'EOF' | sed 's/^/[deploy-docs] [remote] /'
 set -eu
 
-chown -R 1000:1000 "$RELEASE_STAGE"
 mv "$RELEASE_STAGE" "$RELEASE_PATH"
 
 if [ -L "$DEPLOY_TARGET" ]; then
   :
-elif [ -d "$DEPLOY_TARGET" ]; then
-  mv "$DEPLOY_TARGET" "$LEGACY_RELEASE"
-  chown -R 1000:1000 "$LEGACY_RELEASE"
 elif [ -e "$DEPLOY_TARGET" ]; then
   rm -rf "$DEPLOY_TARGET"
 fi
 
 ln -s "releases/$RELEASE_NAME" "$CURRENT_TMP"
 mv -Tf "$CURRENT_TMP" "$DEPLOY_TARGET"
-chown -h 1000:1000 "$DEPLOY_TARGET"
 
 find "$RELEASES_DIR" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' \
   | sort -r \

@@ -33,7 +33,7 @@ export default defineConfig({
       {
         defer: '',
         src: 'https://umami.zhenxin.me/script.js',
-        'data-website-id': 'c5a252ad-badb-488e-80c8-81c366119027'
+        'data-website-id': '1d01764d-0e67-4a79-969a-1a431153fb22'
       }
     ],
     ['meta', { name: 'author', content: 'ZhenXin' }],
