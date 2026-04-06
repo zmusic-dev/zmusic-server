@@ -23,7 +23,7 @@
   "packageManager": "pnpm@10.33.0",
   "devDependencies": {
     "vitepress": "2.0.0-alpha.17",
-    "vue": "^3.5.31"
+    "vue": "^3.5.32"
   },
   "dependencies": {
     "@giscus/vue": "^3.1.1",
