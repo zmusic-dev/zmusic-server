@@ -21,6 +21,11 @@
     "node": ">=22.18.0"
   },
   "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "overrides": {
+      "vite": "7.3.2"
+    }
+  },
   "devDependencies": {
     "vitepress": "2.0.0-alpha.17",
     "vue": "^3.5.32"
