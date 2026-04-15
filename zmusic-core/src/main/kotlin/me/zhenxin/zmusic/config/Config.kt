@@ -88,7 +88,7 @@ object Config {
         get() = config.get("proxy.port") ?: 0
 }
 
-fun initConfig() {
+fun initConfig(): Boolean {
     val configPath = dataFolder.resolve("config.toml")
     if (!configPath.exists()) {
         val stream = ZMusic::class.java.getResourceAsStream("/config.toml")
@@ -102,9 +102,9 @@ fun initConfig() {
     if (Config.version != currentVersion) {
         // 此时国际化尚未加载，使用英文错误信息
         logger.error("Config is outdated, please delete the config file and restart the server.")
-        // TODO: disablePlugin()
+        return false
     }
-    // 移除初始化成功的日志，避免割裂感
+    return true
 }
 
 private var config: CommentedConfig = CommentedConfig.inMemory()

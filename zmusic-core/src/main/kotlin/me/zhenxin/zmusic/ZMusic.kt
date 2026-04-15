@@ -38,7 +38,7 @@ object ZMusic {
         logger.log("")
 
         // 初始化配置和国际化
-        initConfig()
+        if (!initConfig()) return
         initI18n()
 
         // 初始化平台服务
