@@ -8,11 +8,20 @@ gradle-app.setting
 # Gradle wrapper
 !gradle-wrapper.jar
 
-# IDE
+# IDE - IntelliJ
 .idea/
 *.iml
 *.ipr
 *.iws
+
+# IDE - Eclipse / VSCode
+.classpath
+.project
+.settings/
+bin/
+.kotlin/
+
+# IDE - General
 local.properties
 
 # Claude Code
