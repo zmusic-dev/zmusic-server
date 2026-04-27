@@ -11,13 +11,13 @@ const t = useI18n()
 
 const links = [
   {
-    url: 'https://codeberg.org/zmusic-dev/zmusic-server/releases',
+    url: 'https://codeberg.org/zmusic-dev/zmusic-plugin/releases',
     label: 'Codeberg',
     icon: 'codeberg',
     svg: siCodeberg.svg
   },
   {
-    url: 'https://cnb.cool/zmusic-dev/zmusic-server/-/releases',
+    url: 'https://cnb.cool/zmusic-dev/zmusic-plugin/-/releases',
     label: 'CNB',
     icon: 'cnb',
     svg: siCloudnativebuild.svg
