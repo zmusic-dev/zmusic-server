@@ -10,8 +10,6 @@ object Permissions {
     val PLAY = Permission("zmusic.play", "允许播放音乐")
     val SEARCH = Permission("zmusic.search", "允许搜索音乐")
     val STOP = Permission("zmusic.stop", "允许停止播放")
-    val VOLUME = Permission("zmusic.volume", "允许调整音量")
-    val LYRIC = Permission("zmusic.lyric", "允许显示歌词")
     val RELOAD = Permission("zmusic.reload", "允许重载配置")
     val PLAYLIST = Permission("zmusic.playlist", "允许管理歌单")
     val ADMIN = Permission("zmusic.admin", "允许使用所有管理命令")

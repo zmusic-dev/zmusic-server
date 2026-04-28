@@ -84,12 +84,3 @@ ZMusic 的主命令是 `/zmusic`，同时提供两个简短别名。
 | `/zmusic playlist global <subcommand>` | `zmusic.admin` | 管理全局歌单 |
 
 全局歌单子命令包括 `list`、`create`、`delete`、`add`、`remove`、`play`，均需要 `zmusic.admin` 权限。
-
-## 预留权限 {#reserved-permissions}
-
-后续音量和歌词功能会分别使用以下权限：
-
-| 权限 | 计划用途 |
-| --- | --- |
-| `zmusic.volume` | 调整音量 |
-| `zmusic.lyric` | 显示歌词 |

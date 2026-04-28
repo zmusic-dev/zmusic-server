@@ -30,7 +30,7 @@ The root command aliases are `/music` and `/zm`.
 
 The currently available base commands do not depend on network access to a music API.
 
-After music playback, search, lyrics, and playlists are completed, those features will need access to the configured music API service.
+After music playback, search, lyrics display, and playlists are completed, those features will need access to the configured music API service.
 
 ### Does V4 support Netease Cloud Music login? {#netease-login}
 

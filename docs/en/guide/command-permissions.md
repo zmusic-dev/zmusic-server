@@ -84,12 +84,3 @@ The following command entries and permission nodes are reserved, but music featu
 | `/zmusic playlist global <subcommand>` | `zmusic.admin` | Manage global playlists |
 
 Global playlist subcommands include `list`, `create`, `delete`, `add`, `remove`, and `play`. They all require the `zmusic.admin` permission.
-
-## Reserved permissions {#reserved-permissions}
-
-Future volume and lyrics features will use these permissions:
-
-| Permission | Planned use |
-| --- | --- |
-| `zmusic.volume` | Adjust volume |
-| `zmusic.lyric` | Show lyrics |

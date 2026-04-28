@@ -34,12 +34,6 @@ permissions:
   zmusic.stop:
     description: Allow stopping music playback
     default: true
-  zmusic.volume:
-    description: Allow adjusting music volume
-    default: true
-  zmusic.lyric:
-    description: Allow showing lyrics
-    default: true
   zmusic.playlist:
     description: Allow managing playlists
     default: true
