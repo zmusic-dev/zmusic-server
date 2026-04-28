@@ -10,26 +10,32 @@ title: よくある質問
 **V2 バージョンについては [よくある質問 (V2 アーカイブ)](/ja/v2/faq) をご覧ください**
 :::
 
-### なぜ Bilibili プラットフォームの音楽を再生できませんか？ {#why-cant-i-play-bilibili-music}
+### 再生、検索、停止、プレイリストコマンドが利用不可と表示されるのはなぜですか？ {#why-are-music-commands-unavailable}
 
-Bilibili プラットフォームの音楽を再生するには VIP ユーザーである必要があります。VIP ユーザーの場合は、設定が正しいか確認してください。
+V4R では現在、コマンド登録、権限チェック、基本フレームワークは接続済みですが、音楽バックエンドはまだ開発中です。
 
-### ZMusic VIP にはどのような機能がありますか？ {#zmusic-vip-features}
+そのため、`/zmusic play`、`/zmusic search`、`/zmusic stop`、`/zmusic playlist` とそのサブコマンドは、現在は機能が利用できない旨を表示します。
 
-ZMusic VIP は ZMusic のサブスクリプションサービスで、ユーザーにより多くの機能とサービスを提供します。現在 VIP ユーザーは以下の機能を利用できます：
+### 現在使用できるコマンドは何ですか？ {#available-commands}
 
-- オーディオトランスコーディングサービスの提供、Bilibili プラットフォームの音楽再生に対応
+現在利用できるコマンドは次のとおりです：
+
+- `/zmusic help [command]`
+- `/zmusic info`
+- `/zmusic reload`
+
+ルートコマンドのエイリアスは `/music` と `/zm` です。
 
 ### サーバーにインターネット接続がない場合、ZMusic を使用できませんか？ {#no-network}
 
-ZMusic は正常に動作するためにインターネット接続が必要です。サーバーにインターネット接続がない場合、ZMusic を使用できません。
+現在利用できる基本コマンドは、音楽 API へのネットワーク接続に依存しません。
 
-### NetEase Cloud Music の再生で、なぜ 30 秒しか再生されませんか？ {#30-seconds-preview}
+今後、音楽再生、検索、歌詞、プレイリストのバックエンドが接続された後は、関連機能で設定済みの音楽 API サービスへのアクセスが必要になります。
 
-再生しているのは試聴版の可能性があります。試聴版は 30 秒しか再生されません。
+### V4R は NetEase Cloud Music ログインに対応していますか？ {#netease-login}
 
-完全版を再生するには、NetEase Cloud Music アカウントにログインし、VIP サービスに登録してください。
+まだ対応していません。現在の V4R コードには `/zm login` または同等のログインコマンドはありません。
 
-### NetEase Cloud Music アカウントにログインするにはどうすればいいですか？ {#how-to-login-netease}
+### NetEase API ドキュメントは現在何に使いますか？ {#netease-api-docs-purpose}
 
-`/zm login` コマンドを使用して NetEase Cloud Music アカウントにログインしてください。
+NetEase API ドキュメントは、デプロイ可能な外部 API サービスを説明するものです。V4R の音楽バックエンドはまだこれらのサービスに接続されていないため、現在は今後の機能開発に向けた準備資料です。

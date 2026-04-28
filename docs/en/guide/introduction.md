@@ -10,11 +10,19 @@ title: Introduction
 **The current long-term support version is V2, and you can view the [V2 Docs](/en/v2/)**
 :::
 
-This is a powerful music system that supports the following features.
+ZMusic V4R is a Minecraft music system currently under development.
 
-- Music playback
+Currently implemented:
+
+- Cross-platform plugin framework (Bukkit/Spigot/Paper/Folia, BungeeCord, Velocity)
+- Command registration, permission checks, and Tab completion entry points
+- Configuration and i18n file loading
+- Runtime dependency loading
+
+Under development:
+
+- Music playback and search backend
 - Server-wide music requests
 - Lyrics display
 - Playlist system
 - Play queue
-- Cross-platform support (Spigot/BungeeCord/Velocity)

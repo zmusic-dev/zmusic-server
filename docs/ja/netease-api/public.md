@@ -4,6 +4,10 @@ title: NetEase Cloud Music API
 
 # NetEase Cloud Music API {#netease-cloud-music-api}
 
+::: info V4R の状態
+現在 V4R の音楽バックエンドはまだ開発中であり、NetEase Cloud Music API には接続されていません。このページは、今後利用できる外部 API サービスと設定方法を説明するものです。
+:::
+
 ## パブリックサーバー {#public-servers}
 
 ::: warning

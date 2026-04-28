@@ -4,6 +4,10 @@ title: 网易云音乐 API
 
 # 网易云音乐 API {#netease-cloud-music-api}
 
+::: info V4R 状态
+当前 V4R 音乐后端仍在开发中，尚未接入网易云音乐 API。此页面用于说明后续可使用的外部 API 服务与配置方式。
+:::
+
 ## 公共服务器 {#public-servers}
 
 ::: warning

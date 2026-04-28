@@ -158,6 +158,12 @@ docs/
 └── public/                # 静态资源
 ```
 
+当前分支是 `v4` 分支，默认只维护 V4 文档：
+
+- 允许修改：`docs/guide/`、`docs/en/guide/`、`docs/ja/guide/`、`docs/faq.md`、`docs/en/faq.md`、`docs/ja/faq.md`、`docs/netease-api/`、`docs/en/netease-api/`、`docs/ja/netease-api/`、首页和主题相关文件。
+- 禁止修改：`docs/v2/`、`docs/en/v2/`、`docs/ja/v2/` 以及根目录下 V2 留档入口内容，除非用户明确要求修复 V2 归档文档。
+- 若需要同步命令、权限、配置等说明，优先更新 V4 的 `guide` 页面；不要把 V4 状态写入 V2 文档。
+
 ### 多语言配置
 
 路由映射：

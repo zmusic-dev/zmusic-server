@@ -10,26 +10,32 @@ title: 常见问题
 **V2 版本请查看 [常见问题 (V2 留档)](/v2/faq)**
 :::
 
-### 为什么我无法播放哔哩哔哩平台的音乐？ {#why-cant-i-play-bilibili-music}
+### 为什么播放、搜索、停止和歌单命令提示暂不可用？ {#why-are-music-commands-unavailable}
 
-哔哩哔哩平台的音乐需要 VIP 用户才能播放，如果您是 VIP 用户，请检查您的配置是否正确。
+V4R 目前已完成命令注册、权限检查和基础框架，但音乐后端仍在开发中。
 
-### ZMusic VIP 有什么功能？ {#zmusic-vip-features}
+因此 `/zmusic play`、`/zmusic search`、`/zmusic stop`、`/zmusic playlist` 及其子命令当前会提示功能暂不可用。
 
-ZMusic VIP 是 ZMusic 的订阅服务，为用户提供更多的功能和服务，当前 VIP 用户可以享受以下功能：
+### 现在有哪些命令可以使用？ {#available-commands}
 
-- 提供音频转码服务，支持哔哩哔哩平台音乐播放
+当前可用命令包括：
+
+- `/zmusic help [command]`
+- `/zmusic info`
+- `/zmusic reload`
+
+根命令别名包括 `/music` 和 `/zm`。
 
 ### 我的服务器没有网络，无法使用 ZMusic？ {#no-network}
 
-ZMusic 需要网络连接才能正常使用，如果您的服务器没有网络，则无法使用 ZMusic。
+当前可用的基础命令不依赖音乐 API 网络连接。
 
-### 网易云音乐播放，为什么只播放了 30 秒？ {#30-seconds-preview}
+后续音乐播放、搜索、歌词和歌单后端接入后，相关功能会需要访问配置的音乐 API 服务。
 
-您播放的可能是试听版音乐，试听版音乐只能播放 30 秒。
+### V4R 是否支持网易云音乐登录？ {#netease-login}
 
-需要播放完整版音乐，请登录网易云音乐账号，并且开通 VIP 服务。
+暂不支持。当前 V4R 代码中没有 `/zm login` 或等价登录命令。
 
-### 如何登录网易云音乐账号？ {#how-to-login-netease}
+### 网易云 API 文档现在有什么用途？ {#netease-api-docs-purpose}
 
-请使用 `/zm login` 命令登录网易云音乐账号。
+网易云 API 文档用于说明可部署的外部 API 服务。V4R 音乐后端尚未接入这些服务，因此它们目前是后续功能开发的准备资料。

@@ -10,26 +10,32 @@ title: FAQ
 **For the V2 version, please refer to [FAQ (V2 Archive)](/en/v2/faq)**
 :::
 
-### Why can't I play music from Bilibili? {#why-cant-i-play-bilibili-music}
+### Why do playback, search, stop, and playlist commands say they are unavailable? {#why-are-music-commands-unavailable}
 
-Music from Bilibili requires a VIP account. If you are already a VIP user, please verify that your configuration is correct.
+V4R currently has command registration, permission checks, and the base framework wired, but the music backend is still under development.
 
-### What features does ZMusic VIP provide? {#zmusic-vip-features}
+As a result, `/zmusic play`, `/zmusic search`, `/zmusic stop`, `/zmusic playlist`, and their subcommands currently report that the feature is unavailable.
 
-ZMusic VIP is a subscription service that provides additional capabilities. At the moment, VIP users can enjoy:
+### Which commands can I use now? {#available-commands}
 
-- Audio transcoding support for music playback on Bilibili
+Currently available commands are:
+
+- `/zmusic help [command]`
+- `/zmusic info`
+- `/zmusic reload`
+
+The root command aliases are `/music` and `/zm`.
 
 ### My server has no Internet access. Can I still use ZMusic? {#no-network}
 
-ZMusic requires network connectivity to work properly. If your server has no network access, ZMusic will not function.
+The currently available base commands do not depend on network access to a music API.
 
-### Why does Netease Cloud Music only play for 30 seconds? {#30-seconds-preview}
+After the music playback, search, lyrics, and playlist backend is connected, those features will need access to the configured music API service.
 
-The track you are playing is likely a preview version, which is limited to 30 seconds.
+### Does V4R support Netease Cloud Music login? {#netease-login}
 
-To play the full version, log in to your Netease Cloud Music account and activate VIP service.
+Not yet. The current V4R code does not include `/zm login` or an equivalent login command.
 
-### How do I log in to my Netease Cloud Music account? {#how-to-login-netease}
+### What are the Netease API docs for right now? {#netease-api-docs-purpose}
 
-Use the `/zm login` command to log in to your Netease Cloud Music account.
+The Netease API docs describe deployable external API services. The V4R music backend is not connected to these services yet, so they currently serve as preparation material for upcoming feature development.
