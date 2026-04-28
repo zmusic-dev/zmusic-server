@@ -12,7 +12,7 @@ title: FAQ
 
 ### Why do playback, search, stop, and playlist commands say they are unavailable? {#why-are-music-commands-unavailable}
 
-V4R currently has command registration, permission checks, and the base framework wired, but the music backend is still under development.
+V4 currently has base commands and permission control in place, but music features are still under development.
 
 As a result, `/zmusic play`, `/zmusic search`, `/zmusic stop`, `/zmusic playlist`, and their subcommands currently report that the feature is unavailable.
 
@@ -30,12 +30,12 @@ The root command aliases are `/music` and `/zm`.
 
 The currently available base commands do not depend on network access to a music API.
 
-After the music playback, search, lyrics, and playlist backend is connected, those features will need access to the configured music API service.
+After music playback, search, lyrics, and playlists are completed, those features will need access to the configured music API service.
 
-### Does V4R support Netease Cloud Music login? {#netease-login}
+### Does V4 support Netease Cloud Music login? {#netease-login}
 
-Not yet. The current V4R code does not include `/zm login` or an equivalent login command.
+Not yet. The current V4 version does not include `/zm login` or an equivalent login command.
 
 ### What are the Netease API docs for right now? {#netease-api-docs-purpose}
 
-The Netease API docs describe deployable external API services. The V4R music backend is not connected to these services yet, so they currently serve as preparation material for upcoming feature development.
+The Netease API docs describe deployable external API services. V4 music features are not connected to these services yet, so they currently serve as preparation material for upcoming feature development.

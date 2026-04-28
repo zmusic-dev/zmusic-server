@@ -76,8 +76,7 @@ function sidebar(): DefaultTheme.Sidebar {
       items: [
         { text: '紹介', link: '/ja/guide/introduction' },
         { text: 'はじめに', link: '/ja/guide/getting-started' },
-        { text: 'コマンド', link: '/ja/guide/commands' },
-        { text: '権限', link: '/ja/guide/permissions' },
+        { text: 'コマンド権限', link: '/ja/guide/command-permissions' },
         { text: '設定ファイル', link: '/ja/guide/config' }
       ]
     },

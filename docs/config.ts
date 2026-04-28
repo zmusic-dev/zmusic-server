@@ -76,8 +76,7 @@ function sidebar(): DefaultTheme.Sidebar {
       items: [
         { text: '介绍', link: '/guide/introduction' },
         { text: '快速开始', link: '/guide/getting-started' },
-        { text: '命令', link: '/guide/commands' },
-        { text: '权限', link: '/guide/permissions' },
+        { text: '命令权限', link: '/guide/command-permissions' },
         { text: '配置文件', link: '/guide/config' }
       ]
     },

@@ -22,10 +22,10 @@ features:
     details: Supports Spigot, BungeeCord, Velocity
   - icon:
       src: /icons/feature-easy.svg
-      alt: Easy to Use
+      alt: Command Permissions
       wrap: true
-    title: Easy to Use
-    details: Comprehensive command prompts, simple and intuitive
+    title: Command Permissions
+    details: Commands and required permissions are listed clearly for server admins
   - icon:
       src: /icons/feature-beginner.svg
       alt: Beginner Friendly

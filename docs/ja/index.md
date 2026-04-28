@@ -22,10 +22,10 @@ features:
     details: Spigot、BungeeCord、Velocity に対応
   - icon:
       src: /icons/feature-easy.svg
-      alt: 使いやすい
+      alt: コマンド権限
       wrap: true
-    title: 使いやすい
-    details: 完善なコマンドヒント、シンプルな操作
+    title: コマンド権限
+    details: コマンドと必要な権限を分かりやすく確認できます
   - icon:
       src: /icons/feature-beginner.svg
       alt: 初心者向け

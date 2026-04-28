@@ -76,8 +76,7 @@ function sidebar(): DefaultTheme.Sidebar {
       items: [
         { text: 'Introduction', link: '/en/guide/introduction' },
         { text: 'Getting Started', link: '/en/guide/getting-started' },
-        { text: 'Commands', link: '/en/guide/commands' },
-        { text: 'Permissions', link: '/en/guide/permissions' },
+        { text: 'Command Permissions', link: '/en/guide/command-permissions' },
         { text: 'Configuration', link: '/en/guide/config' }
       ]
     },
