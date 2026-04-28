@@ -60,7 +60,7 @@ private object PlaylistPlayCommand : PlaylistSubCommand(
 
 private object PlaylistGlobalCommand : PlaylistSubCommand(
     name = "global",
-    strictPermissions = setOf(Permissions.PLAYLIST, Permissions.ADMIN),
+    permission = Permissions.ADMIN,
     description = { I18n.Command.playlistGlobalDescription },
     usage = "zmusic playlist global <list|create|delete|add|remove|play>",
     children = listOf(
@@ -75,42 +75,42 @@ private object PlaylistGlobalCommand : PlaylistSubCommand(
 
 private object PlaylistGlobalListCommand : PlaylistSubCommand(
     name = "list",
-    strictPermissions = setOf(Permissions.PLAYLIST, Permissions.ADMIN),
+    permission = Permissions.ADMIN,
     description = { I18n.Command.playlistGlobalListDescription },
     usage = "zmusic playlist global list"
 )
 
 private object PlaylistGlobalCreateCommand : PlaylistSubCommand(
     name = "create",
-    strictPermissions = setOf(Permissions.PLAYLIST, Permissions.ADMIN),
+    permission = Permissions.ADMIN,
     description = { I18n.Command.playlistGlobalCreateDescription },
     usage = "zmusic playlist global create <name>"
 )
 
 private object PlaylistGlobalDeleteCommand : PlaylistSubCommand(
     name = "delete",
-    strictPermissions = setOf(Permissions.PLAYLIST, Permissions.ADMIN),
+    permission = Permissions.ADMIN,
     description = { I18n.Command.playlistGlobalDeleteDescription },
     usage = "zmusic playlist global delete <name>"
 )
 
 private object PlaylistGlobalAddCommand : PlaylistSubCommand(
     name = "add",
-    strictPermissions = setOf(Permissions.PLAYLIST, Permissions.ADMIN),
+    permission = Permissions.ADMIN,
     description = { I18n.Command.playlistGlobalAddDescription },
     usage = "zmusic playlist global add <playlist> <song>"
 )
 
 private object PlaylistGlobalRemoveCommand : PlaylistSubCommand(
     name = "remove",
-    strictPermissions = setOf(Permissions.PLAYLIST, Permissions.ADMIN),
+    permission = Permissions.ADMIN,
     description = { I18n.Command.playlistGlobalRemoveDescription },
     usage = "zmusic playlist global remove <playlist> <song>"
 )
 
 private object PlaylistGlobalPlayCommand : PlaylistSubCommand(
     name = "play",
-    strictPermissions = setOf(Permissions.PLAYLIST, Permissions.ADMIN),
+    permission = Permissions.ADMIN,
     description = { I18n.Command.playlistGlobalPlayDescription },
     usage = "zmusic playlist global play <playlist>"
 )

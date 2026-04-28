@@ -26,10 +26,19 @@ permissions:
     description: Allow viewing ZMusic status
     default: true
   zmusic.play:
-    description: Allow playing and searching music
+    description: Allow playing music
+    default: true
+  zmusic.search:
+    description: Allow searching music
     default: true
   zmusic.stop:
     description: Allow stopping music playback
+    default: true
+  zmusic.volume:
+    description: Allow adjusting music volume
+    default: true
+  zmusic.lyric:
+    description: Allow showing lyrics
     default: true
   zmusic.playlist:
     description: Allow managing playlists

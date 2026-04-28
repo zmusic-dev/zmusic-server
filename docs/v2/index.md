@@ -179,11 +179,25 @@ title: V2 使用文档
 
 ## 普通玩家权限 {#player-permissions}
 
-`zmusic.use` 可使用 play、stop 等普通指令
+`zmusic.use` 可使用 ZMusic 根指令
+
+`zmusic.play` 可播放音乐
+
+`zmusic.search` 可搜索音乐
+
+`zmusic.stop` 可停止播放
+
+`zmusic.volume` 可调整音量
+
+`zmusic.lyric` 可显示歌词
+
+`zmusic.playlist` 可管理歌单
 
 ## 管理员权限 {#admin-permissions}
 
-`zmusic.admin` 可使用 playAll、stopAll 等管理员指令
+`zmusic.reload` 可重载配置文件
+
+`zmusic.admin` 可使用所有管理指令
 
 # 配置文件 {#configuration}
 

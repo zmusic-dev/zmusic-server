@@ -5,7 +5,7 @@ import me.zhenxin.zmusic.config.I18n
 
 object SearchCommand : UnavailableCommand(
     name = "search",
-    permission = Permissions.PLAY,
+    permission = Permissions.SEARCH,
     description = { I18n.Command.searchDescription },
     usage = "zmusic search <keyword>"
 )
