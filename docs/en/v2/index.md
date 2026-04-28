@@ -186,25 +186,11 @@ Administrator-related operations, such as forced full-server playback and config
 
 ## Regular player permissions {#player-permissions}
 
-`zmusic.use` allows using the ZMusic root command
-
-`zmusic.play` allows playing music
-
-`zmusic.search` allows searching music
-
-`zmusic.stop` allows stopping playback
-
-`zmusic.volume` allows adjusting volume
-
-`zmusic.lyric` allows showing lyrics
-
-`zmusic.playlist` allows managing playlists
+`zmusic.use` allows common commands such as `play` and `stop`
 
 ## Administrator permissions {#admin-permissions}
 
-`zmusic.reload` allows reloading the configuration file
-
-`zmusic.admin` allows all administrative commands
+`zmusic.admin` allows administrative commands such as `playAll` and `stopAll`
 
 # Configuration File Example {#configuration}
 
