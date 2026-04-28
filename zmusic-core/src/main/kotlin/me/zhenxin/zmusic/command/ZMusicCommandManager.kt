@@ -4,7 +4,11 @@ import me.zhenxin.zmusic.ZMusicConstants
 import me.zhenxin.zmusic.api.entity.ZCommandSender
 import me.zhenxin.zmusic.command.builtin.HelpCommand
 import me.zhenxin.zmusic.command.builtin.InfoCommand
+import me.zhenxin.zmusic.command.builtin.PlayCommand
+import me.zhenxin.zmusic.command.builtin.PlaylistCommand
 import me.zhenxin.zmusic.command.builtin.ReloadCommand
+import me.zhenxin.zmusic.command.builtin.SearchCommand
+import me.zhenxin.zmusic.command.builtin.StopCommand
 import me.zhenxin.zmusic.command.permission.Permission
 import me.zhenxin.zmusic.command.permission.Permissions
 import me.zhenxin.zmusic.config.I18n
@@ -22,7 +26,11 @@ object ZMusicCommandManager {
     private val commands: List<CommandNode> = listOf(
         HelpCommand,
         InfoCommand,
-        ReloadCommand
+        ReloadCommand,
+        PlayCommand,
+        SearchCommand,
+        StopCommand,
+        PlaylistCommand
     )
 
     fun execute(sender: ZCommandSender, label: String, args: Array<out String>): Boolean {
@@ -67,12 +75,7 @@ object ZMusicCommandManager {
             }
 
             else -> {
-                val command = findCommand(args.first()) ?: return emptyList()
-                if (!canExecute(sender, command.permission) || (command.playerOnly && !sender.isPlayer)) {
-                    return emptyList()
-                }
-                command.suggest(createContext(sender, label, args.drop(1)))
-                    .filter { it.startsWith(args.last(), ignoreCase = true) }
+                suggestChildren(sender, label, args.toList())
             }
         }
     }
@@ -83,6 +86,10 @@ object ZMusicCommandManager {
 
     fun findCommand(name: String): CommandNode? {
         return commands.firstOrNull { it.matches(name) }
+    }
+
+    fun visibleChildren(sender: ZCommandSender, command: CommandNode): List<CommandNode> {
+        return command.children.filter { canAccess(sender, it) }
     }
 
     fun rootPermission(): Permission = Permissions.USE
@@ -105,10 +112,45 @@ object ZMusicCommandManager {
 
     private fun dispatch(command: CommandNode, context: CommandContext) {
         command.permission?.let(context::checkPermission)
+        command.extraPermissions.forEach(context::checkPermission)
+        command.strictPermissions.forEach { permission ->
+            if (!context.sender.hasPermission(permission.node)) {
+                throw NoPermissionCommandException()
+            }
+        }
         if (command.playerOnly) {
             context.requirePlayer()
         }
+
+        if (context.args.isNotEmpty()) {
+            command.findChild(context.args.first())?.let { child ->
+                dispatch(child, context.copy(args = context.args.drop(1), raw = context.args.drop(1).joinToString(" ")))
+                return
+            }
+        }
+
         command.execute(context)
+    }
+
+    private fun suggestChildren(sender: ZCommandSender, label: String, args: List<String>): List<String> {
+        var command = findCommand(args.first()) ?: return emptyList()
+        if (!canAccess(sender, command)) {
+            return emptyList()
+        }
+
+        for (index in 1 until args.lastIndex) {
+            command = command.findChild(args[index]) ?: return emptyList()
+            if (!canAccess(sender, command)) {
+                return emptyList()
+            }
+        }
+
+        val remainingArgs = args.drop(1)
+        val childSuggestions = visibleChildren(sender, command).map { it.name }
+        val ownSuggestions = command.suggest(createContext(sender, label, remainingArgs))
+        return (childSuggestions + ownSuggestions)
+            .distinct()
+            .filter { it.startsWith(args.last(), ignoreCase = true) }
     }
 
     private fun handleCommandException(context: CommandContext, ex: CommandException) {
@@ -131,5 +173,12 @@ object ZMusicCommandManager {
             return true
         }
         return sender.hasPermission(permission.node) || sender.hasPermission(Permissions.ADMIN.node)
+    }
+
+    private fun canAccess(sender: ZCommandSender, command: CommandNode): Boolean {
+        return canExecute(sender, command.permission) &&
+            command.extraPermissions.all { canExecute(sender, it) } &&
+            command.strictPermissions.all { sender.hasPermission(it.node) } &&
+            (!command.playerOnly || sender.isPlayer)
     }
 }

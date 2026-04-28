@@ -89,11 +89,65 @@ object I18n {
         val reloadDescription: String
             get() = getI18nValue("command.reload_description")
 
+        val playDescription: String
+            get() = getI18nValue("command.play_description")
+
+        val searchDescription: String
+            get() = getI18nValue("command.search_description")
+
+        val stopDescription: String
+            get() = getI18nValue("command.stop_description")
+
+        val playlistDescription: String
+            get() = getI18nValue("command.playlist_description")
+
+        val playlistListDescription: String
+            get() = getI18nValue("command.playlist_list_description")
+
+        val playlistCreateDescription: String
+            get() = getI18nValue("command.playlist_create_description")
+
+        val playlistDeleteDescription: String
+            get() = getI18nValue("command.playlist_delete_description")
+
+        val playlistAddDescription: String
+            get() = getI18nValue("command.playlist_add_description")
+
+        val playlistRemoveDescription: String
+            get() = getI18nValue("command.playlist_remove_description")
+
+        val playlistPlayDescription: String
+            get() = getI18nValue("command.playlist_play_description")
+
+        val playlistGlobalDescription: String
+            get() = getI18nValue("command.playlist_global_description")
+
+        val playlistGlobalListDescription: String
+            get() = getI18nValue("command.playlist_global_list_description")
+
+        val playlistGlobalCreateDescription: String
+            get() = getI18nValue("command.playlist_global_create_description")
+
+        val playlistGlobalDeleteDescription: String
+            get() = getI18nValue("command.playlist_global_delete_description")
+
+        val playlistGlobalAddDescription: String
+            get() = getI18nValue("command.playlist_global_add_description")
+
+        val playlistGlobalRemoveDescription: String
+            get() = getI18nValue("command.playlist_global_remove_description")
+
+        val playlistGlobalPlayDescription: String
+            get() = getI18nValue("command.playlist_global_play_description")
+
         val reloadSuccess: String
             get() = getI18nValue("command.reload_success")
 
         val reloadFailed: String
             get() = getI18nValue("command.reload_failed")
+
+        val featureUnavailable: String
+            get() = getI18nValue("command.feature_unavailable")
 
         val infoHeader: String
             get() = getI18nValue("command.info_header")

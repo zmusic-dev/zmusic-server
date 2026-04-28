@@ -25,6 +25,15 @@ permissions:
   zmusic.info:
     description: Allow viewing ZMusic status
     default: true
+  zmusic.play:
+    description: Allow playing and searching music
+    default: true
+  zmusic.stop:
+    description: Allow stopping music playback
+    default: true
+  zmusic.playlist:
+    description: Allow managing playlists
+    default: true
   zmusic.reload:
     description: Allow reloading ZMusic
     default: op

@@ -36,10 +36,17 @@ object HelpCommand : CommandNode(
         }
 
         context.reply(I18n.Command.helpDetailHeader.replace("{usage}", target.usage))
+        replyEntry(context, target)
+        ZMusicCommandManager.visibleChildren(context.sender, target).forEach { child ->
+            replyEntry(context, child)
+        }
+    }
+
+    private fun replyEntry(context: CommandContext, command: CommandNode) {
         context.reply(
             I18n.Command.helpEntry
-                .replace("{usage}", target.usage)
-                .replace("{description}", target.description())
+                .replace("{usage}", command.usage)
+                .replace("{description}", command.description())
         )
     }
 }
