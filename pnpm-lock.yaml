@@ -18,8 +18,8 @@ importers:
         specifier: ^1.11.0
         version: 1.11.0(vue@3.5.33)
       simple-icons:
-        specifier: ^16.18.0
-        version: 16.18.0
+        specifier: ^16.18.1
+        version: 16.18.1
     devDependencies:
       vitepress:
         specifier: 2.0.0-alpha.17
@@ -689,8 +689,8 @@ packages:
   shiki@3.23.0:
     resolution: {integrity: sha512-55Dj73uq9ZXL5zyeRPzHQsK7Nbyt6Y10k5s7OjuFZGMhpp4r/rsLBH0o/0fstIzX1Lep9VxefWljK/SKCzygIA==}
 
-  simple-icons@16.18.0:
-    resolution: {integrity: sha512-5KbjcP456Gm1lrk+rhDuX4zFri+3lRX39IjzXAvoMAO8Ne76WlVlM+Z3kA6jdZ7+QHadgXsf++R7g2jaYVbYig==}
+  simple-icons@16.18.1:
+    resolution: {integrity: sha512-+AS16pmdVHFdKrzYuTGfNGW6RRJ7eubpRhh2wipqPD5nglXKKIbAoEFhdxuweR1AV63+TuLXVJ+NEqlJpXXa2A==}
     engines: {node: '>=0.12.18'}
 
   source-map-js@1.2.1:
@@ -1383,7 +1383,7 @@ snapshots:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
 
-  simple-icons@16.18.0: {}
+  simple-icons@16.18.1: {}
 
   source-map-js@1.2.1: {}
 
