@@ -2,6 +2,9 @@ name: Sync Code
 
 on:
   push:
+    branches:
+      - "v4"
+      - "v2"
 
 jobs:
   sync:
