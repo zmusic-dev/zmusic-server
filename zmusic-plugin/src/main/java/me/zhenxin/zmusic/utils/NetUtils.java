@@ -71,6 +71,17 @@ public class NetUtils {
         }
     }
 
+    public static String getNetStringBiliBiliWeb(String url, String Referer) {
+        ZMusic.log.sendDebugMessage(url);
+        try {
+            String ua = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 ZMusic/" + ZMusic.thisVer;
+            return getString(url, Referer, ua);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * 获取网络文件返回文本
      *
@@ -206,4 +217,3 @@ public class NetUtils {
     }
 
 }
-

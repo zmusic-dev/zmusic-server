@@ -42,7 +42,7 @@ public class HelpUtils {
                 ZMusic.message.sendNormalMessage("/zm play qq <歌名> - QQ音乐播放§a.", playerObj);
                 ZMusic.message.sendNormalMessage("/zm play kugou <歌名> - 酷狗音乐播放§a.", playerObj);
                 ZMusic.message.sendNormalMessage("/zm play kuwo <歌名> - 酷我音乐播放§a.", playerObj);
-                ZMusic.message.sendNormalMessage("/zm play bilibili <:auXXXXX/歌名> - 哔哩哔哩音乐播放§a.", playerObj);
+                ZMusic.message.sendNormalMessage("/zm play bilibili <BV号/关键词> - 哔哩哔哩视频音频播放§a.", playerObj);
                 ZMusic.message.sendNormalMessage("§6=========================================", playerObj);
                 break;
             case "playlist":
@@ -71,7 +71,7 @@ public class HelpUtils {
                 ZMusic.message.sendNormalMessage("/zm music qq <歌名> - QQ音乐点歌§a.", playerObj);
                 ZMusic.message.sendNormalMessage("/zm music kugou <歌名> - 酷狗音乐点歌§a.", playerObj);
                 ZMusic.message.sendNormalMessage("/zm music kuwo <歌名> - 酷我音乐点歌§a.", playerObj);
-                ZMusic.message.sendNormalMessage("/zm music bilibili <:auXXXXX歌名> - 哔哩哔哩音乐点歌§a.", playerObj);
+                ZMusic.message.sendNormalMessage("/zm music bilibili <BV号/关键词> - 哔哩哔哩视频音频点歌§a.", playerObj);
                 ZMusic.message.sendNormalMessage("§6=========================================", playerObj);
                 break;
             case "search":
@@ -80,7 +80,7 @@ public class HelpUtils {
                 ZMusic.message.sendNormalMessage("/zm search qq <歌名> - QQ音乐搜索§a.", playerObj);
                 ZMusic.message.sendNormalMessage("/zm search kugou <歌名> - 酷狗音乐搜索§a.", playerObj);
                 ZMusic.message.sendNormalMessage("/zm search kuwo <歌名> - 酷我音乐搜索§a.", playerObj);
-                ZMusic.message.sendNormalMessage("/zm search bilibili <:auXXXXX歌名> - 哔哩哔哩音乐搜索§a.", playerObj);
+                ZMusic.message.sendNormalMessage("/zm search bilibili <关键词> - 哔哩哔哩视频搜索§a.", playerObj);
                 ZMusic.message.sendNormalMessage("§6=========================================", playerObj);
                 break;
             case "url":

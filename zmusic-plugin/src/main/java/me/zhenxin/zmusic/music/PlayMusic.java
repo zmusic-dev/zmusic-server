@@ -56,11 +56,11 @@ public class PlayMusic {
                     break;
                 case "bilibili":
                     if (ZMusic.isVip) {
-                        ZMusic.message.sendNormalMessage("哔哩哔哩音乐需要在插件服务器将M4A转换为MP3。", player);
+                        ZMusic.message.sendNormalMessage("哔哩哔哩视频音频需要在插件服务器将M4A转换为MP3。", player);
                         ZMusic.message.sendNormalMessage("第一次搜索将会耗时很久，如有其他用户使用过，将会返回缓存文件。", player);
                         ZMusic.message.sendNormalMessage("请耐心等待。。。。", player);
                         json = BiliBiliMusic.getMusic(searchKey);
-                        searchSourceName = "哔哩哔哩音乐";
+                        searchSourceName = "哔哩哔哩视频";
                         break;
                     } else {
                         ZMusic.message.sendErrorMessage("错误,本服务器未授权.", player);

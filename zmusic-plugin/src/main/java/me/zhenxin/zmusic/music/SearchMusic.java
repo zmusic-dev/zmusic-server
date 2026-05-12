@@ -36,7 +36,7 @@ public class SearchMusic {
                 break;
             case "bilibili":
                 json = BiliBiliMusic.getMusicList(searchKey);
-                searchSourceName = "哔哩哔哩音乐";
+                searchSourceName = "哔哩哔哩视频";
                 break;
             default:
                 ZMusic.message.sendErrorMessage("错误：未知的搜索源", player);
