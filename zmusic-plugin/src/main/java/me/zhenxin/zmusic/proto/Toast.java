@@ -70,7 +70,9 @@ public class Toast {
                     break;
                 case "craftbukkit": // Mojang mappings server for paper 1.20.5+
                     String version;
-                    if (Bukkit.getUnsafe().getDataVersion() >= 4435) {
+                    if (Bukkit.getUnsafe().getDataVersion() >= 4440) {
+                        version = "1_21_11";
+                    } else if (Bukkit.getUnsafe().getDataVersion() >= 4435) {
                         version = "1_21_7";
                     } else {
                         version = "1_21_4";
