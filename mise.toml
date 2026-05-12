@@ -1,0 +1,6 @@
+[tools]
+java = "temurin-21"
+
+[tasks.build]
+description = "Build all modules"
+run = "./gradlew build"
