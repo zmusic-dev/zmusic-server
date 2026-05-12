@@ -13,8 +13,8 @@ dependencies {
     implementation(project(":zmusic-nms:zmusic-nms-1.18"))
     implementation(project(":zmusic-nms:zmusic-nms-1.19"))
     implementation(project(":zmusic-nms:zmusic-nms-1.20"))
-    implementation(project(":zmusic-nms:zmusic-nms-1.21.4"))
-    implementation(project(":zmusic-nms:zmusic-nms-1.21.7"))
+    implementation(project(path: ":zmusic-nms:zmusic-nms-1.21.4", configuration: "default"))
+    implementation(project(path: ":zmusic-nms:zmusic-nms-1.21.7", configuration: "default"))
 
     compileOnly libs.bungeecord
     compileOnly libs.velocity
