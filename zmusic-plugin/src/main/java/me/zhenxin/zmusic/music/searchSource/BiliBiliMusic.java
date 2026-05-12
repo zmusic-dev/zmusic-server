@@ -1,6 +1,7 @@
 package me.zhenxin.zmusic.music.searchSource;
 
 import com.google.gson.*;
+import me.zhenxin.zmusic.ZMusic;
 import me.zhenxin.zmusic.config.Config;
 import me.zhenxin.zmusic.utils.NetUtils;
 import me.zhenxin.zmusic.utils.OtherUtils;
@@ -16,6 +17,8 @@ public class BiliBiliMusic {
     private static final String PLAY_URL_API = "https://api.bilibili.com/x/player/playurl";
     private static final String NAV_API = "https://api.bilibili.com/x/web-interface/nav";
     private static final String REFERER = "https://search.bilibili.com/";
+    private static final String BILIBILI_ORIGIN = "https://www.bilibili.com";
+    private static final String BILIBILI_USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 ZMusic/";
     private static final int[] WBI_MIXIN_KEY_ENC_TAB = {
         46, 47, 18, 2, 53, 8, 23, 32,
         15, 50, 10, 31, 58, 3, 45, 35,
@@ -189,6 +192,9 @@ public class BiliBiliMusic {
         data.addProperty("secret", Config.vipSecret);
         data.addProperty("id", "bilibili_video_" + bvid);
         data.addProperty("url", musicUrl);
+        data.addProperty("referer", BILIBILI_ORIGIN + "/video/" + bvid);
+        data.addProperty("origin", BILIBILI_ORIGIN);
+        data.addProperty("userAgent", BILIBILI_USER_AGENT + ZMusic.thisVer);
         String res = NetUtils.postNetString("https://api.zhenxin.me/zmusic/vip/m4a2mp3", null, data);
         JsonObject resJson = gson.fromJson(res, JsonObject.class);
         if (resJson.get("code").getAsInt() == 200) {
