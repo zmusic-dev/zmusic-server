@@ -149,6 +149,10 @@ public class NetUtils {
     }
 
     public static String postNetString(String url, String Referer, JsonObject data) {
+        return postNetString(url, Referer, data, 20000);
+    }
+
+    public static String postNetString(String url, String Referer, JsonObject data, int readTimeout) {
         try {
             String ua = "Mozilla/5.0 (Linux; Android 11; Mi 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36 ZMusic/" + ZMusic.thisVer;
 
@@ -162,7 +166,7 @@ public class NetUtils {
 
             URL getUrl = new URL(url);
             HttpURLConnection con = (HttpURLConnection) getUrl.openConnection();
-            con.setReadTimeout(20000);
+            con.setReadTimeout(readTimeout);
             con.setConnectTimeout(5000);
             con.addRequestProperty("Charset", "UTF-8");
             con.addRequestProperty("Referer", Referer);

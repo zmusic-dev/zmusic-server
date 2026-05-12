@@ -19,6 +19,7 @@ public class BiliBiliMusic {
     private static final String REFERER = "https://search.bilibili.com/";
     private static final String BILIBILI_ORIGIN = "https://www.bilibili.com";
     private static final String BILIBILI_USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 ZMusic/";
+    private static final int CONVERT_READ_TIMEOUT = 600000;
     private static final int[] WBI_MIXIN_KEY_ENC_TAB = {
         46, 47, 18, 2, 53, 8, 23, 32,
         15, 50, 10, 31, 58, 3, 45, 35,
@@ -195,8 +196,14 @@ public class BiliBiliMusic {
         data.addProperty("referer", BILIBILI_ORIGIN + "/video/" + bvid);
         data.addProperty("origin", BILIBILI_ORIGIN);
         data.addProperty("userAgent", BILIBILI_USER_AGENT + ZMusic.thisVer);
-        String res = NetUtils.postNetString("https://api.zhenxin.me/zmusic/vip/m4a2mp3", null, data);
+        String res = NetUtils.postNetString("https://api.zhenxin.me/zmusic/vip/m4a2mp3", null, data, CONVERT_READ_TIMEOUT);
+        if (res == null || res.isEmpty()) {
+            throw new Exception("视频音频转MP3失败: 转换服务无响应");
+        }
         JsonObject resJson = gson.fromJson(res, JsonObject.class);
+        if (resJson == null || !resJson.has("code")) {
+            throw new Exception("视频音频转MP3失败: 转换服务响应异常");
+        }
         if (resJson.get("code").getAsInt() == 200) {
             JsonObject dataJson = resJson.get("data").getAsJsonObject();
             String name = dataJson.get("name").getAsString();
