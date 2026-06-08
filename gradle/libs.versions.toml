@@ -20,7 +20,7 @@ placeholderapi = "2.12.2"
 
 hutool = "5.8.46"
 netty = "4.2.14.Final"
-nightconfig = "3.8.4"
+nightconfig = "3.9.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
