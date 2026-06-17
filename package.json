@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@giscus/vue": "^3.1.1",
-    "@lucide/vue": "^1.17.0",
+    "@lucide/vue": "^1.20.0",
     "simple-icons": "^16.21.0"
   }
 }
