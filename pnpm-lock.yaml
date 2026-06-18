@@ -15,8 +15,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(vue@3.5.35)
       '@lucide/vue':
-        specifier: ^1.17.0
-        version: 1.17.0(vue@3.5.35)
+        specifier: ^1.21.0
+        version: 1.21.0(vue@3.5.35)
       simple-icons:
         specifier: ^16.21.0
         version: 16.21.0
@@ -232,8 +232,8 @@ packages:
   '@lit/reactive-element@2.1.2':
     resolution: {integrity: sha512-pbCDiVMnne1lYUIaYNN5wrwQXDtHaYtg7YEFPeW+hws6U47WeFvISGUWekPGKWOP1ygrs0ef0o1VJMk1exos5A==}
 
-  '@lucide/vue@1.17.0':
-    resolution: {integrity: sha512-6Q1ZHgr5FbmJzKWe5BxlNdjLj2lbmuH1zwDtVzUJofX0w9UREwKgq4F4jwKqFYyyIS4Rj3FiJvDi2k6djukmmw==}
+  '@lucide/vue@1.21.0':
+    resolution: {integrity: sha512-eoFn3tppjKAc12ZqdnRSMFdtwQ1ZMRQFb6SV1Eub6Y8kU28ccnqKeSFdnur9hMg8gIbosU2Y3WFJr/J/xS/IlQ==}
     peerDependencies:
       vue: '>=3.0.1'
 
@@ -924,7 +924,7 @@ snapshots:
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.5.1
 
-  '@lucide/vue@1.17.0(vue@3.5.35)':
+  '@lucide/vue@1.21.0(vue@3.5.35)':
     dependencies:
       vue: 3.5.35
 
