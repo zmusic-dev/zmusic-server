@@ -285,7 +285,6 @@ public class Cmd {
             if (plp != null) {
                 plp.isStop = true;
                 PlayerData.setPlayerPlayListPlayer(sender, null);
-                OtherUtils.resetPlayerStatus(sender);
             }
             OtherUtils.resetPlayerStatus(sender);
             ZMusic.message.sendNormalMessage("停止播放音乐成功!", sender);

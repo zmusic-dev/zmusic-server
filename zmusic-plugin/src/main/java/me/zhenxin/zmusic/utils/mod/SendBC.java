@@ -19,8 +19,11 @@ public class SendBC implements Send {
             ByteBuf buf = Unpooled.buffer(bytes.length + 1);
             buf.writeByte(666);
             buf.writeBytes(bytes);
-            ZMusic.runTask.runAsync(() -> player.sendData("allmusic:channel", buf.array()));
-            ZMusic.runTask.runAsync(() -> player.sendData("zmusic:channel", buf.array()));
+            byte[] array = buf.array();
+            // 同步发送到两个频道，保证 [Stop] 和 [Play] 的顺序，
+            // 避免因 runAsync 线程池竞争导致的播放无声问题
+            player.sendData("allmusic:channel", array);
+            player.sendData("zmusic:channel", array);
         } catch (
             Exception e) {
             ZMusic.log.sendDebugMessage("[Mod通信] 数据发送发生错误");

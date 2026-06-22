@@ -23,8 +23,11 @@ public class SendBukkit implements Send {
             ByteBuf buf = Unpooled.buffer(bytes.length + 1);
             buf.writeByte(666);
             buf.writeBytes(bytes);
-            ZMusic.runTask.runAsync(() -> player.sendPluginMessage(ZMusicBukkit.plugin, "allmusic:channel", buf.array()));
-            ZMusic.runTask.runAsync(() -> player.sendPluginMessage(ZMusicBukkit.plugin, "zmusic:channel", buf.array()));
+            byte[] array = buf.array();
+            // 同步发送到两个频道，保证 [Stop] 和 [Play] 的顺序，
+            // 避免因 runAsync 线程池竞争导致的 30%-50% 概率播放无声问题
+            player.sendPluginMessage(ZMusicBukkit.plugin, "allmusic:channel", array);
+            player.sendPluginMessage(ZMusicBukkit.plugin, "zmusic:channel", array);
         } catch (Exception e) {
             ZMusic.log.sendDebugMessage("[Mod通信] 数据发送发生错误");
         }
