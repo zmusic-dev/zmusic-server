@@ -31,7 +31,7 @@ public final class ZMusic {
 
     public static File dataFolder;
     public static String thisVer;
-    public static int thisVerCode = 202605120;
+    public static int thisVerCode = 202606220;
     public static boolean isVip = false;
     public static boolean isViaVer = true;
     public static boolean isEnable = true;
@@ -42,13 +42,12 @@ public final class ZMusic {
         List<Object> players = ZMusic.player.getOnlinePlayerList();
         if (!players.isEmpty()) {
             for (Object player : players) {
-                OtherUtils.resetPlayerStatus(player);
                 PlayListPlayer plp = PlayerData.getPlayerPlayListPlayer(player);
                 if (plp != null) {
                     plp.isStop = true;
                     PlayerData.setPlayerPlayListPlayer(player, null);
-                    OtherUtils.resetPlayerStatus(player);
                 }
+                OtherUtils.resetPlayerStatus(player);
             }
         }
         ZMusic.log.sendNormalMessage("插件作者: 真心");
