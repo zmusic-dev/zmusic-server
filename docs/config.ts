@@ -13,9 +13,9 @@ export default defineAdditionalConfig({
 
     footer: {
       message:
-        '<a href="https://beian.miit.gov.cn" target="_blank" rel="noreferrer">辽ICP备19016520号-4</a>',
+        '<a href="https://beian.miit.gov.cn" target="_blank" rel="noreferrer">辽ICP备2026013342号-2</a>',
       copyright:
-        '&copy;2026 <a href="https://zhenxin.me" target="_blank" rel="noreferrer">ZhenXin</a> All Rights Reserved.'
+        '&copy;2026 <a href="https://starhui.cc" target="_blank" rel="noreferrer">星绘科技</a> All Rights Reserved.'
     },
 
     docFooter: {

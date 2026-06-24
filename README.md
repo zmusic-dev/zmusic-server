@@ -48,7 +48,7 @@
 
 ```text
 ZMusic - Powerful Music System
-Copyright (C) 2025 ZhenXin
+Copyright (C) 2025 星绘科技
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -109,7 +109,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 [contrib]: https://contrib.rocks/image?repo=zmusic-dev/zmusic-plugin
 
-[docs-link]: https://zmusic.zhenxin.me
+[docs-link]: https://docs.zmusic.cc
 
 [qq-group-link]: https://qm.qq.com/q/buxuatfTCo
 

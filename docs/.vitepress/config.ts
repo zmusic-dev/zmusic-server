@@ -47,7 +47,7 @@ export default defineConfig({
     ]
   ],
   sitemap: {
-    hostname: 'https://zmusic.zhenxin.me'
+    hostname: 'https://docs.zmusic.cc'
   },
   themeConfig: {
     socialLinks: [

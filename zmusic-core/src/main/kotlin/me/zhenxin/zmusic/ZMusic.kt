@@ -48,7 +48,7 @@ object ZMusic {
             logger.info(
                 it.replace("{version}", ZMusicConstants.PLUGIN_VERSION)
                     .replace("{platform}", currentPlatform.name.lowercase())
-                    .replace("{docs-url}", "zmusic.zhenxin.me")
+                    .replace("{docs-url}", "docs.zmusic.cc")
                     .replace("{author}", "ZhenXin")
             )
         }
