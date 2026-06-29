@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "vitepress": "2.0.0-alpha.17",
-    "vue": "^3.5.38"
+    "vue": "^3.5.39"
   },
   "dependencies": {
     "@giscus/vue": "^3.1.1",
