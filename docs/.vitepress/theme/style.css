@@ -188,7 +188,19 @@ body::before {
 }
 
 .VPFooter .message {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     flex: 0 0 auto;
+}
+
+.VPFooter .message a {
+    display: inline-flex;
+    align-items: center;
+}
+
+.VPFooter .footer-separator {
+    color: var(--vp-c-text-2);
 }
 
 .VPFooter .copyright {
@@ -203,6 +215,12 @@ body::before {
 
 .VPFooter a:hover {
     color: #42abff !important;
+}
+
+.VPFooter .beian-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .VPHero .image-src {
@@ -320,12 +338,8 @@ body::before {
     }
 
     .VPFooter .message {
-        display: none;
-    }
-
-    .VPFooter .message,
-    .VPFooter .copyright {
-        text-align: left;
+        width: 100%;
+        text-align: center;
     }
 
     .VPFooter .message,
@@ -949,4 +963,11 @@ body::before {
     .VPSidebar .caret {
         -webkit-tap-highlight-color: transparent;
     }
+}
+
+.VPFooter .beian-icon {
+    height: 14px;
+    width: 14px;
+    object-fit: contain;
+    flex: 0 0 auto;
 }

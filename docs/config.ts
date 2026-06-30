@@ -13,7 +13,7 @@ export default defineAdditionalConfig({
 
     footer: {
       message:
-        '<a href="https://beian.miit.gov.cn" target="_blank" rel="noreferrer">辽ICP备2026013342号-2</a>',
+        '<a href="https://beian.miit.gov.cn" target="_blank" rel="noreferrer">辽ICP备2026013342号-2</a><span class="footer-separator">·</span><a class="beian-link" href="https://beian.mps.gov.cn/#/query/webSearch?code=21010602001361" target="_blank" rel="noreferrer"><img class="beian-icon" src="https://s3.starhui.cc/public/images/mps-beian-icon.png" alt="">辽公网安备21010602001361号</a>',
       copyright:
         '&copy;2026 <a href="https://starhui.cc" target="_blank" rel="noreferrer">星绘科技</a> All Rights Reserved.'
     },
