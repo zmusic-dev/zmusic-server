@@ -1,9 +1,13 @@
 package me.zhenxin.zmusic.api.bossbar;
 
 import me.zhenxin.zmusic.ZMusic;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 
 public class BossBarBukkit implements BossBar {
@@ -12,6 +16,8 @@ public class BossBarBukkit implements BossBar {
     private final String title;
     private final double seconds;
     private final org.bukkit.boss.BossBar bar;
+    private Object foliaTask;
+    private BukkitTask bukkitTask;
 
     public BossBarBukkit(Object p, String title, BarColor color, BarStyle style, float seconds) {
         Player player = (Player) p;
@@ -26,21 +32,41 @@ public class BossBarBukkit implements BossBar {
         bar.setVisible(true);
         bar.setProgress(0);
         bar.addPlayer(p);
-        ZMusic.runTask.runAsync(() -> {
-            double step = 1F / seconds;
-            double prog = bar.getProgress();
-            while (prog >= 0 || prog <= 1) {
-                prog += step;
-                if (prog > 1) break;
-                bar.setProgress(prog);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        // 同步定时器更新进度，避免在异步线程访问非线程安全的 BossBar
+        // 兼容 Folia: 反射调用 GlobalRegionScheduler.runAtFixedRate
+        Plugin plugin = ZMusicBukkitPlugin();
+        Runnable tick = () -> {
+            if (!bar.isVisible()) {
+                cancelTask();
+                return;
             }
-            bar.setVisible(false);
-        });
+            double step = 1F / seconds;
+            double prog = Math.min(bar.getProgress() + step, 1.0);
+            if (prog >= 1.0) {
+                bar.setProgress(1.0);
+                bar.setVisible(false);
+                cancelTask();
+                return;
+            }
+            bar.setProgress(prog);
+        };
+        if (ZMusic.isFolia) {
+            try {
+                Object scheduler = Bukkit.class.getMethod("getGlobalRegionScheduler").invoke(null);
+                java.lang.reflect.Method runAtFixedRate = scheduler.getClass().getMethod(
+                        "runAtFixedRate", Plugin.class, Consumer.class, long.class, long.class);
+                foliaTask = runAtFixedRate.invoke(scheduler, plugin, (Consumer<Object>) t -> tick.run(), 20L, 20L);
+            } catch (Exception e) {
+                // 反射失败回退到 Bukkit 调度器
+                bukkitTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, tick, 20L, 20L);
+            }
+        } else {
+            bukkitTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, tick, 20L, 20L);
+        }
+    }
+
+    private static Plugin ZMusicBukkitPlugin() {
+        return me.zhenxin.zmusic.ZMusicBukkit.plugin;
     }
 
     @Override
@@ -57,11 +83,13 @@ public class BossBarBukkit implements BossBar {
     public void removePlayer(Object player) {
         Player p = (Player) player;
         bar.removePlayer(p);
+        cancelTask();
     }
 
     @Override
     public void removeAll() {
         bar.removeAll();
+        cancelTask();
     }
 
     @Override
@@ -72,6 +100,23 @@ public class BossBarBukkit implements BossBar {
     @Override
     public void setVisible(boolean visible) {
         bar.setVisible(visible);
+        if (!visible) {
+            cancelTask();
+        }
+    }
+
+    private void cancelTask() {
+        if (bukkitTask != null) {
+            bukkitTask.cancel();
+            bukkitTask = null;
+        }
+        if (foliaTask != null) {
+            try {
+                foliaTask.getClass().getMethod("cancel").invoke(foliaTask);
+            } catch (Exception ignored) {
+            }
+            foliaTask = null;
+        }
     }
 
     @Override
