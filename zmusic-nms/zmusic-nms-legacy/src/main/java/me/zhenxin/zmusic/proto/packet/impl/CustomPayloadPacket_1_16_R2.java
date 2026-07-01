@@ -1,0 +1,27 @@
+package me.zhenxin.zmusic.proto.packet.impl;
+
+import io.netty.buffer.Unpooled;
+import me.zhenxin.zmusic.proto.packet.CustomPayloadPacket;
+import net.minecraft.server.v1_16_R2.*;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
+import org.bukkit.entity.Player;
+
+/**
+ * @author 真心
+ */
+@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
+public class CustomPayloadPacket_1_16_R2 extends CustomPayloadPacket {
+
+    public CustomPayloadPacket_1_16_R2(Player player, String channel, byte[] data) {
+        super(player, channel, data);
+    }
+
+    @Override
+    public void send() {
+        MinecraftKey key = new MinecraftKey(channel);
+        PacketDataSerializer buf = new PacketDataSerializer(Unpooled.wrappedBuffer(data));
+        PacketPlayOutCustomPayload packet = new PacketPlayOutCustomPayload(key, buf);
+        CraftPlayer craftPlayer = (CraftPlayer) player;
+        craftPlayer.getHandle().playerConnection.sendPacket(packet);
+    }
+}
